@@ -1,0 +1,298 @@
+lib/
+├── core/
+│   ├── app_cubit/
+│   │   ├── app_cubit.dart
+│   │   └── app_state.dart
+│   ├── di/
+│   │   ├── module/
+│   │   │   ├── di_module.dart
+│   │   │   └── dio_module.dart
+│   │   ├── di.config.dart
+│   │   └── di.dart
+│   ├── helpers/
+│   │   ├── document_helper/
+│   │   │   └── document_picker.dart
+│   │   ├── fire_base/
+│   │   │   └── firebase_notification.dart
+│   │   ├── location/
+│   │   │   └── location_helper.dart
+│   │   ├── dynamic_link_service.dart
+│   │   ├── enums.dart
+│   │   ├── format_price_helper.dart
+│   │   ├── locathion_name.dart
+│   │   ├── luanch_url.dart
+│   │   └── rate_app_helper.dart
+│   ├── network/
+│   │   ├── error_handler.dart
+│   │   ├── exceptions.dart
+│   │   ├── network_info.dart
+│   │   └── save_api.dart
+│   ├── state_renderer/
+│   │   ├── request_builder.dart
+│   │   ├── state_renderer.dart
+│   │   └── state_renderer_impl.dart
+│   ├── utils/
+│   │   ├── functions/
+│   │   │   ├── function_utils.dart
+│   │   │   └── function_validation.dart
+│   │   ├── widgets/
+│   │   │   ├── CustomCachedNetworkImage.dart
+│   │   │   ├── custom_error_widget.dart
+│   │   │   ├── custom_loading_widget.dart
+│   │   │   ├── error_widget_cached_network_image.dart
+│   │   │   └── place_holder_cached_network_image.dart
+│   │   └── app_rating_helper.dart
+│   ├── api_urls.dart
+│   ├── app_assets.dart
+│   ├── app_colors.dart
+│   ├── app_router.dart
+│   ├── app_sized_box.dart
+│   ├── app_validation.dart
+│   ├── bloc_observer.dart
+│   ├── constants.dart
+│   ├── extensions.dart
+│   ├── fuctions.dart
+│   ├── strings_manager.dart
+│   ├── text_style.dart
+│   └── theme_manager.dart
+├── data/
+│   ├── models/
+│   │   ├── models_employee/
+│   │   │   ├── EmployeeNotificationModel.dart
+│   │   │   ├── EmployeeWalletModel.dart
+│   │   │   ├── FlatRentTypeModel.dart
+│   │   │   ├── FlatTypeModel.dart
+│   │   │   ├── FlatWalletModel.dart
+│   │   │   ├── FlatWalletRequestModel.dart
+│   │   │   ├── GetEmployeeFlatByAqarRequestModel.dart
+│   │   │   ├── NotificationNotSeenCountModel.dart
+│   │   │   ├── SearchMostagerModel.dart
+│   │   │   ├── StopRentalRequestModel.dart
+│   │   │   ├── TermsModel.dart
+│   │   │   ├── WhatsappOTPModel.dart
+│   │   │   ├── add_rental_model.dart
+│   │   │   ├── add_rental_price_model.dart
+│   │   │   ├── base_response.dart
+│   │   │   ├── base_response.g.dart
+│   │   │   ├── employee_update_request_model.dart
+│   │   │   ├── get_employee_flat_model.dart
+│   │   │   ├── get_employee_model.dart
+│   │   │   ├── get_flat_rentals_model.dart
+│   │   │   ├── login_response.dart
+│   │   │   ├── login_response.g.dart
+│   │   │   ├── owner_info_model.dart
+│   │   │   └── update_rental_request_model.dart
+│   │   ├── models_owner/
+│   │       ├── AddEmployeeToAqarRequestModel.dart
+│   │       ├── AqarEmployeesModel.dart
+│   │       ├── AqarPricesModel.dart
+│   │       ├── CheckPromoReqModel.dart
+│   │       ├── CollectMoneyFromEmployeeModel.dart
+│   │       ├── CollectMoneyFromEmployeeRequestModel.dart
+│   │       ├── ContactUsRequestModel.dart
+│   │       ├── EmployeeWalletModel.dart
+│   │       ├── EmployeeWalletTotalModel.dart
+│   │       ├── FlatRentTypeModel.dart
+│   │       ├── FlatTypeModel.dart
+│   │       ├── FlatWalletModel.dart
+│   │       ├── GetAllMyBillsModel.dart
+│   │       ├── GetAqarTypeModel.dart
+│   │       ├── GetHomeStatsModel.dart
+│   │       ├── GetOwnerInfoModel.dart
+│   │       ├── GetOwnerNotificationRequestModel.dart
+│   │       ├── NeedUpdateModel.dart
+│   │       ├── NotificationNotSeenCountModel.dart
+│   │       ├── OwnerNotificationModel.dart
+│   │       ├── RefuseResonsModel.dart
+│   │       ├── RemoveEmpFromAqarRequestModel.dart
+│   │       ├── RemoveEmpFromFlatRequestModel.dart
+│   │       ├── SearchMostagerModel.dart
+│   │       ├── StopRentalRequestModel.dart
+│   │       ├── TermsModel.dart
+│   │       ├── UpdateEshterakReqModel.dart
+│   │       ├── add_employee_model.dart
+│   │       ├── add_expense_request_model.dart
+│   │       ├── add_rental_model.dart
+│   │       ├── add_rental_request_model.dart
+│   │       ├── aqar_model.dart
+│   │       ├── customer_service_model.dart
+│   │       ├── emoloyee_model.dart
+│   │       ├── flat_model_request.dart
+│   │       ├── flat_rentals_model.dart
+│   │       ├── getEmployeeWalletRequestModel.dart
+│   │       ├── getFlatWalletRequestModel.dart
+│   │       ├── get_aqar_bakat_model.dart
+│   │       ├── login_response.dart
+│   │       ├── my_aqar_flat_model.dart
+│   │       ├── my_aqars_model.dart
+│   │       ├── my_areas_model.dart
+│   │       ├── my_gover_model.dart
+│   │       ├── on_boarding_model.dart
+│   │       ├── otp_code_model.dart
+│   │       ├── owner_info.dart
+│   │       ├── owner_model.dart
+│   │       ├── spec_by_type_model.dart
+│   │       ├── update_rental_request_model.dart
+│   │       └── upload_file_request_model.dart
+│   ├── repository/
+│   │   ├── app_repo/
+│   │   │   └── app_repo.dart
+│   │   ├── repository_employee/
+│   │   │   ├── employee_repository.dart
+│   │   │   ├── flat_repository.dart
+│   │   │   ├── notification_repo.dart
+│   │   │   ├── profile_repo.dart
+│   │   │   └── proudect_repository.dart
+│   │   ├── repository_owner/
+│   │       ├── aqaraty_repo/
+│   │       │   ├── real_estate_repo.dart
+│   │       │   └── real_estate_repo_impl.dart
+│   │       ├── auth/
+│   │       │   └── auth_repository.dart
+│   │       ├── customer_service/
+│   │       │   ├── customer_service_repo.dart
+│   │       │   └── customer_service_repo_impl.dart
+│   │       ├── employees_repo/
+│   │       │   ├── employees_repo.dart
+│   │       │   └── employees_repo_impl.dart
+│   │       ├── flats_repo/
+│   │       │   ├── flats_repo.dart
+│   │       │   └── flats_repo_impl.dart
+│   │       ├── notification_repo/
+│   │       │   └── notification_repo.dart
+│   │       ├── on_boarding_repo/
+│   │       │   ├── on_boarding_repo.dart
+│   │       │   └── on_boarding_repo_impl.dart
+│   │       ├── profile/
+│   │           └── profile_repo.dart
+│   ├── storage/
+│       ├── local/
+│       │   └── app_prefs.dart
+│       ├── remote/
+│           ├── dio_helper/
+│               └── dio_helper.dart
+├── features/
+│   ├── auth/
+│   │   ├── controller/
+│   │   │   ├── login_cubit.dart
+│   │   │   └── login_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── login_screen.dart
+│   │       ├── widgets/
+│   ├── business_trip_requests/
+│   │   ├── controller/
+│   │   │   ├── business_trip_cubit.dart
+│   │   │   └── business_trip_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── business_trip_screen.dart
+│   │       ├── widgets/
+│   ├── componnents/
+│   │   ├── date_time_widgets/
+│   │   │   ├── common.dart
+│   │   │   ├── start_end_date.dart
+│   │   │   └── start_end_time.dart
+│   │   ├── file_picker/
+│   │   │   ├── file_picker_cubit/
+│   │   │   │   ├── file_picker_cubit.dart
+│   │   │   │   └── file_picker_state.dart
+│   │   │   ├── file_picker_widget.dart
+│   │   │   └── image_picker_widget.dart
+│   │   ├── pdf/
+│   │   │   └── show_pdf_screen.dart
+│   │   ├── screen_builder/
+│   │   │   ├── custom_loading_indicator.dart
+│   │   │   └── screen_builder.dart
+│   │   ├── SalarieContainer.dart
+│   │   ├── app_asset_image.dart
+│   │   ├── app_common.dart
+│   │   ├── app_dialoge.dart
+│   │   ├── app_divider.dart
+│   │   ├── app_logo.dart
+│   │   ├── app_network_image.dart
+│   │   ├── app_shimmers.dart
+│   │   ├── code_picker_textfield.dart
+│   │   ├── const_widget.dart
+│   │   ├── custom_app_bar.dart
+│   │   ├── custom_button.dart
+│   │   ├── custom_dialog.dart
+│   │   ├── custom_display_icon.dart
+│   │   ├── custom_drop_down.dart
+│   │   ├── custom_fab.dart
+│   │   ├── custom_search_widget.dart
+│   │   ├── custom_selection_menu.dart
+│   │   ├── custom_text_field.dart
+│   │   ├── empty_screen.dart
+│   │   ├── icon_button.dart
+│   │   ├── info_screen.dart
+│   │   ├── internet_check_screen.dart
+│   │   ├── loading_widget.dart
+│   │   ├── search_bar.dart
+│   │   ├── show_bottom_sheet.dart
+│   │   ├── show_flutter_snackbar.dart
+│   │   ├── to_cart_icon.dart
+│   │   ├── update_app_dialog.dart
+│   │   └── web_page_screen.dart
+│   ├── holiday__requests/
+│   │   ├── controller/
+│   │   │   ├── holiday_cubit.dart
+│   │   │   └── holiday_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── holiday_screen.dart
+│   │       ├── widgets/
+│   ├── loan__requests/
+│   │   ├── controller/
+│   │   │   ├── loan_cubit.dart
+│   │   │   └── loan_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── loan_screen.dart
+│   │       ├── widgets/
+│   ├── main_screen/
+│   │   ├── controller/
+│   │   │   ├── main_screen_cubit.dart
+│   │   │   └── main_screen_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── main_screen.dart
+│   │       ├── widgets/
+│   ├── mission_requests/
+│   │   ├── controller/
+│   │   │   ├── mission_cubit.dart
+│   │   │   └── mission_state.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── mission_screen.dart
+│   │       ├── widgets/
+│   ├── notifications/
+│   │   ├── controller/
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── notifications_screen.dart
+│   │       ├── widgets/
+│   ├── permission_request/
+│   │   ├── controller/
+│   │   │   ├── permission/
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── permission_screen.dart
+│   │       ├── widgets/
+│   ├── profile/
+│   │   ├── controller/
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── profile_screen.dart
+│   │       ├── widgets/
+│   ├── reports/
+│   │   ├── controller/
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── reports_screen.dart
+│   │       ├── widgets/
+│   ├── splash/
+│       └── splash_screen.dart
+├── firebase_options.dart
+├── main.dart
+└── my_app.dart
