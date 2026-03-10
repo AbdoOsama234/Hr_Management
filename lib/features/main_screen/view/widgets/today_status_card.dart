@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
@@ -19,9 +20,11 @@ class TodayStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.select((AppCubit cubit) => cubit.isDark);
-    final Color cardBg =
-    isDark ? AppColors.backGround2 : const Color(0xFFFFFFFF);
+    final isDark = context.watch<AppCubit>().isDark;
+    context.locale;
+    final Color cardBg = isDark
+        ? AppColors.backGround2
+        : const Color(0xFFFFFFFF);
 
     final Color borderColor = isDark
         ? Colors.white.withOpacity(.05)
@@ -31,19 +34,18 @@ class TodayStatusCard extends StatelessWidget {
         ? Colors.black.withOpacity(.3)
         : Colors.grey.withOpacity(.15);
 
-    final Color textColor =
-    isDark ? AppColors.textMain : const Color(0xFF1A1A2E);
+    final Color textColor = isDark
+        ? AppColors.textMain
+        : const Color(0xFF1A1A2E);
 
-    final Color subtextColor =
-    isDark ? AppColors.textSub : const Color(0xFF6A6A8A);
+    final Color subtextColor = isDark
+        ? AppColors.textSub
+        : const Color(0xFF6A6A8A);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
-      padding: EdgeInsets.symmetric(
-        horizontal: 4.w,
-        vertical: 2.5.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(20),
@@ -59,16 +61,13 @@ class TodayStatusCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           /// Title
           Row(
             children: [
               Container(
                 padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(
-                    isDark ? .12 : .08,
-                  ),
+                  color: AppColors.primary.withOpacity(isDark ? .12 : .08),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -81,7 +80,7 @@ class TodayStatusCard extends StatelessWidget {
               SizedBox(width: 2.5.w),
 
               Text(
-                "حالة اليوم",
+                "today_status".tr(),
                 style: AppTextStyle.title.copyWith(
                   color: textColor,
                   fontWeight: FontWeight.w700,
@@ -97,7 +96,7 @@ class TodayStatusCard extends StatelessWidget {
             children: [
               _buildItem(
                 icon: Icons.login_rounded,
-                label: "الدخول",
+                label: "check_in".tr(),
                 value: checkIn,
                 color: AppColors.green,
                 textColor: textColor,
@@ -109,7 +108,7 @@ class TodayStatusCard extends StatelessWidget {
 
               _buildItem(
                 icon: Icons.logout_rounded,
-                label: "الخروج",
+                label: "check_out".tr(),
                 value: checkOut,
                 color: AppColors.primary,
                 textColor: textColor,
@@ -121,7 +120,7 @@ class TodayStatusCard extends StatelessWidget {
 
               _buildItem(
                 icon: Icons.access_time_filled,
-                label: "ساعات العمل",
+                label: "working_hours".tr(),
                 value: workedHours,
                 color: AppColors.blue,
                 textColor: textColor,
@@ -146,30 +145,20 @@ class TodayStatusCard extends StatelessWidget {
   }) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 1.2.h,
-          horizontal: 2.w,
-        ),
+        padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.w),
         decoration: BoxDecoration(
           color: color.withOpacity(isDark ? .06 : .04),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           children: [
-
-            Icon(
-              icon,
-              color: color,
-              size: 5.w,
-            ),
+            Icon(icon, color: color, size: 5.w),
 
             SizedBox(height: .5.h),
 
             Text(
               label,
-              style: AppTextStyle.smallBody.copyWith(
-                color: subtextColor,
-              ),
+              style: AppTextStyle.smallBody.copyWith(color: subtextColor),
             ),
 
             SizedBox(height: .3.h),

@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/app_router.dart';
+import 'package:hr_manegement/core/constants.dart';
 
 import 'core/app_cubit/app_state.dart';
-import 'core/helpers/dynamic_link_service.dart';
 import 'core/theme_manager.dart';
 import 'core/di/di.dart';
 import 'features/main_screen/controller/main_screen_cubit.dart'
     show MainScreenCubit;
+import 'features/language/controller/language_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -30,19 +31,20 @@ class _MyAppState extends State<MyApp> {
   //   deepLink.initDeepLinking();
   //   super.initState();
   // }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AppCubit>()),
         BlocProvider(create: (context) => getIt<MainScreenCubit>()),
+        BlocProvider(create: (context) => getIt<LanguageCubit>()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, local) {
           MyApp.appContext = context;
-          var cubit = getIt<AppCubit>();
-          MyApp.isDark = cubit.isDark;
+          var appCubit = context.read<AppCubit>();
+          MyApp.isDark = appCubit.isDark;
+
           return MaterialApp(
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
@@ -50,13 +52,18 @@ class _MyAppState extends State<MyApp> {
               MyApp.appContext = context;
               return "HR Management".tr();
             },
-            theme: lightTheme(),
+            theme: lightTheme().copyWith(
+              textTheme: lightTheme().textTheme.apply(
+                fontFamily: context.locale.languageCode == 'ar'
+                    ? Constants.arFont
+                    : Constants.enFont,
+              ),
+            ),
             // darkTheme: darkTheme(),
-            // themeMode: cubit.isDark ? ThemeMode.dark : ThemeMode.light,
-            locale: cubit.locale,
+            // themeMode: appCubit.isDark ? ThemeMode.dark : ThemeMode.light,
+            locale: context.locale,
             localizationsDelegates: [
               ...context.localizationDelegates,
-
               CountryLocalizations.delegate,
             ],
             supportedLocales: context.supportedLocales,

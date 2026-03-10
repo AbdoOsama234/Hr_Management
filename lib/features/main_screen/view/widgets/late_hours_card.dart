@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
@@ -84,7 +85,7 @@ class LateHoursCard extends StatelessWidget {
               ),
               SizedBox(width: 2.5.w),
               Text(
-                'التأخير',
+                'late_hours'.tr(),
                 style: AppTextStyle.title.copyWith(
                   color: textColor,
                   fontWeight: FontWeight.w700,
@@ -102,7 +103,7 @@ class LateHoursCard extends StatelessWidget {
                   border: Border.all(color: _statusColor.withOpacity(0.2)),
                 ),
                 child: Text(
-                  'متبقي ${_remaining.toInt()} ساعات',
+                  '${'remaining'.tr()} ${_remaining.toInt()} ${'hours'.tr()}',
                   style: AppTextStyle.smallBody.copyWith(
                     color: _statusColor,
                     fontWeight: FontWeight.w600,
@@ -145,7 +146,7 @@ class LateHoursCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'مستخدم',
+                          'used'.tr(),
                           style: AppTextStyle.hint.copyWith(
                             color: subtextColor,
                           ),
@@ -162,8 +163,8 @@ class LateHoursCard extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildDetailRow(
-                      'المستخدم',
-                      '${lateHoursUsed.toInt()} ساعة',
+                      'the_used'.tr(),
+                      '${lateHoursUsed.toInt()} ${'hour'.tr()}',
                       _statusColor,
                       textColor,
                       subtextColor,
@@ -171,8 +172,8 @@ class LateHoursCard extends StatelessWidget {
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
-                      'المسموح',
-                      '${lateHoursAllowed.toInt()} ساعات',
+                      'the_allowed'.tr(),
+                      '${lateHoursAllowed.toInt()} ${'hours'.tr()}',
                       AppColors.blue,
                       textColor,
                       subtextColor,
@@ -180,8 +181,8 @@ class LateHoursCard extends StatelessWidget {
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
-                      'المتبقي',
-                      '${_remaining.toInt()} ساعات',
+                      'the_remaining'.tr(),
+                      '${_remaining.toInt()} ${'hours'.tr()}',
                       AppColors.green,
                       textColor,
                       subtextColor,
@@ -199,7 +200,7 @@ class LateHoursCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${lateHoursUsed.toInt()}h مستخدم / ${lateHoursAllowed.toInt()}h مسموح',
+                '${lateHoursUsed.toInt()}h ${'used'.tr()} / ${lateHoursAllowed.toInt()}h ${'late_limit'.tr()}',
                 style: AppTextStyle.smallBody.copyWith(color: subtextColor),
               ),
               Text(

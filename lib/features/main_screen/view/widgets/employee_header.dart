@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
@@ -11,6 +12,7 @@ class EmployeeHeader extends StatelessWidget {
   final String jobTitle;
   final String profileImageUrl;
   final VoidCallback? onNotificationTap;
+  final VoidCallback? onMenuTap;
 
   const EmployeeHeader({
     super.key,
@@ -18,6 +20,7 @@ class EmployeeHeader extends StatelessWidget {
     required this.jobTitle,
     required this.profileImageUrl,
     this.onNotificationTap,
+    this.onMenuTap,
   });
 
   @override
@@ -79,28 +82,30 @@ class EmployeeHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          /// Notification Bell (left in RTL)
+          /// Menu Button
+          _buildIconButton(
+            icon: Icons.menu_rounded,
+            onTap: onMenuTap,
+            bgColor: iconBgColor,
+            borderColor: iconBorderColor,
+            iconColor: textColor,
+          ),
+          SizedBox(width: 2.w),
+
+          /// Notification Bell
           _buildNotificationButton(
             iconBgColor,
             iconBorderColor,
             textColor,
             badgeBorderColor,
           ),
-          SizedBox(width: 2.w),
-
-          /// Theme Toggle
-          _buildThemeToggle(
-            context,
-            isDark,
-            iconBgColor,
-            iconBorderColor,
-            textColor,
-          ),
           const Spacer(),
 
-          /// Name & Job Title (right-aligned text in RTL)
+          /// Name & Job Title
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: context.locale.languageCode == 'ar'
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
@@ -130,7 +135,7 @@ class EmployeeHeader extends StatelessWidget {
           ),
           AppSizedBox.w3,
 
-          /// Profile Avatar (right side in RTL)
+          /// Profile Avatar
           Container(
             padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
@@ -158,6 +163,26 @@ class EmployeeHeader extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildIconButton({
+    required IconData icon,
+    required VoidCallback? onTap,
+    required Color bgColor,
+    required Color borderColor,
+    required Color iconColor,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: borderColor),
+      ),
+      child: IconButton(
+        onPressed: onTap,
+        icon: Icon(icon, color: iconColor, size: 6.w),
       ),
     );
   }
@@ -194,40 +219,6 @@ class EmployeeHeader extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildThemeToggle(
-    BuildContext context,
-    bool isDark,
-    Color bgColor,
-    Color borderColor,
-    Color iconColor,
-  ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: borderColor),
-      ),
-      child: IconButton(
-        onPressed: () {
-          context.read<AppCubit>().changeTheme();
-        },
-        icon: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (child, animation) => RotationTransition(
-            turns: animation,
-            child: FadeTransition(opacity: animation, child: child),
-          ),
-          child: Icon(
-            isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-            key: ValueKey(isDark),
-            color: isDark ? AppColors.yellow : const Color(0xFF3A3A5C),
-            size: 5.5.w,
-          ),
         ),
       ),
     );

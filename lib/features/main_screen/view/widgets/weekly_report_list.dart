@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
@@ -42,7 +43,7 @@ class WeeklyReportList extends StatelessWidget {
             ),
             SizedBox(width: 2.5.w),
             Text(
-              'تقارير الأسبوع',
+              'weekly_reports'.tr(),
               style: AppTextStyle.title.copyWith(
                 color: textColor,
                 fontWeight: FontWeight.w700,
@@ -130,7 +131,7 @@ class WeeklyReportList extends StatelessWidget {
                       ),
                       SizedBox(width: 1.w),
                       Text(
-                        'تأخير ${log.lateMinutes}',
+                        '${'delay'.tr()} ${log.lateMinutes}',
                         style: AppTextStyle.hint.copyWith(
                           color: AppColors.orange,
                           fontWeight: FontWeight.w600,
@@ -159,7 +160,7 @@ class WeeklyReportList extends StatelessWidget {
                       ),
                       SizedBox(width: 1.w),
                       Text(
-                        'في الموعد',
+                        'on_time'.tr(),
                         style: AppTextStyle.hint.copyWith(
                           color: AppColors.green,
                           fontWeight: FontWeight.w600,
@@ -177,7 +178,7 @@ class WeeklyReportList extends StatelessWidget {
             children: [
               _buildInfoChip(
                 Icons.login_rounded,
-                'الدخول',
+                'check_in'.tr(),
                 log.checkIn,
                 AppColors.green,
                 isDark,
@@ -185,7 +186,7 @@ class WeeklyReportList extends StatelessWidget {
               SizedBox(width: 2.w),
               _buildInfoChip(
                 Icons.logout_rounded,
-                'الخروج',
+                'check_out'.tr(),
                 log.checkOut,
                 AppColors.primary,
                 isDark,
@@ -193,7 +194,7 @@ class WeeklyReportList extends StatelessWidget {
               SizedBox(width: 2.w),
               _buildInfoChip(
                 Icons.access_time_filled,
-                'ساعات العمل',
+                'working_hours'.tr(),
                 log.workHours,
                 AppColors.blue,
                 isDark,
