@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/di/di.dart';
-import 'package:hr_manegement/data/storage/local/app_prefs.dart';
+import 'package:hr_manegement/core/storage/local/app_prefs.dart';
 import 'package:flutter/material.dart';
 
 import 'app_asset_image.dart';

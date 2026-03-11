@@ -12,7 +12,7 @@ import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/firebase_options.dart';
 import 'core/bloc_observer.dart';
 import 'core/helpers/fire_base/firebase_notification.dart';
-import 'data/storage/local/app_prefs.dart';
+import 'core/storage/local/app_prefs.dart';
 import 'my_app.dart';
 
 void main() async {

@@ -5,7 +5,7 @@ import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-import '../../data/storage/local/app_prefs.dart';
+import '../../core/storage/local/app_prefs.dart';
 
 class CustomButton extends StatelessWidget {
   final double? width;

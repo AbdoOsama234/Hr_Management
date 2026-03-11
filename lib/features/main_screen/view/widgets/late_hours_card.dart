@@ -67,10 +67,7 @@ class LateHoursCard extends StatelessWidget {
               SizedBox(width: 2.5.w),
               Text(
                 'late_hours'.tr(),
-                style: AppTextStyle.title.copyWith(
-                  color: AppColors.textMain,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: AppTextStyle.title.copyWith(fontWeight: FontWeight.w700),
               ),
               const Spacer(),
               Container(
@@ -142,27 +139,18 @@ class LateHoursCard extends StatelessWidget {
                       'the_used'.tr(),
                       '${lateHoursUsed.toInt()} ${'hour'.tr()}',
                       _statusColor,
-                      AppColors.textMain,
-                      AppColors.textSub,
-                      0.05,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_allowed'.tr(),
                       '${lateHoursAllowed.toInt()} ${'hours'.tr()}',
                       AppColors.blue,
-                      AppColors.textMain,
-                      AppColors.textSub,
-                      0.05,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_remaining'.tr(),
                       '${_remaining.toInt()} ${'hours'.tr()}',
                       AppColors.green,
-                      AppColors.textMain,
-                      AppColors.textSub,
-                      0.05,
                     ),
                   ],
                 ),
@@ -209,14 +197,14 @@ class LateHoursCard extends StatelessWidget {
     String label,
     String value,
     Color dotColor,
-    Color textColor,
-    Color subtextColor,
-    double bgOpacity,
+    // Color textColor,
+    // Color subtextColor,
+    // double bgOpacity,
   ) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.8.h),
       decoration: BoxDecoration(
-        color: dotColor.withOpacity(bgOpacity),
+        color: dotColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -227,15 +215,12 @@ class LateHoursCard extends StatelessWidget {
             decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 2.w),
-          Text(
-            label,
-            style: AppTextStyle.smallBody.copyWith(color: subtextColor),
-          ),
+          Text(label, style: AppTextStyle.smallBody),
           const Spacer(),
           Text(
             value,
             style: AppTextStyle.body.copyWith(
-              color: textColor,
+              color: AppColors.textMain,
               fontWeight: FontWeight.w600,
             ),
           ),

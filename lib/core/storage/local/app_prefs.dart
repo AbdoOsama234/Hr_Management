@@ -1,12 +1,9 @@
 // ignore_for_file: unused_field
 
-import 'package:hr_manegement/data/models/models_owner/owner_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
-import '../../../core/constants.dart';
-import '../../models/models_employee/get_employee_model.dart';
+import '../../constants.dart';
 
 @singleton
 class AppPreferences {
@@ -127,19 +124,19 @@ class AppPreferences {
   //   return QwnerModel.fromJson(jsonDecode(_getData(_userData, null)));
   // }
 
-  QwnerModel? get loadUserData {
-    var jsonEncode = _getData("userData", null);
-    QwnerModel? userModel;
-    if (jsonEncode != null) {
-      Map<String, dynamic> map = json.decode(jsonEncode);
-      userModel = QwnerModel.fromJson(map);
-    }
-    return userModel;
-  }
+  // QwnerModel? get loadUserData {
+  //   var jsonEncode = _getData("userData", null);
+  //   QwnerModel? userModel;
+  //   if (jsonEncode != null) {
+  //     Map<String, dynamic> map = json.decode(jsonEncode);
+  //     userModel = QwnerModel.fromJson(map);
+  //   }
+  //   return userModel;
+  // }
 
-  set userData(QwnerModel? user) {
-    _putData(_userData, jsonEncode(user));
-  } // user data
+  // set userData(QwnerModel? user) {
+  //   _putData(_userData, jsonEncode(user));
+  // } // user data
 
   void removeUserData() {
     _sharedPreferences.remove(_userData);
@@ -162,19 +159,19 @@ class AppPreferences {
   //   _putData(_guestCart, jsonEncode(cart));
   // } // user data
 
-  EmployeeInfoModel? get loadEmployeeData {
-    var jsonEncode = _getData(_employeeInfo, null);
-    EmployeeInfoModel? userModel;
-    if (jsonEncode != null) {
-      Map<String, dynamic> map = json.decode(jsonEncode);
-      userModel = EmployeeInfoModel.fromJson(map);
-    }
-    return userModel;
-  }
+  // EmployeeInfoModel? get loadEmployeeData {
+  //   var jsonEncode = _getData(_employeeInfo, null);
+  //   EmployeeInfoModel? userModel;
+  //   if (jsonEncode != null) {
+  //     Map<String, dynamic> map = json.decode(jsonEncode);
+  //     userModel = EmployeeInfoModel.fromJson(map);
+  //   }
+  //   return userModel;
+  // }
 
-  void employeeData(EmployeeInfoModel? user) {
-    _putData(_employeeInfo, jsonEncode(user));
-  } // user data
+  // void employeeData(EmployeeInfoModel? user) {
+  //   _putData(_employeeInfo, jsonEncode(user));
+  // } // user data
 
   void removeEmployeeData() {
     _sharedPreferences.remove(_employeeInfo);

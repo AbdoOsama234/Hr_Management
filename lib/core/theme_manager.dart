@@ -2,7 +2,7 @@ import 'package:hr_manegement/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/di/di.dart';
 
-import '../data/storage/local/app_prefs.dart';
+import 'storage/local/app_prefs.dart';
 import 'app_colors.dart';
 import 'text_style.dart';
 

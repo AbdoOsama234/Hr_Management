@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
-import 'package:hr_manegement/data/models/daily_work_log.dart';
+import 'package:hr_manegement/features/main_screen/data/models/daily_work_log.dart';
 import 'package:hr_manegement/my_app.dart';
 
 class WeeklyReportList extends StatelessWidget {

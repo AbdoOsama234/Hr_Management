@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:hr_manegement/data/models/employee_dashboard.dart';
-import 'package:hr_manegement/data/repository/main_screen_repository.dart';
+import 'package:hr_manegement/features/main_screen/data/models/employee_dashboard.dart';
+import 'package:hr_manegement/features/main_screen/data/repository/main_screen_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 

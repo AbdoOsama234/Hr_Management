@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hr_manegement/core/constants.dart';
 
 import '../../core/di/di.dart';
-import '../../data/storage/local/app_prefs.dart';
+import '../storage/local/app_prefs.dart';
 
 class LocationHelper {
   LocationHelper._(); // private constructor
