@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:hr_manegement/core/network/error_handler.dart';
-import 'package:hr_manegement/data/models/daily_work_log.dart';
-import 'package:hr_manegement/data/models/employee_dashboard.dart';
-import 'package:hr_manegement/data/storage/remote/dio_helper/dio_helper.dart';
+import 'package:hr_manegement/features/main_screen/data/models/daily_work_log.dart';
+import 'package:hr_manegement/features/main_screen/data/models/employee_dashboard.dart';
+import 'package:hr_manegement/core/storage/remote/dio_helper/dio_helper.dart';
 
 @injectable
 class MainScreenRepository {
@@ -64,7 +64,6 @@ class MainScreenRepository {
             lateMinutes: '0m',
             status: 'Done',
           ),
-
         ],
       );
 

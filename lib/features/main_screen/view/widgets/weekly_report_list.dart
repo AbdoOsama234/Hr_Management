@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
-import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
-import 'package:hr_manegement/data/models/daily_work_log.dart';
+import 'package:hr_manegement/features/main_screen/data/models/daily_work_log.dart';
+import 'package:hr_manegement/my_app.dart';
 
 class WeeklyReportList extends StatelessWidget {
   final List<DailyWorkLog> logs;
@@ -14,12 +13,7 @@ class WeeklyReportList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.read<AppCubit>().isDark;
-
-    final Color textColor = isDark
-        ? AppColors.textMain
-        : const Color(0xFF1A1A2E);
-    final Color iconTitleBg = isDark
+    final Color iconTitleBg = MyApp.isDark
         ? AppColors.blue.withOpacity(0.12)
         : AppColors.blue.withOpacity(0.08);
 
@@ -45,7 +39,7 @@ class WeeklyReportList extends StatelessWidget {
             Text(
               'weekly_reports'.tr(),
               style: AppTextStyle.title.copyWith(
-                color: textColor,
+                color: AppColors.textMain,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -54,7 +48,7 @@ class WeeklyReportList extends StatelessWidget {
         SizedBox(height: 1.5.h),
 
         /// Log Items
-        ...logs.map((log) => _buildLogItem(log, isDark)),
+        ...logs.map((log) => _buildLogItem(log, MyApp.isDark)),
       ],
     );
   }
@@ -213,13 +207,6 @@ class WeeklyReportList extends StatelessWidget {
     Color color,
     bool isDark,
   ) {
-    final Color textColor = isDark
-        ? AppColors.textMain
-        : const Color(0xFF1A1A2E);
-    final Color subtextColor = isDark
-        ? AppColors.textSub
-        : const Color(0xFF6A6A8A);
-
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
@@ -233,7 +220,7 @@ class WeeklyReportList extends StatelessWidget {
             SizedBox(height: 0.4.h),
             Text(
               label,
-              style: AppTextStyle.hint.copyWith(color: subtextColor),
+              style: AppTextStyle.hint.copyWith(color: AppColors.textSub),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -242,7 +229,7 @@ class WeeklyReportList extends StatelessWidget {
             Text(
               value,
               style: AppTextStyle.body.copyWith(
-                color: textColor,
+                color: AppColors.textMain,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,

@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
+import 'package:hr_manegement/core/app_cubit/app_state.dart';
+
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
@@ -45,140 +47,128 @@ class _MainScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.select((AppCubit c) => c.isDark);
-
-    final scaffoldBg = isDark ? AppColors.backGround : const Color(0xFFF6F7FB);
-
-    final textColor = isDark ? AppColors.textMain : const Color(0xFF1A1A2E);
-
-    final subtextColor = isDark ? AppColors.textSub : const Color(0xFF6A6A8A);
-
     return Scaffold(
-      backgroundColor: scaffoldBg,
       body: BlocBuilder<MainScreenCubit, MainScreenState>(
         builder: (context, state) {
           if (state is MainScreenLoaded) {
             final dashboard = state.dashboard;
 
-            return Column(
-              children: [
-                EmployeeHeader(
-                  name: dashboard.employeeName,
-                  jobTitle: dashboard.jobTitle,
-                  profileImageUrl: dashboard.avatar,
-                  onMenuTap: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  },
-                ),
-
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5.w,
-                      vertical: 2.h,
+            return BlocBuilder<AppCubit, AppState>(
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    EmployeeHeader(
+                      name: dashboard.employeeName,
+                      jobTitle: dashboard.jobTitle,
+                      profileImageUrl: dashboard.avatar,
+                      onMenuTap: () {
+                        scaffoldKey.currentState?.openDrawer();
+                      },
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /// Welcome
-                        Text(
 
-                          "welcome_back".tr(),
-                          style: AppTextStyle.subHeadline.copyWith(
-                            color: textColor,
-                            fontWeight: FontWeight.w700,
-
-
-                          ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.w,
+                          vertical: 2.h,
                         ),
-
-                        SizedBox(height: .5.h),
-
-                        Text(
-                          "attendance_glance".tr(),
-                          style: AppTextStyle.body.copyWith(
-                            color: subtextColor,
-                          ),
-                        ),
-
-                        AppSizedBox.h2,
-
-                        /// Today Status
-                        const TodayStatusCard(
-                          checkIn: "10:05",
-                          checkOut: "--",
-                          workedHours: "3h",
-                        ),
-
-                        AppSizedBox.h3,
-
-                        /// Attendance Summary
-                        AttendanceSummaryCard(
-                          presentDays: dashboard.presentDays,
-                          leaveDays: dashboard.leaveDays,
-                          allowedLateHours: dashboard.lateHoursAllowed,
-                        ),
-
-                        AppSizedBox.h3,
-
-                        /// Late Hours
-                        LateHoursCard(
-                          lateHoursUsed: dashboard.lateHoursUsed,
-                          lateHoursAllowed: dashboard.lateHoursAllowed,
-                        ),
-
-                        AppSizedBox.h3,
-
-                        /// Weekly report
-                        WeeklyReportList(logs: dashboard.weeklyReport),
-
-                        AppSizedBox.h3,
-
-                        /// More Button
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary.withOpacity(
-                                .08,
-                              ),
-                              foregroundColor: AppColors.primary,
-                              elevation: 0,
-                              padding: EdgeInsets.symmetric(vertical: 1.8.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// Welcome
+                            Text(
+                              "welcome_back".tr(),
+                              style: AppTextStyle.subHeadline.copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "view_more".tr(),
-                                  style: AppTextStyle.title.copyWith(
-                                    color: AppColors.primary,
+
+                            SizedBox(height: .5.h),
+
+                            Text(
+                              "attendance_glance".tr(),
+                              style: AppTextStyle.body.copyWith(),
+                            ),
+
+                            AppSizedBox.h2,
+
+                            /// Today Status
+                            const TodayStatusCard(
+                              checkIn: "10:05",
+                              checkOut: "--",
+                              workedHours: "3h",
+                            ),
+
+                            AppSizedBox.h3,
+
+                            /// Attendance Summary
+                            AttendanceSummaryCard(
+                              presentDays: dashboard.presentDays,
+                              leaveDays: dashboard.leaveDays,
+                              allowedLateHours: dashboard.lateHoursAllowed,
+                            ),
+
+                            AppSizedBox.h3,
+
+                            /// Late Hours
+                            LateHoursCard(
+                              lateHoursUsed: dashboard.lateHoursUsed,
+                              lateHoursAllowed: dashboard.lateHoursAllowed,
+                            ),
+
+                            AppSizedBox.h3,
+
+                            /// Weekly report
+                            WeeklyReportList(logs: dashboard.weeklyReport),
+
+                            AppSizedBox.h3,
+
+                            /// More Button
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary
+                                      .withOpacity(.08),
+                                  foregroundColor: AppColors.primary,
+                                  elevation: 0,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 1.8.h,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
                                 ),
-                                SizedBox(width: 2.w),
-                                Icon(
-                                  context.locale.languageCode == 'ar'
-                                      ? Icons.arrow_back_ios_new_rounded
-                                      : Icons.arrow_forward_ios_rounded,
-                                  size: 4.w,
-                                  color: AppColors.primary,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "view_more".tr(),
+                                      style: AppTextStyle.title.copyWith(
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                    SizedBox(width: 2.w),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 4.w,
+                                      color: AppColors.primary,
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
 
-                        AppSizedBox.h3,
-                      ],
+                            AppSizedBox.h3,
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             );
           }
 

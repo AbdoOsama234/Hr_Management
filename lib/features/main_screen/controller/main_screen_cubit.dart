@@ -1,12 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:hr_manegement/data/models/employee_dashboard.dart';
-import 'package:hr_manegement/data/repository/main_screen_repository.dart';
+import 'package:hr_manegement/features/main_screen/data/models/employee_dashboard.dart';
+import 'package:hr_manegement/features/main_screen/data/repository/main_screen_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-import 'package:hr_manegement/core/network/error_handler.dart';
-import 'package:hr_manegement/data/models/daily_work_log.dart';
-import 'package:hr_manegement/data/storage/remote/dio_helper/dio_helper.dart';
 
 part 'main_screen_state.dart';
 

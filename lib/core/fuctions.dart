@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/extensions.dart';
-import 'package:hr_manegement/data/storage/local/app_prefs.dart';
+import 'package:hr_manegement/core/storage/local/app_prefs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hijri/hijri_calendar.dart';

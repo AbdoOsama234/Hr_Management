@@ -1,36 +1,34 @@
-import 'package:flutter/services.dart';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/di/di.dart';
 
-import '../data/storage/local/app_prefs.dart';
+import 'storage/local/app_prefs.dart';
 import 'app_colors.dart';
 import 'text_style.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: AppColors.backGround,
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: AppColors.backGroundLight,
     fontFamily: getIt<AppPreferences>().font,
     fontFamilyFallback: const [Constants.arFont, Constants.enFont],
     primaryColor: AppColors.primary,
     primaryColorLight: AppColors.primaryLight,
     primaryColorDark: AppColors.primaryDark,
     disabledColor: AppColors.darkGrey,
-    //splashColor: AppColors.primaryLight,
+
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
-    splashFactory: NoSplash.splashFactory, // 🔥 stops ripple
-    // ripple effect color
-    // cardview theme
+    splashFactory: NoSplash.splashFactory,
+
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColors.backGround2,
+      backgroundColor: AppColors.backGroundLight2,
       elevation: 0,
       selectedIconTheme: IconThemeData(color: AppColors.primary),
     ),
     cardTheme: const CardThemeData(
-      color: AppColors.backGround2,
+      color: AppColors.backGroundLight2,
       shadowColor: AppColors.grey,
       elevation: 4,
       clipBehavior: Clip.hardEdge,
@@ -38,21 +36,14 @@ ThemeData lightTheme() {
     // app bar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      color: AppColors.backGround2,
+      backgroundColor: AppColors.backGroundLight2,
       shadowColor: AppColors.white,
       elevation: 0,
       scrolledUnderElevation: 0,
       titleTextStyle: AppTextStyle.subTitle.copyWith(
-        color: AppColors.black,
+        color: AppColors.textMainLight,
         fontFamily: getIt<AppPreferences>().font,
       ),
-      // systemOverlayStyle: SystemUiOverlayStyle(
-      //   statusBarColor: Colors.transparent, // status bar background
-      //   statusBarIconBrightness: Brightness.light, // Android icons (black)
-      //   statusBarBrightness: Brightness.light, // iOS icons (black)
-      //   systemNavigationBarColor: AppColors.backGround2,
-      //   systemNavigationBarIconBrightness: Brightness.dark,
-      // ),
     ),
     // button theme
     buttonTheme: const ButtonThemeData(
@@ -62,11 +53,11 @@ ThemeData lightTheme() {
       splashColor: AppColors.primaryLight,
     ),
 
-    // elevated button them
+    // elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: AppTextStyle.title.copyWith(
-          color: AppColors.textMain,
+          color: AppColors.textMainLight,
           fontFamily: getIt<AppPreferences>().font,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -74,37 +65,29 @@ ThemeData lightTheme() {
     ),
 
     // input decoration theme (text form field)
-    inputDecorationTheme: InputDecorationTheme(
-      // content padding
-      contentPadding: const EdgeInsets.all(8),
-      // hint style
-      hintStyle: AppTextStyle.title,
-      labelStyle: AppTextStyle.subTitle,
+    inputDecorationTheme: const InputDecorationTheme(
+      contentPadding: EdgeInsets.all(8),
+      hintStyle: TextStyle(color: AppColors.grey),
+      labelStyle: TextStyle(color: AppColors.textMainLight),
 
-      // enabled border style
-      enabledBorder: const OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.grey),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-
-      // focused border style
-      focusedBorder: const OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-
-      // error border style
-      errorBorder: const OutlineInputBorder(
+      errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.error),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-      // focused border style
-      focusedErrorBorder: const OutlineInputBorder(
+      focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
     ),
-    // label style
+
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.all(AppColors.grey),
       trackColor: WidgetStateProperty.all(AppColors.primary),
@@ -116,8 +99,6 @@ ThemeData lightTheme() {
       fillColor: WidgetStateProperty.all(AppColors.white),
       side: const BorderSide(color: AppColors.primary),
       overlayColor: WidgetStateProperty.all(AppColors.primary),
-      // overlayColor: WidgetStateProperty.all(AppColors.primary),
-      // fillColor: WidgetStateProperty.all(AppColors.primary),
     ),
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.all(AppColors.primary),
@@ -125,4 +106,102 @@ ThemeData lightTheme() {
   );
 }
 
-ThemeData darkTheme() => ThemeData();
+ThemeData darkTheme() {
+  return ThemeData(
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: AppColors.backGroundDark,
+    fontFamily: getIt<AppPreferences>().font,
+    fontFamilyFallback: const [Constants.arFont, Constants.enFont],
+    primaryColor: AppColors.primary,
+    primaryColorLight: AppColors.primaryLight,
+    primaryColorDark: AppColors.primaryDark,
+    disabledColor: AppColors.darkGrey,
+
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    hoverColor: Colors.transparent,
+    splashFactory: NoSplash.splashFactory,
+
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.backGroundDark2,
+      elevation: 0,
+      selectedIconTheme: IconThemeData(color: AppColors.primary),
+    ),
+    cardTheme: const CardThemeData(
+      color: AppColors.backGroundDark2,
+      shadowColor: AppColors.black,
+      elevation: 4,
+      clipBehavior: Clip.hardEdge,
+    ),
+    // app bar theme
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      backgroundColor: AppColors.backGroundDark2,
+      shadowColor: AppColors.black,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      titleTextStyle: AppTextStyle.subTitle.copyWith(
+        color: AppColors.textMainDark,
+        fontFamily: getIt<AppPreferences>().font,
+      ),
+    ),
+    // button theme
+    buttonTheme: const ButtonThemeData(
+      shape: StadiumBorder(),
+      disabledColor: AppColors.darkGrey,
+      buttonColor: AppColors.primary,
+      splashColor: AppColors.primaryLight,
+    ),
+
+    // elevated button theme
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle: AppTextStyle.title.copyWith(
+          color: AppColors.textMainDark,
+          fontFamily: getIt<AppPreferences>().font,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+
+    // input decoration theme (text form field)
+    inputDecorationTheme: const InputDecorationTheme(
+      contentPadding: EdgeInsets.all(8),
+      hintStyle: TextStyle(color: AppColors.grey),
+      labelStyle: TextStyle(color: AppColors.textMainDark),
+
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.darkGrey),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.primary),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.error),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.primary),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+    ),
+
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.all(AppColors.grey),
+      trackColor: WidgetStateProperty.all(AppColors.primary),
+      overlayColor: WidgetStateProperty.all(AppColors.grey),
+      trackOutlineColor: WidgetStateProperty.all(AppColors.primary),
+    ),
+    checkboxTheme: CheckboxThemeData(
+      checkColor: WidgetStateProperty.all(AppColors.primary),
+      fillColor: WidgetStateProperty.all(AppColors.backGroundDark2),
+      side: const BorderSide(color: AppColors.primary),
+      overlayColor: WidgetStateProperty.all(AppColors.primary),
+    ),
+    radioTheme: RadioThemeData(
+      fillColor: WidgetStateProperty.all(AppColors.primary),
+    ),
+  );
+}

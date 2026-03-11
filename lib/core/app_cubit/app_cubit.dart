@@ -12,7 +12,7 @@ import 'package:hr_manegement/my_app.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/constants.dart';
-import '../../../../data/storage/local/app_prefs.dart';
+import '../storage/local/app_prefs.dart';
 
 @singleton
 class AppCubit extends Cubit<AppState> {

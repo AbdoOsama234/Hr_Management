@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
-import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+
+import '../../../componnents/icon_button.dart';
 
 class EmployeeHeader extends StatelessWidget {
   final String name;
@@ -25,34 +25,6 @@ class EmployeeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.read<AppCubit>().isDark;
-
-    final List<Color> headerGradient = isDark
-        ? const [Color(0xFF1e1d2f), Color(0xFF28273d), Color(0xFF1e1d2f)]
-        : const [Color(0xFFEAF0FF), Color(0xFFDDE6FF), Color(0xFFEAF0FF)];
-
-    final Color textColor = isDark
-        ? AppColors.textMain
-        : const Color(0xFF1A1A2E);
-    final Color subtextColor = isDark
-        ? AppColors.textSub
-        : const Color(0xFF5A5A7A);
-    final Color iconBgColor = isDark
-        ? Colors.white.withOpacity(0.06)
-        : Colors.black.withOpacity(0.05);
-    final Color iconBorderColor = isDark
-        ? Colors.white.withOpacity(0.08)
-        : Colors.black.withOpacity(0.06);
-    final Color shadowColor = isDark
-        ? Colors.black.withOpacity(0.4)
-        : Colors.grey.withOpacity(0.2);
-    final Color badgeBorderColor = isDark
-        ? const Color(0xFF1e1d2f)
-        : const Color(0xFFEAF0FF);
-    final Color avatarBg = isDark
-        ? AppColors.backGround
-        : const Color(0xFFF0F0F5);
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
@@ -63,18 +35,14 @@ class EmployeeHeader extends StatelessWidget {
         bottom: 2.5.h,
       ),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: headerGradient,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: AppColors.primaryGradient,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(28),
           bottomRight: Radius.circular(28),
         ),
         boxShadow: [
           BoxShadow(
-            color: shadowColor,
+            color: AppColors.shadowColor,
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -83,22 +51,47 @@ class EmployeeHeader extends StatelessWidget {
       child: Row(
         children: [
           /// Menu Button
-          _buildIconButton(
-            icon: Icons.menu_rounded,
+          AppIcon(
+            icon: Icon(
+              Icons.menu_rounded,
+              color: AppColors.textMain,
+              size: 6.w,
+            ),
             onTap: onMenuTap,
-            bgColor: iconBgColor,
-            borderColor: iconBorderColor,
-            iconColor: textColor,
           ),
-          SizedBox(width: 2.w),
 
-          /// Notification Bell
-          _buildNotificationButton(
-            iconBgColor,
-            iconBorderColor,
-            textColor,
-            badgeBorderColor,
+          SizedBox(width: 2.w),
+          AppIcon(
+            icon: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(
+                  Icons.notifications_outlined,
+                  color: AppColors.textMain,
+                  size: 6.w,
+                ),
+                Positioned(
+                  top: -3,
+                  right: -2,
+                  child: Container(
+                    width: 2.5.w,
+                    height: 2.5.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.badgeBorderColor,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            onTap: onNotificationTap ?? () {},
           ),
+
           const Spacer(),
 
           /// Name & Job Title
@@ -111,7 +104,7 @@ class EmployeeHeader extends StatelessWidget {
               Text(
                 name,
                 style: AppTextStyle.title.copyWith(
-                  color: textColor,
+                  color: AppColors.textMain,
                   fontWeight: FontWeight.w700,
                   fontSize: 15.sp,
                 ),
@@ -158,68 +151,11 @@ class EmployeeHeader extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 6.5.w,
-              backgroundColor: avatarBg,
+              backgroundColor: AppColors.avatarBg,
               backgroundImage: NetworkImage(profileImageUrl),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildIconButton({
-    required IconData icon,
-    required VoidCallback? onTap,
-    required Color bgColor,
-    required Color borderColor,
-    required Color iconColor,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: borderColor),
-      ),
-      child: IconButton(
-        onPressed: onTap,
-        icon: Icon(icon, color: iconColor, size: 6.w),
-      ),
-    );
-  }
-
-  Widget _buildNotificationButton(
-    Color bgColor,
-    Color borderColor,
-    Color iconColor,
-    Color badgeBorderColor,
-  ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: borderColor),
-      ),
-      child: IconButton(
-        onPressed: onNotificationTap ?? () {},
-        icon: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Icon(Icons.notifications_outlined, color: iconColor, size: 6.w),
-            Positioned(
-              top: -3,
-              right: -2,
-              child: Container(
-                width: 2.5.w,
-                height: 2.5.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: badgeBorderColor, width: 1.5),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

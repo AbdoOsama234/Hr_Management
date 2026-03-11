@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/di/di.dart';
 
-import '../../data/storage/local/app_prefs.dart';
+import '../storage/local/app_prefs.dart';
 
 class FormatPriceHelper {
   static String formatPrice(String? price) {
