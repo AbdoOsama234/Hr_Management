@@ -44,7 +44,6 @@ import '../../data/repository/repository_owner/profile/profile_repo.dart'
     as _i108;
 import '../../data/storage/local/app_prefs.dart' as _i74;
 import '../../data/storage/remote/dio_helper/dio_helper.dart' as _i832;
-import '../../features/language/controller/language_cubit.dart' as _i247;
 import '../../features/main_screen/controller/main_screen_cubit.dart' as _i97;
 import '../app_cubit/app_cubit.dart' as _i962;
 import '../network/network_info.dart' as _i932;
@@ -78,9 +77,6 @@ Future<_i174.GetIt> $initGetIt(
     () => _i832.DioHelper(gh<_i74.AppPreferences>()),
   );
   gh.factory<_i871.SafeApi>(() => _i871.SafeApi(gh<_i932.NetworkInfo>()));
-  gh.singleton<_i247.LanguageCubit>(
-    () => _i247.LanguageCubit(gh<_i74.AppPreferences>()),
-  );
   gh.factory<_i402.MainScreenRepository>(
     () => _i402.MainScreenRepository(dioRequest: gh<_i832.DioHelper>()),
   );

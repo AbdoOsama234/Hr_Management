@@ -1,7 +1,7 @@
-import 'package:flutter/services.dart';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/di/di.dart';
+import 'package:hr_manegement/my_app.dart';
 
 import '../data/storage/local/app_prefs.dart';
 import 'app_colors.dart';
@@ -9,7 +9,7 @@ import 'text_style.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
-    brightness: Brightness.dark,
+    brightness: MyApp.isDark ? Brightness.dark : Brightness.light,
     scaffoldBackgroundColor: AppColors.backGround,
     fontFamily: getIt<AppPreferences>().font,
     fontFamilyFallback: const [Constants.arFont, Constants.enFont],
@@ -17,19 +17,18 @@ ThemeData lightTheme() {
     primaryColorLight: AppColors.primaryLight,
     primaryColorDark: AppColors.primaryDark,
     disabledColor: AppColors.darkGrey,
-    //splashColor: AppColors.primaryLight,
+
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
     hoverColor: Colors.transparent,
     splashFactory: NoSplash.splashFactory, // 🔥 stops ripple
-    // ripple effect color
-    // cardview theme
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.backGround2,
       elevation: 0,
       selectedIconTheme: IconThemeData(color: AppColors.primary),
     ),
-    cardTheme: const CardThemeData(
+    cardTheme: CardThemeData(
       color: AppColors.backGround2,
       shadowColor: AppColors.grey,
       elevation: 4,
@@ -46,13 +45,6 @@ ThemeData lightTheme() {
         color: AppColors.black,
         fontFamily: getIt<AppPreferences>().font,
       ),
-      // systemOverlayStyle: SystemUiOverlayStyle(
-      //   statusBarColor: Colors.transparent, // status bar background
-      //   statusBarIconBrightness: Brightness.light, // Android icons (black)
-      //   statusBarBrightness: Brightness.light, // iOS icons (black)
-      //   systemNavigationBarColor: AppColors.backGround2,
-      //   systemNavigationBarIconBrightness: Brightness.dark,
-      // ),
     ),
     // button theme
     buttonTheme: const ButtonThemeData(

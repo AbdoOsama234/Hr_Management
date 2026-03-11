@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/firebase_options.dart';
@@ -41,15 +40,6 @@ void main() async {
   //it must be before this: await configureDependencies();
   Bloc.observer = MyBlocObserver();
   await configureDependencies();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: AppColors.backGround, // background color
-      statusBarIconBrightness: Brightness.light, // Android icons
-      statusBarBrightness: Brightness.light, // iOS icons
-      systemNavigationBarColor: AppColors.backGround,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
   runApp(
     EasyLocalization(
       supportedLocales: Constants.supportedLocales,

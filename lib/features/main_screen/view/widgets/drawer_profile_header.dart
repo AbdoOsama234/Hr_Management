@@ -8,7 +8,6 @@ class DrawerProfileHeader extends StatelessWidget {
   final String jobTitle;
   final String profileImageUrl;
   final VoidCallback onTap;
-  final bool isDark;
 
   const DrawerProfileHeader({
     super.key,
@@ -16,21 +15,20 @@ class DrawerProfileHeader extends StatelessWidget {
     required this.jobTitle,
     required this.profileImageUrl,
     required this.onTap,
-    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<Color> headerGradient = isDark
-        ? const [Color(0xFF1e1d2f), Color(0xFF28273d)]
-        : const [Color(0xFFEAF0FF), Color(0xFFDDE6FF)];
+    // final List<Color> headerGradient = isDark
+    //     ? const [Color(0xFF1e1d2f), Color(0xFF28273d)]
+    //     : const [Color(0xFFEAF0FF), Color(0xFFDDE6FF)];
 
-    final Color textColor = isDark
-        ? AppColors.textMain
-        : const Color(0xFF1A1A2E);
-    final Color avatarBg = isDark
-        ? AppColors.backGround
-        : const Color(0xFFF0F0F5);
+    // final Color textColor = isDark
+    //     ? AppColors.textMain
+    //     : const Color(0xFF1A1A2E);
+    // final Color avatarBg = isDark
+    //     ? AppColors.backGround
+    //     : const Color(0xFFF0F0F5);
 
     return InkWell(
       onTap: onTap,
@@ -42,11 +40,7 @@ class DrawerProfileHeader extends StatelessWidget {
           3.h,
         ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: headerGradient,
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          gradient: AppColors.primaryGradient,
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(24),
             bottomRight: Radius.circular(24),
@@ -67,7 +61,7 @@ class DrawerProfileHeader extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: 7.w,
-                backgroundColor: avatarBg,
+                backgroundColor: AppColors.backGround,
                 backgroundImage: NetworkImage(profileImageUrl),
               ),
             ),
@@ -80,7 +74,7 @@ class DrawerProfileHeader extends StatelessWidget {
                   Text(
                     name,
                     style: AppTextStyle.title.copyWith(
-                      color: textColor,
+                      color: AppColors.textMain,
                       fontWeight: FontWeight.w700,
                       fontSize: 14.sp,
                     ),

@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   final Color butcolor;
   final Widget? iconRight;
   final Widget? iconLeft;
-  final Color txtcolor;
+  final Color? txtcolor;
   const CustomButton({
     required this.text,
     this.height,
@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     this.radius = Constants.defaultRadius,
     super.key,
-    this.txtcolor = AppColors.textMain,
+    this.txtcolor,
     this.fontweight = FontWeight.w600,
     this.iconRight,
     this.iconLeft,
@@ -64,7 +64,7 @@ class CustomButton extends StatelessWidget {
               Text(
                 text,
                 style: AppTextStyle.title.copyWith(
-                  color: txtcolor,
+                  color: txtcolor ?? AppColors.textMain,
                   fontSize: fontsize.sp,
                   fontWeight: fontweight,
                   fontFamily:

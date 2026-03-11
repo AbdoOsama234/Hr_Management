@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/app_router.dart';
-import 'package:hr_manegement/core/constants.dart';
 
 import 'core/app_cubit/app_state.dart';
 import 'core/theme_manager.dart';
 import 'core/di/di.dart';
 import 'features/main_screen/controller/main_screen_cubit.dart'
     show MainScreenCubit;
-import 'features/language/controller/language_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -37,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => getIt<AppCubit>()),
         BlocProvider(create: (context) => getIt<MainScreenCubit>()),
-        BlocProvider(create: (context) => getIt<LanguageCubit>()),
+        // BlocProvider(create: (context) => getIt<LanguageCubit>()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, local) {
@@ -52,15 +50,7 @@ class _MyAppState extends State<MyApp> {
               MyApp.appContext = context;
               return "HR Management".tr();
             },
-            theme: lightTheme().copyWith(
-              textTheme: lightTheme().textTheme.apply(
-                fontFamily: context.locale.languageCode == 'ar'
-                    ? Constants.arFont
-                    : Constants.enFont,
-              ),
-            ),
-            // darkTheme: darkTheme(),
-            // themeMode: appCubit.isDark ? ThemeMode.dark : ThemeMode.light,
+            theme: lightTheme().copyWith(),
             locale: context.locale,
             localizationsDelegates: [
               ...context.localizationDelegates,

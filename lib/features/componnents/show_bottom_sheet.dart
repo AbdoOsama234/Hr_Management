@@ -29,7 +29,7 @@ Future<dynamic> showAppBottomSheet({
     ),
 
     builder: (context) => Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.backGround2,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),

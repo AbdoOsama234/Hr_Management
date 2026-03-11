@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
-import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/my_app.dart';
 
 class LateHoursCard extends StatelessWidget {
   final double lateHoursUsed;
@@ -27,39 +26,21 @@ class LateHoursCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.read<AppCubit>().isDark;
-
-    final Color cardBg = isDark
-        ? AppColors.backGround2
-        : const Color(0xFFFFFFFF);
-    final Color borderColor = isDark
-        ? Colors.white.withOpacity(0.05)
-        : Colors.grey.withOpacity(0.12);
-    final Color shadowColor = isDark
-        ? Colors.black.withOpacity(0.3)
-        : Colors.grey.withOpacity(0.15);
-    final Color textColor = isDark
-        ? AppColors.textMain
-        : const Color(0xFF1A1A2E);
-    final Color subtextColor = isDark
-        ? AppColors.textSub
-        : const Color(0xFF6A6A8A);
-    final Color trackBg = isDark
+    final Color trackBg = MyApp.isDark
         ? AppColors.darkGrey.withOpacity(0.15)
         : Colors.grey.withOpacity(0.12);
-    final double detailRowBgOpacity = isDark ? 0.06 : 0.05;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
       decoration: BoxDecoration(
-        color: cardBg,
+        color: AppColors.backGround2,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: borderColor),
+        border: Border.all(color: AppColors.borderColor),
         boxShadow: [
           BoxShadow(
-            color: shadowColor,
+            color: AppColors.shadowColor,
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -74,7 +55,7 @@ class LateHoursCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
-                  color: _statusColor.withOpacity(isDark ? 0.12 : 0.08),
+                  color: _statusColor.withOpacity(MyApp.isDark ? 0.12 : 0.08),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -87,7 +68,7 @@ class LateHoursCard extends StatelessWidget {
               Text(
                 'late_hours'.tr(),
                 style: AppTextStyle.title.copyWith(
-                  color: textColor,
+                  color: AppColors.textMain,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -98,7 +79,7 @@ class LateHoursCard extends StatelessWidget {
                   vertical: 0.6.h,
                 ),
                 decoration: BoxDecoration(
-                  color: _statusColor.withOpacity(isDark ? 0.12 : 0.08),
+                  color: _statusColor.withOpacity(MyApp.isDark ? 0.12 : 0.08),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: _statusColor.withOpacity(0.2)),
                 ),
@@ -130,7 +111,7 @@ class LateHoursCard extends StatelessWidget {
                       child: CircularProgressIndicator(
                         value: _progress,
                         strokeWidth: 7,
-                        backgroundColor: trackBg,
+                        backgroundColor: AppColors.backGround2,
                         valueColor: AlwaysStoppedAnimation<Color>(_statusColor),
                         strokeCap: StrokeCap.round,
                       ),
@@ -141,16 +122,11 @@ class LateHoursCard extends StatelessWidget {
                         Text(
                           '${lateHoursUsed.toInt()}h',
                           style: AppTextStyle.subHeadline.copyWith(
-                            color: textColor,
+                            color: AppColors.textMain,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          'used'.tr(),
-                          style: AppTextStyle.hint.copyWith(
-                            color: subtextColor,
-                          ),
-                        ),
+                        Text('used'.tr(), style: AppTextStyle.hint.copyWith()),
                       ],
                     ),
                   ],
@@ -166,27 +142,27 @@ class LateHoursCard extends StatelessWidget {
                       'the_used'.tr(),
                       '${lateHoursUsed.toInt()} ${'hour'.tr()}',
                       _statusColor,
-                      textColor,
-                      subtextColor,
-                      detailRowBgOpacity,
+                      AppColors.textMain,
+                      AppColors.textSub,
+                      0.05,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_allowed'.tr(),
                       '${lateHoursAllowed.toInt()} ${'hours'.tr()}',
                       AppColors.blue,
-                      textColor,
-                      subtextColor,
-                      detailRowBgOpacity,
+                      AppColors.textMain,
+                      AppColors.textSub,
+                      0.05,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_remaining'.tr(),
                       '${_remaining.toInt()} ${'hours'.tr()}',
                       AppColors.green,
-                      textColor,
-                      subtextColor,
-                      detailRowBgOpacity,
+                      AppColors.textMain,
+                      AppColors.textSub,
+                      0.05,
                     ),
                   ],
                 ),
@@ -201,7 +177,9 @@ class LateHoursCard extends StatelessWidget {
             children: [
               Text(
                 '${lateHoursUsed.toInt()}h ${'used'.tr()} / ${lateHoursAllowed.toInt()}h ${'late_limit'.tr()}',
-                style: AppTextStyle.smallBody.copyWith(color: subtextColor),
+                style: AppTextStyle.smallBody.copyWith(
+                  color: AppColors.textSub,
+                ),
               ),
               Text(
                 '${(_progress * 100).toInt()}%',
