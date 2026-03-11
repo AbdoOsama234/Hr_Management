@@ -50,7 +50,9 @@ class _MyAppState extends State<MyApp> {
               MyApp.appContext = context;
               return "HR Management".tr();
             },
-            theme: lightTheme().copyWith(),
+            theme: lightTheme(),
+            darkTheme: darkTheme(),
+            themeMode: appCubit.isDark ? ThemeMode.dark : ThemeMode.light,
             locale: context.locale,
             localizationsDelegates: [
               ...context.localizationDelegates,
