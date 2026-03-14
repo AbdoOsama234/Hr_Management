@@ -122,44 +122,7 @@ class _MainScreenBody extends StatelessWidget {
                             /// Weekly report
                             WeeklyReportList(logs: dashboard.weeklyReport),
 
-                            AppSizedBox.h3,
 
-                            /// More Button
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary
-                                      .withOpacity(.08),
-                                  foregroundColor: AppColors.primary,
-                                  elevation: 0,
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 1.8.h,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "view_more".tr(),
-                                      style: AppTextStyle.title.copyWith(
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                    SizedBox(width: 2.w),
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 4.w,
-                                      color: AppColors.primary,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
 
                             AppSizedBox.h3,
                           ],
