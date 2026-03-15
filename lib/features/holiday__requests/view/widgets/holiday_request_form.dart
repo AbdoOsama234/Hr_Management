@@ -42,8 +42,8 @@ class _HolidayRequestFormState extends State<HolidayRequestForm> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
               primary: AppColors.primary,
-              onPrimary: Colors.white,
-              onSurface: AppColors.textMain,
+              onPrimary: Colors.black,
+              onSurface: AppColors.black,
             ),
           ),
           child: child!,
@@ -125,29 +125,48 @@ class _HolidayRequestFormState extends State<HolidayRequestForm> {
                 },
               ),
               AppSizedBox.h4,
-              CustomButton(
-                text: 'submit_request'.tr(),
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    if (_startDate == null || _endDate == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('select_dates_warning'.tr())),
-                      );
-                      return;
-                    }
-                    widget.onSubmit(
-                      _startDate!,
-                      _endDate!,
-                      _reasonController.text,
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                width: double.infinity,
-                radius: 12,
-                txtcolor: Colors.white,
-              ),
-              AppSizedBox.h4,
+        CustomButton(
+          text: 'submit_request'.tr(),
+          width: double.infinity,
+          radius: 12,
+          txtcolor: Colors.white,
+          onTap: () {
+            final isValid = _formKey.currentState?.validate() ?? false;
+
+            if (!isValid) return;
+
+            if (_startDate == null || _endDate == null)
+            {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('select_dates_warning'.tr()),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+              return;
+            }
+
+            if (_startDate!.isAfter(_endDate!)) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('invalid_date_range'.tr()),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+              return;
+            }
+
+            widget.onSubmit(
+              _startDate!,
+              _endDate!,
+              _reasonController.text.trim(),
+            );
+
+            Navigator.pop(context);
+          },
+        )
+  ,
+            AppSizedBox.h4,
             ],
           ),
         ),

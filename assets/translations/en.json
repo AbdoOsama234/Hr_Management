@@ -74,5 +74,15 @@
   "Please enter phone number": "Please enter phone number",
   "Search country": "Search country",
   "Invalid phone number": "Invalid phone number",
-  "Send OTP": "Send OTP"
+  "Send OTP": "Send OTP",
+  "holiday_requests": "Holiday Requests",
+  "no_requests": "No Holiday Requests",
+  "no_requests_subtitle": "You haven't submitted any holiday requests yet.",
+  "request_holiday": "Request Holiday",
+  "status_pending": "Pending",
+  "status_approved": "Approved",
+  "status_rejected": "Rejected",
+  "submit_request": "Submit Request",
+  "reason_required": "Reason is required",
+  "select_dates_warning": "Please select start and end dates"
 }

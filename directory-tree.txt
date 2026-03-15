@@ -31,6 +31,12 @@ lib/
 │   │   ├── request_builder.dart
 │   │   ├── state_renderer.dart
 │   │   └── state_renderer_impl.dart
+│   ├── storage/
+│   │   ├── local/
+│   │   │   └── app_prefs.dart
+│   │   ├── remote/
+│   │       ├── dio_helper/
+│   │           └── dio_helper.dart
 │   ├── utils/
 │   │   ├── functions/
 │   │   │   ├── function_utils.dart
@@ -55,125 +61,6 @@ lib/
 │   ├── strings_manager.dart
 │   ├── text_style.dart
 │   └── theme_manager.dart
-├── data/
-│   ├── models/
-│   │   ├── models_employee/
-│   │   │   ├── EmployeeNotificationModel.dart
-│   │   │   ├── EmployeeWalletModel.dart
-│   │   │   ├── FlatRentTypeModel.dart
-│   │   │   ├── FlatTypeModel.dart
-│   │   │   ├── FlatWalletModel.dart
-│   │   │   ├── FlatWalletRequestModel.dart
-│   │   │   ├── GetEmployeeFlatByAqarRequestModel.dart
-│   │   │   ├── NotificationNotSeenCountModel.dart
-│   │   │   ├── SearchMostagerModel.dart
-│   │   │   ├── StopRentalRequestModel.dart
-│   │   │   ├── TermsModel.dart
-│   │   │   ├── WhatsappOTPModel.dart
-│   │   │   ├── add_rental_model.dart
-│   │   │   ├── add_rental_price_model.dart
-│   │   │   ├── base_response.dart
-│   │   │   ├── base_response.g.dart
-│   │   │   ├── employee_update_request_model.dart
-│   │   │   ├── get_employee_flat_model.dart
-│   │   │   ├── get_employee_model.dart
-│   │   │   ├── get_flat_rentals_model.dart
-│   │   │   ├── login_response.dart
-│   │   │   ├── login_response.g.dart
-│   │   │   ├── owner_info_model.dart
-│   │   │   └── update_rental_request_model.dart
-│   │   ├── models_owner/
-│   │   │   ├── AddEmployeeToAqarRequestModel.dart
-│   │   │   ├── AqarEmployeesModel.dart
-│   │   │   ├── AqarPricesModel.dart
-│   │   │   ├── CheckPromoReqModel.dart
-│   │   │   ├── CollectMoneyFromEmployeeModel.dart
-│   │   │   ├── CollectMoneyFromEmployeeRequestModel.dart
-│   │   │   ├── ContactUsRequestModel.dart
-│   │   │   ├── EmployeeWalletModel.dart
-│   │   │   ├── EmployeeWalletTotalModel.dart
-│   │   │   ├── FlatRentTypeModel.dart
-│   │   │   ├── FlatTypeModel.dart
-│   │   │   ├── FlatWalletModel.dart
-│   │   │   ├── GetAllMyBillsModel.dart
-│   │   │   ├── GetAqarTypeModel.dart
-│   │   │   ├── GetHomeStatsModel.dart
-│   │   │   ├── GetOwnerInfoModel.dart
-│   │   │   ├── GetOwnerNotificationRequestModel.dart
-│   │   │   ├── NeedUpdateModel.dart
-│   │   │   ├── NotificationNotSeenCountModel.dart
-│   │   │   ├── OwnerNotificationModel.dart
-│   │   │   ├── RefuseResonsModel.dart
-│   │   │   ├── RemoveEmpFromAqarRequestModel.dart
-│   │   │   ├── RemoveEmpFromFlatRequestModel.dart
-│   │   │   ├── SearchMostagerModel.dart
-│   │   │   ├── StopRentalRequestModel.dart
-│   │   │   ├── TermsModel.dart
-│   │   │   ├── UpdateEshterakReqModel.dart
-│   │   │   ├── add_employee_model.dart
-│   │   │   ├── add_expense_request_model.dart
-│   │   │   ├── add_rental_model.dart
-│   │   │   ├── add_rental_request_model.dart
-│   │   │   ├── aqar_model.dart
-│   │   │   ├── customer_service_model.dart
-│   │   │   ├── emoloyee_model.dart
-│   │   │   ├── flat_model_request.dart
-│   │   │   ├── flat_rentals_model.dart
-│   │   │   ├── getEmployeeWalletRequestModel.dart
-│   │   │   ├── getFlatWalletRequestModel.dart
-│   │   │   ├── get_aqar_bakat_model.dart
-│   │   │   ├── login_response.dart
-│   │   │   ├── my_aqar_flat_model.dart
-│   │   │   ├── my_aqars_model.dart
-│   │   │   ├── my_areas_model.dart
-│   │   │   ├── my_gover_model.dart
-│   │   │   ├── on_boarding_model.dart
-│   │   │   ├── otp_code_model.dart
-│   │   │   ├── owner_info.dart
-│   │   │   ├── owner_model.dart
-│   │   │   ├── spec_by_type_model.dart
-│   │   │   ├── update_rental_request_model.dart
-│   │   │   └── upload_file_request_model.dart
-│   │   ├── daily_work_log.dart
-│   │   └── employee_dashboard.dart
-│   ├── repository/
-│   │   ├── app_repo/
-│   │   │   └── app_repo.dart
-│   │   ├── repository_employee/
-│   │   │   ├── employee_repository.dart
-│   │   │   ├── flat_repository.dart
-│   │   │   ├── notification_repo.dart
-│   │   │   ├── profile_repo.dart
-│   │   │   └── proudect_repository.dart
-│   │   ├── repository_owner/
-│   │   │   ├── aqaraty_repo/
-│   │   │   │   ├── real_estate_repo.dart
-│   │   │   │   └── real_estate_repo_impl.dart
-│   │   │   ├── auth/
-│   │   │   │   └── auth_repository.dart
-│   │   │   ├── customer_service/
-│   │   │   │   ├── customer_service_repo.dart
-│   │   │   │   └── customer_service_repo_impl.dart
-│   │   │   ├── employees_repo/
-│   │   │   │   ├── employees_repo.dart
-│   │   │   │   └── employees_repo_impl.dart
-│   │   │   ├── flats_repo/
-│   │   │   │   ├── flats_repo.dart
-│   │   │   │   └── flats_repo_impl.dart
-│   │   │   ├── notification_repo/
-│   │   │   │   └── notification_repo.dart
-│   │   │   ├── on_boarding_repo/
-│   │   │   │   ├── on_boarding_repo.dart
-│   │   │   │   └── on_boarding_repo_impl.dart
-│   │   │   ├── profile/
-│   │   │       └── profile_repo.dart
-│   │   └── main_screen_repository.dart
-│   ├── storage/
-│       ├── local/
-│       │   └── app_prefs.dart
-│       ├── remote/
-│           ├── dio_helper/
-│               └── dio_helper.dart
 ├── features/
 │   ├── auth/
 │   │   ├── controller/
@@ -241,10 +128,16 @@ lib/
 │   │   ├── controller/
 │   │   │   ├── holiday_cubit.dart
 │   │   │   └── holiday_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── holiday_request_model.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── holiday_screen.dart
 │   │       ├── widgets/
+│   │           ├── holiday_empty_state.dart
+│   │           ├── holiday_request_card.dart
+│   │           └── holiday_request_form.dart
 │   ├── loan__requests/
 │   │   ├── controller/
 │   │   │   ├── loan_cubit.dart
@@ -257,6 +150,12 @@ lib/
 │   │   ├── controller/
 │   │   │   ├── main_screen_cubit.dart
 │   │   │   └── main_screen_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │   │   ├── daily_work_log.dart
+│   │   │   │   └── employee_dashboard.dart
+│   │   │   ├── repository/
+│   │   │       └── main_screen_repository.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── main_screen.dart

@@ -74,5 +74,15 @@
   "Please enter phone number": "يرجى إدخال رقم الهاتف",
   "Search country": "ابحث عن الدولة",
   "Invalid phone number": "رقم الهاتف غير صحيح",
-  "Send OTP": "إرسال الرمز"
+  "Send OTP": "إرسال الرمز",
+  "holiday_requests": "طلبات الإجازة",
+  "no_requests": "لا توجد طلبات إجازة",
+  "no_requests_subtitle": "لم تقم بتقديم أي طلبات إجازة بعد.",
+  "request_holiday": "طلب إجازة",
+  "status_pending": "قيد الانتظار",
+  "status_approved": "مقبول",
+  "status_rejected": "مرفوض",
+  "submit_request": "تقديم الطلب",
+  "reason_required": "السبب مطلوب",
+  "select_dates_warning": "يرجى اختيار تاريخ البداية والنهاية"
 }
