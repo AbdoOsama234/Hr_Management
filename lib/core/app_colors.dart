@@ -26,8 +26,8 @@ class AppColors {
       : Colors.grey.withOpacity(.12);
 
   static Color get iconBgColor => MyApp.isDark
-      ? Colors.white.withOpacity(0.06)
-      : Colors.black.withOpacity(0.05);
+      ? Colors.white.withOpacity(0.1)
+      : Colors.black.withOpacity(0.1);
   static Color get iconBorderColor => MyApp.isDark
       ? Colors.white.withOpacity(0.08)
       : Colors.black.withOpacity(0.06);

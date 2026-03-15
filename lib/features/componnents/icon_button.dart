@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/di/di.dart';
+import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/storage/local/app_prefs.dart';
 import 'package:flutter/material.dart';
 
@@ -106,10 +107,10 @@ class AppIcon extends StatelessWidget {
             ),
             child:
                 icon ??
-                const Icon(
+                Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
-                  size: 18,
+                  color: AppColors.textMain,
+                  size: 5.w,
                 ),
           ),
         ),

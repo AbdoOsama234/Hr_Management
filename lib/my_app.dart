@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             ],
             supportedLocales: context.supportedLocales,
             onGenerateRoute: AppRouter.generatedRoute,
-            initialRoute: Routes.mainScreen,
+            initialRoute: Routes.login,
           );
         },
       ),

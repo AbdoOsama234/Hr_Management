@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/strings_manager.dart';
 
 /// SCREENS
-import 'package:hr_manegement/features/splash/splash_screen.dart';
 import 'package:hr_manegement/features/auth/view/screens/login_screen.dart';
 import 'package:hr_manegement/features/main_screen/view/screens/main_screen.dart';
 
@@ -37,46 +36,43 @@ class Routes {
 class AppRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
     switch (settings.name) {
-
-
-
-    /// Login
+      /// Login
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
 
-    /// Main Screen
+      /// Main Screen
       case Routes.mainScreen:
         return MaterialPageRoute(builder: (_) => const MainScreen());
 
-    /// Holiday Request
+      /// Holiday Request
       case Routes.holidayRequest:
         return MaterialPageRoute(builder: (_) => const HolidayScreen());
 
-    /// Mission Request
+      /// Mission Request
       case Routes.missionRequest:
         return MaterialPageRoute(builder: (_) => const MissionScreen());
 
-    /// Loan Request
+      /// Loan Request
       case Routes.loanRequest:
         return MaterialPageRoute(builder: (_) => const LoanScreen());
 
-    /// Business Trip Request
+      /// Business Trip Request
       case Routes.businessTripRequest:
         return MaterialPageRoute(builder: (_) => const BusinessTripScreen());
 
-    /// Permission Request
+      /// Permission Request
       case Routes.permissionRequest:
         return MaterialPageRoute(builder: (_) => const PermissionScreen());
 
-    /// Reports
+      /// Reports
       case Routes.reports:
         return MaterialPageRoute(builder: (_) => const ReportsScreen());
 
-    /// Profile
+      /// Profile
       case Routes.profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
 
-    /// Notifications
+      /// Notifications
       case Routes.notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
 
@@ -89,9 +85,7 @@ class AppRouter {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
         appBar: AppBar(title: const Text(AppStrings.noRouteFound)),
-        body: const Center(
-          child: Text(AppStrings.noRouteFound),
-        ),
+        body: const Center(child: Text(AppStrings.noRouteFound)),
       ),
     );
   }

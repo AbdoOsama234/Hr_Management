@@ -211,7 +211,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             showPassword
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: AppColors.white,
+                            color: AppColors.iconBgColor,
                           ),
                         ),
                       ),
@@ -298,7 +298,7 @@ OutlineInputBorder errorBorder({double? radius}) {
 OutlineInputBorder disabledBorder({double? radius}) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(radius ?? 10),
-    borderSide: BorderSide(color: AppColors.white.withOpacity(0.1), width: 1),
+    borderSide: BorderSide(color: AppColors.iconBgColor, width: 1),
   );
 }
 
@@ -312,13 +312,13 @@ OutlineInputBorder focusedBorder({double? radius}) {
 OutlineInputBorder border({double? radius}) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(radius ?? 10),
-    borderSide: BorderSide(color: AppColors.white.withOpacity(0.1), width: 1),
+    borderSide: BorderSide(color: AppColors.iconBgColor, width: 1),
   );
 }
 
 OutlineInputBorder enabledBorder({double? radius}) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(radius ?? 10),
-    borderSide: BorderSide(color: AppColors.white.withOpacity(0.2), width: 1),
+    borderSide: BorderSide(color: AppColors.iconBgColor, width: 1),
   );
 }
