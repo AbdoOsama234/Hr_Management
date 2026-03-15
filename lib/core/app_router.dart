@@ -38,9 +38,7 @@ class AppRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
     switch (settings.name) {
 
-    /// Splash
-      case Routes.splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+
 
     /// Login
       case Routes.login:
