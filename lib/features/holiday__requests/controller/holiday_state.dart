@@ -6,9 +6,10 @@ class HolidayInitial extends HolidayState {}
 
 class HolidayLoading extends HolidayState {}
 
+class HolidayEmpty extends HolidayState {}
+
 class HolidayLoaded extends HolidayState {
   final List<HolidayRequestModel> requests;
+
   HolidayLoaded(this.requests);
 }
-
-class HolidayEmpty extends HolidayState {}

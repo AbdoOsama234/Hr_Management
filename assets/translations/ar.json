@@ -48,5 +48,15 @@
   "weekly_reports": "تقارير الأسبوع",
   "delay": "تأخير",
   "on_time": "في الموعد",
-  "change_language": "تغيير اللغة"
+  "change_language": "تغيير اللغة",
+  "holiday_requests": "طلبات الإجازة",
+  "no_requests": "لا توجد طلبات إجازة",
+  "no_requests_subtitle": "لم تقم بتقديم أي طلبات إجازة بعد.",
+  "request_holiday": "طلب إجازة",
+  "status_pending": "قيد الانتظار",
+  "status_approved": "مقبول",
+  "status_rejected": "مرفوض",
+  "submit_request": "تقديم الطلب",
+  "reason_required": "السبب مطلوب",
+  "select_dates_warning": "يرجى اختيار تاريخ البداية والنهاية"
 }

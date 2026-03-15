@@ -1,7 +1,7 @@
 enum HolidayStatus {
   pending,
   approved,
-  rejected,
+  rejected
 }
 
 class HolidayRequestModel {
@@ -19,19 +19,23 @@ class HolidayRequestModel {
     required this.status,
   });
 
-  HolidayRequestModel copyWith({
-    String? id,
-    DateTime? startDate,
-    DateTime? endDate,
-    String? reason,
-    HolidayStatus? status,
-  }) {
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
+      'reason': reason,
+      'status': status.index,
+    };
+  }
+
+  factory HolidayRequestModel.fromJson(Map<String, dynamic> json) {
     return HolidayRequestModel(
-      id: id ?? this.id,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
-      reason: reason ?? this.reason,
-      status: status ?? this.status,
+      id: json['id'],
+      startDate: DateTime.parse(json['startDate']),
+      endDate: DateTime.parse(json['endDate']),
+      reason: json['reason'],
+      status: HolidayStatus.values[json['status']],
     );
   }
 }
