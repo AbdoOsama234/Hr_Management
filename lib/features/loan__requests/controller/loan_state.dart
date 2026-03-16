@@ -1,6 +1,15 @@
-part of 'loan_cubit.dart';
+import '../data/models/loan_request_model.dart';
 
-@immutable
-sealed class LoanState {}
+abstract class LoanState {}
 
-final class LoanInitial extends LoanState {}
+class LoanInitial extends LoanState {}
+
+class LoanLoading extends LoanState {}
+
+class LoanEmpty extends LoanState {}
+
+class LoanLoaded extends LoanState {
+  final List<LoanRequestModel> requests;
+
+  LoanLoaded(this.requests);
+}

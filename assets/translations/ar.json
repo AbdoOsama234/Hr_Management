@@ -91,5 +91,14 @@
   "Yes": "نعم",
   "No": "لا",
   "Update Holiday Request": "تحديث طلب الإجازة",
-  "Update Request": "تحديث الطلب"
+  "Update Request": "تحديث الطلب",
+  "Request Loan": "طلب سلفة",
+  "Loan Requests": "طلبات السلف",
+  "No Loan Requests": "لا توجد طلبات سلف",
+  "You haven't submitted any loan requests yet.": "لم تقم بتقديم أي طلبات سلف بعد.",
+  "Update Loan Request": "تحديث طلب السلفة",
+  "Date": "التاريخ",
+  "Loan Amount": "مبلغ السلفة",
+  "Please enter a valid number": "يرجى إدخال رقم صحيح",
+  "Reason": "السبب"
 }

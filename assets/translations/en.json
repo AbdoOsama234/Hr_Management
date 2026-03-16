@@ -91,5 +91,14 @@
   "Yes": "Yes",
   "No": "No",
   "Update Holiday Request": "Update Holiday Request",
-  "Update Request": "Update Request"
+  "Update Request": "Update Request",
+  "Request Loan": "Request Loan",
+  "Loan Requests": "Loan Requests",
+  "No Loan Requests": "No Loan Requests",
+  "You haven't submitted any loan requests yet.": "You haven't submitted any loan requests yet.",
+  "Update Loan Request": "Update Loan Request",
+  "Date": "Date",
+  "Loan Amount": "Loan Amount",
+  "Please enter a valid number": "Please enter a valid number",
+  "Reason": "Reason"
 }
