@@ -75,7 +75,7 @@ Future<dynamic> showAppBottomSheet({
 class BottomSheetOption {
   final String title;
   final Function onTap;
-  final Color textColor;
+  final Color? textColor;
   final Color backGroundColor;
   final Color borderColor;
   final String? icon;
@@ -85,7 +85,7 @@ class BottomSheetOption {
     required this.title,
     required this.onTap,
     this.iconColor = AppColors.primary,
-    this.textColor = AppColors.primary,
+    this.textColor,
     this.backGroundColor = AppColors.white,
     this.borderColor = AppColors.primary,
     this.icon,
@@ -156,7 +156,9 @@ Widget button({required BottomSheetOption option}) {
               ],
               Text(
                 option.title,
-                style: AppTextStyle.smallBody.copyWith(color: option.textColor),
+                style: AppTextStyle.smallBody.copyWith(
+                  color: option.textColor ?? AppColors.textMain,
+                ),
               ),
             ],
           ),

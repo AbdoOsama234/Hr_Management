@@ -106,6 +106,7 @@ class HolidayRequestCard extends StatelessWidget {
                     title: "Are you sure you want to delete this request?".tr(),
                     option1: BottomSheetOption(
                       title: "Yes".tr(),
+                      backGroundColor: Colors.transparent,
 
                       onTap: () {
                         context.read<HolidayCubit>().deleteRequest(request.id);
