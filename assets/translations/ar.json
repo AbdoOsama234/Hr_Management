@@ -113,5 +113,11 @@
   "You haven't submitted any permission requests yet.": "لم تقم بتقديم أي طلبات الإذن بعد.",
   "Hours": "ساعات",
   "Update Permission Request": "تحديث طلب الإذن",
-  "Permission Hours": "ساعات الإذن"
+  "Permission Hours": "ساعات الإذن",
+  "Business Trip Requests": "طلبات رحلات العمل",
+  "Request Business Trip": "طلب رحلة عمل",
+  "No Business Trip Requests": "لا توجد طلبات رحلات عمل",
+  "You haven't submitted any business trip requests yet.": "لم تقم بتقديم أي طلبات رحلات عمل بعد.",
+  "Business Trip Days": "أيام رحلات العمل",
+  "Update Business Trip Request": "تحديث طلب رحلة عمل"
 }

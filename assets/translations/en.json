@@ -113,5 +113,11 @@
   "You haven't submitted any permission requests yet.": "You haven't submitted any permission requests yet.",
   "Hours": "Hours",
   "Update Permission Request": "Update Permission Request",
-  "Permission Hours": "Permission Hours"
+  "Permission Hours": "Permission Hours",
+  "Business Trip Requests": "Business Trip Requests",
+  "Request Business Trip": "Request Business Trip",
+  "No Business Trip Requests": "No Business Trip Requests",
+  "You haven't submitted any business trip requests yet.": "You haven't submitted any business trip requests yet.",
+  "Business Trip Days": "Business Trip Days",
+  "Update Business Trip Request": "Update Business Trip Request"
 }

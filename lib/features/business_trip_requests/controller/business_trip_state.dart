@@ -1,6 +1,15 @@
-part of 'business_trip_cubit.dart';
+import '../data/models/business_trip_request_model.dart';
 
-@immutable
-sealed class BusinessTripState {}
+abstract class BusinessTripState {}
 
-final class BusinessTripInitial extends BusinessTripState {}
+class BusinessTripInitial extends BusinessTripState {}
+
+class BusinessTripLoading extends BusinessTripState {}
+
+class BusinessTripEmpty extends BusinessTripState {}
+
+class BusinessTripLoaded extends BusinessTripState {
+  final List<BusinessTripRequestModel> requests;
+
+  BusinessTripLoaded(this.requests);
+}
