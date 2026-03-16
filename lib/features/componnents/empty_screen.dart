@@ -42,8 +42,8 @@ class _EmptyScreenState extends State<EmptyScreen> {
         children: [
           AppAssetImage(
             uri: widget.image ?? AppAssets.bill,
-            width: 55.w,
-            height: 55.w,
+            width: 80.w,
+
             fit: BoxFit.contain,
           ),
           AppSizedBox.h2,
@@ -55,8 +55,8 @@ class _EmptyScreenState extends State<EmptyScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          AppSizedBox.h2,
           if (widget.description != null) ...[
-            AppSizedBox.h2,
             Text(
               widget.description!,
               textAlign: TextAlign.center,
@@ -64,8 +64,9 @@ class _EmptyScreenState extends State<EmptyScreen> {
                 color: widget.descriptionColor ?? AppColors.grey,
               ),
             ),
+            AppSizedBox.h5,
           ],
-          AppSizedBox.h3,
+
           CustomButton(
             text: widget.buttonText,
             width: 90.w,

@@ -84,5 +84,12 @@
   "status_rejected": "مرفوض",
   "submit_request": "تقديم الطلب",
   "reason_required": "السبب مطلوب",
-  "select_dates_warning": "يرجى اختيار تاريخ البداية والنهاية"
+  "select_dates_warning": "يرجى اختيار تاريخ البداية والنهاية",
+  "Enter Date": "أدخل التاريخ",
+  "First Date must be before end Date": "يجب أن يكون التاريخ الأول قبل التاريخ الأخير",
+  "Are you sure you want to delete this request?": "هل انت متاكد من حذف هذا الطلب؟",
+  "Yes": "نعم",
+  "No": "لا",
+  "Update Holiday Request": "تحديث طلب الإجازة",
+  "Update Request": "تحديث الطلب"
 }

@@ -1,3 +1,4 @@
+import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/helpers/luanch_url.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -37,18 +38,21 @@ Future<dynamic> showAppBottomSheet({
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: AppColors.grey.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(2),
+          Center(
+            child: Container(
+              width: 12.w,
+              height: 0.6.h,
+              decoration: BoxDecoration(
+                color: AppColors.textSub.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
-          const SizedBox(height: 24),
-
-          Text(title, style: AppTextStyle.subHeadline),
-          const SizedBox(height: 24),
+          AppSizedBox.h3,
+          if (title.isNotEmpty) ...[
+            Text(title, style: AppTextStyle.subHeadline),
+            const SizedBox(height: 24),
+          ],
 
           body,
           AppSizedBox.h2,
@@ -60,6 +64,7 @@ Future<dynamic> showAppBottomSheet({
                 onTap();
               },
             ),
+            //SizedBox(height: MediaQuery.of(context).padding.bottom),
           ],
         ],
       ),
@@ -93,56 +98,31 @@ Future<dynamic> showAppOptionBottomSheet({
   required BottomSheetOption option1,
   required BottomSheetOption option2,
 }) async {
-  return await showModalBottomSheet(
+  return await showAppBottomSheet(
     context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    isDismissible: true,
-    constraints: BoxConstraints(
-      maxWidth: MediaQuery.of(context).size.width, // force width
-    ),
-    builder: (context) => Container(
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+    title: "",
+    body: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AppLogoWidget(width: 60.w),
+        AppSizedBox.h2,
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 27,
-            height: 3,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(100)),
-              color: AppColors.grey,
-            ),
+        AppSizedBox.h3,
+        SizedBox(
+          height: 50,
+          child: Row(
+            children: [
+              button(option: option1),
+              const SizedBox(width: 10),
+              button(option: option2),
+            ],
           ),
-          const SizedBox(height: 15),
-          const AppLogoWidget(height: 100, width: 100),
-          const SizedBox(height: 15),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 15),
-          SizedBox(
-            height: 50,
-            child: Row(
-              children: [
-                button(option: option1),
-                const SizedBox(width: 10),
-                button(option: option2),
-              ],
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).padding.bottom + 10),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/features/componnents/date_time_widgets/common.dart';
+import 'package:hr_manegement/features/componnents/icon_button.dart';
+import 'package:hr_manegement/features/componnents/show_bottom_sheet.dart';
+import '../../controller/holiday_cubit.dart';
 import '../../data/models/holiday_request_model.dart';
 import '../../../../my_app.dart';
+import 'holiday_request_form.dart';
 
 class HolidayRequestCard extends StatelessWidget {
   final HolidayRequestModel request;
 
-  const HolidayRequestCard({
-    super.key,
-    required this.request,
-  });
+  const HolidayRequestCard({super.key, required this.request});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +50,8 @@ class HolidayRequestCard extends StatelessWidget {
                   ),
                   SizedBox(width: 2.w),
                   Text(
-                    '${DateFormat('yyyy-MM-dd').format(request.startDate)} \u2192 ${DateFormat('yyyy-MM-dd').format(request.endDate)}',
-                    style: AppTextStyle.smallBody.copyWith(
+                    '${dateFoemated(request.startDate.toString())} \u2192 ${dateFoemated(request.endDate.toString())}',
+                    style: AppTextStyle.hint.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.bold,
                     ),
@@ -59,12 +62,68 @@ class HolidayRequestCard extends StatelessWidget {
             ],
           ),
           AppSizedBox.h2,
-          Text(
-            request.reason,
-            style: AppTextStyle.title.copyWith(
-              color: AppColors.textMain,
-              fontWeight: FontWeight.w600,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Text(
+                  request.reason,
+                  style: AppTextStyle.title.copyWith(
+                    color: AppColors.textMain,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              AppSizedBox.w2,
+              AppIcon(
+                icon: Icon(Icons.edit, color: AppColors.primary),
+                onTap: () {
+                  showAppBottomSheet(
+                    context: context,
+                    title: 'Update Holiday Request'.tr(),
+                    body: HolidayRequestForm(
+                      request: request,
+                      buttonText: 'Update Request'.tr(),
+                      onSubmit: (startDate, endDate, reason) {
+                        context.read<HolidayCubit>().editRequest(
+                          request.id,
+                          startDate,
+                          endDate,
+                          reason,
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+
+              AppSizedBox.w2,
+              AppIcon(
+                icon: Icon(Icons.delete, color: AppColors.primary),
+                onTap: () {
+                  showAppOptionBottomSheet(
+                    context: context,
+                    title: "Are you sure you want to delete this request?".tr(),
+                    option1: BottomSheetOption(
+                      title: "Yes".tr(),
+
+                      onTap: () {
+                        context.read<HolidayCubit>().deleteRequest(request.id);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    option2: BottomSheetOption(
+                      title: "No".tr(),
+                      backGroundColor: AppColors.primary,
+                      textColor: AppColors.white,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),

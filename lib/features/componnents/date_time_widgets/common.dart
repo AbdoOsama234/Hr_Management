@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hr_manegement/core/storage/local/app_prefs.dart';
 
 import 'package:intl/intl.dart';
 
 import '../../../../../core/app_colors.dart';
+import '../../../core/di/di.dart';
 
 String dateFoemated(String date) {
   return DateFormat(
     'dd MMM yyyy',
+    getIt<AppPreferences>().lang,
   ).format(DateTime.parse(date.toString()));
 }
 

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_manegement/core/app_validation.dart';
 import 'package:hr_manegement/features/componnents/date_time_widgets/common.dart';
 
 import '../../../../../core/app_assets.dart';
@@ -9,7 +10,6 @@ import '../../../../../core/app_sized_box.dart';
 import '../../../core/app_colors.dart';
 import '../app_asset_image.dart';
 import '../custom_text_field.dart';
-import '../show_flutter_snackbar.dart';
 
 class DatesRow extends StatefulWidget {
   const DatesRow({
@@ -19,13 +19,16 @@ class DatesRow extends StatefulWidget {
     this.isEnable = true,
     this.startTitel,
     this.endTitel,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
   });
   final TextEditingController startDateController;
   final TextEditingController endDateController;
   final String? startTitel;
   final String? endTitel;
   final bool isEnable;
-
+  final Function(DateTime) onStartDateChanged;
+  final Function(DateTime) onEndDateChanged;
   @override
   State<DatesRow> createState() => _DatesRowState();
 }
@@ -52,14 +55,14 @@ class _DatesRowState extends State<DatesRow> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text(
-              //   widget.startTitel ?? 'Start Date',
-              //   style: const TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.w400,
-              //   ),
-              // ),
-              // AppSizedBox.h2,
+              Text(
+                widget.startTitel ?? 'start_date'.tr(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              AppSizedBox.h1,
               InkWell(
                 onTap: isEnable
                     ? () async {
@@ -71,6 +74,7 @@ class _DatesRowState extends State<DatesRow> {
                           startDateController.text = dateFoemated(
                             start.toString(),
                           );
+                          widget.onStartDateChanged(start);
                         }
                       }
                     : null,
@@ -84,19 +88,19 @@ class _DatesRowState extends State<DatesRow> {
                     color: AppColors.primary,
                   ),
                   validator: (value) {
-                    return null;
+                    return Validations.normalValidation(value);
                   },
                 ),
               ),
               AppSizedBox.h3,
-              // Text(
-              //   widget.endTitel ?? 'End Date',
-              //   style: const TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.w400,
-              //   ),
-              // ),
-              // AppSizedBox.h2,
+              Text(
+                widget.endTitel ?? 'end_date'.tr(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              AppSizedBox.h1,
               InkWell(
                 onTap: isEnable
                     ? () async {
@@ -106,6 +110,7 @@ class _DatesRowState extends State<DatesRow> {
                           log('end');
                           log(end.toString());
                           endDateController.text = dateFoemated(end.toString());
+                          widget.onEndDateChanged(end);
                         }
                       }
                     : null,
@@ -118,13 +123,12 @@ class _DatesRowState extends State<DatesRow> {
                     uri: AppAssets.calendar2,
                     color: AppColors.primary,
                   ),
+
                   validator: (value) {
-                    if (start.isAfter(end)) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required'.tr();
+                    } else if (start.isAfter(end)) {
                       log('First Date must be last end tome');
-                      showFlutterSnackBar(
-                        message: 'First Date must be before end Date'.tr(),
-                        toastColor: Colors.red,
-                      );
                       return 'First Date must be before end Date'.tr();
                     }
                     return null;

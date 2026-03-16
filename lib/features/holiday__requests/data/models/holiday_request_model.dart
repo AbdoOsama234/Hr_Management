@@ -1,15 +1,11 @@
-enum HolidayStatus {
-  pending,
-  approved,
-  rejected
-}
+enum HolidayStatus { pending, approved, rejected }
 
 class HolidayRequestModel {
   final String id;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String reason;
-  final HolidayStatus status;
+  DateTime startDate;
+  DateTime endDate;
+  String reason;
+  HolidayStatus status;
 
   HolidayRequestModel({
     required this.id,

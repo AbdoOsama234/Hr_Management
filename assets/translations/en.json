@@ -84,5 +84,12 @@
   "status_rejected": "Rejected",
   "submit_request": "Submit Request",
   "reason_required": "Reason is required",
-  "select_dates_warning": "Please select start and end dates"
+  "select_dates_warning": "Please select start and end dates",
+  "Enter Date": "Enter Date",
+  "First Date must be before end Date": "First Date must be before end Date",
+  "Are you sure you want to delete this request?": "Are you sure you want to delete this request?",
+  "Yes": "Yes",
+  "No": "No",
+  "Update Holiday Request": "Update Holiday Request",
+  "Update Request": "Update Request"
 }
