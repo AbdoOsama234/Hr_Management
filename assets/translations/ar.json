@@ -100,5 +100,18 @@
   "Date": "التاريخ",
   "Loan Amount": "مبلغ السلفة",
   "Please enter a valid number": "يرجى إدخال رقم صحيح",
-  "Reason": "السبب"
+  "Reason": "السبب",
+  "Mission Requests": "طلبات المأمورية",
+  "Request Mission": "طلب مأمورية",
+  "No Mission Requests": "لا توجد طلبات مأمورية",
+  "Mission Days": "أيام المأمورية",
+  "Update Mission Request": "تحديث طلب المأمورية",
+  "You haven't submitted any mission requests yet.": "لم تقم بتقديم أي طلبات مأمورية بعد.",
+  "Request Permission": "طلب إذن",
+  "Permission Requests": "طلبات الإذن",
+  "No Permission Requests": "لا توجد طلبات الإذن",
+  "You haven't submitted any permission requests yet.": "لم تقم بتقديم أي طلبات الإذن بعد.",
+  "Hours": "ساعات",
+  "Update Permission Request": "تحديث طلب الإذن",
+  "Permission Hours": "ساعات الإذن"
 }

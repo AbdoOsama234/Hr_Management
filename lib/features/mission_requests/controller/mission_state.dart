@@ -1,6 +1,15 @@
-part of 'mission_cubit.dart';
+import '../data/models/mission_request_model.dart';
 
-@immutable
-sealed class MissionState {}
+abstract class MissionState {}
 
-final class MissionInitial extends MissionState {}
+class MissionInitial extends MissionState {}
+
+class MissionLoading extends MissionState {}
+
+class MissionEmpty extends MissionState {}
+
+class MissionLoaded extends MissionState {
+  final List<MissionRequestModel> requests;
+
+  MissionLoaded(this.requests);
+}

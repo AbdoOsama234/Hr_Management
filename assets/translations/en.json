@@ -100,5 +100,18 @@
   "Date": "Date",
   "Loan Amount": "Loan Amount",
   "Please enter a valid number": "Please enter a valid number",
-  "Reason": "Reason"
+  "Reason": "Reason",
+  "Mission Requests": "Mission Requests",
+  "Request Mission": "Request Mission",
+  "No Mission Requests": "No Mission Requests",
+  "Mission Days": "Mission Days",
+  "Update Mission Request": "Update Mission Request",
+  "You haven't submitted any mission requests yet.": "You haven't submitted any mission requests yet.",
+  "Request Permission": "Request Permission",
+  "Permission Requests": "Permission Requests",
+  "No Permission Requests": "No Permission Requests",
+  "You haven't submitted any permission requests yet.": "You haven't submitted any permission requests yet.",
+  "Hours": "Hours",
+  "Update Permission Request": "Update Permission Request",
+  "Permission Hours": "Permission Hours"
 }

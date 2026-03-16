@@ -86,7 +86,7 @@ class Validations {
     if (value == null || value.isEmpty) {
       return 'This field is required'.tr();
     }
-    if (!numbersRegix.hasMatch(value)) {
+    if (!isOnlyNumber(value)) {
       return 'Please enter a valid number'.tr();
     } else {
       return null;
