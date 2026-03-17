@@ -119,5 +119,17 @@
   "No Business Trip Requests": "لا توجد طلبات رحلات عمل",
   "You haven't submitted any business trip requests yet.": "لم تقم بتقديم أي طلبات رحلات عمل بعد.",
   "Business Trip Days": "أيام رحلات العمل",
-  "Update Business Trip Request": "تحديث طلب رحلة عمل"
+  "Update Business Trip Request": "تحديث طلب رحلة عمل",
+  "phone_number": "رقم الهاتف",
+  "job_title": "المسمى الوظيفي",
+  "profile_updated": "تم تحديث الملف الشخصي بنجاح",
+  "enter_name": "أدخل اسمك",
+  "enter_phone": "أدخل رقم هاتفك",
+  "name_required": "الاسم مطلوب",
+  "phone_required": "رقم الهاتف مطلوب",
+  "personal_info": "المعلومات الشخصية",
+  "profile_updated_successfully": "تم تحديث الصفحه الشخصيه بنجاح",
+  "edit_profile": "تعديل الملف الشخصي",
+  "full_name": "الاسم بالكامل"
+
 }
