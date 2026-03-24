@@ -185,20 +185,25 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              CustomButton(
-                text: 'logout'.tr(),
-                width: 300,
-                fontsize: 12,
-                height: 50,
-                butcolor: MyApp.isDark ? AppColors.primary : AppColors.primary,
-                radius: 12,
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                    (route) => false,
-                  );
-                },
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                child: CustomButton(
+                  text: 'logout'.tr(),
+                  width: 300,
+                  fontsize: 12,
+                  height: 50,
+                  butcolor: MyApp.isDark
+                      ? AppColors.primary
+                      : AppColors.primary,
+                  radius: 12,
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (route) => false,
+                    );
+                  },
+                ),
               ),
 
               /// Version

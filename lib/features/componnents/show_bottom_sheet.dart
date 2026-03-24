@@ -29,44 +29,48 @@ Future<dynamic> showAppBottomSheet({
       maxWidth: MediaQuery.of(context).size.width, // force width
     ),
 
-    builder: (context) => Container(
-      decoration: BoxDecoration(
-        color: AppColors.backGround2,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: Container(
-              width: 12.w,
-              height: 0.6.h,
-              decoration: BoxDecoration(
-                color: AppColors.textSub.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
+    builder: (context) => Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.backGround2,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                  width: 12.w,
+                  height: 0.6.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.textSub.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-            ),
+              AppSizedBox.h3,
+              if (title.isNotEmpty) ...[
+                Text(title, style: AppTextStyle.subHeadline),
+                const SizedBox(height: 24),
+              ],
+              body,
+              AppSizedBox.h2,
+              if (buttonTitle != null && onTap != null) ...[
+                AppSizedBox.h1,
+                CustomButton(
+                  text: buttonTitle,
+                  onTap: () {
+                    onTap();
+                  },
+                ),
+              ],
+            ],
           ),
-          AppSizedBox.h3,
-          if (title.isNotEmpty) ...[
-            Text(title, style: AppTextStyle.subHeadline),
-            const SizedBox(height: 24),
-          ],
-
-          body,
-          AppSizedBox.h2,
-          if (buttonTitle != null && onTap != null) ...[
-            AppSizedBox.h1,
-            CustomButton(
-              text: buttonTitle,
-              onTap: () {
-                onTap();
-              },
-            ),
-            //SizedBox(height: MediaQuery.of(context).padding.bottom),
-          ],
-        ],
+        ),
       ),
     ),
   );
