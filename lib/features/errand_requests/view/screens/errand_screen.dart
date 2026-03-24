@@ -9,21 +9,21 @@ import 'package:hr_manegement/features/componnents/empty_screen.dart';
 import 'package:hr_manegement/features/componnents/loading_widget.dart';
 import 'package:hr_manegement/features/componnents/show_bottom_sheet.dart';
 
-import '../../controller/mission_cubit.dart';
-import '../../controller/mission_state.dart';
-import '../widgets/mission_request_card.dart';
-import '../widgets/mission_request_form.dart';
+import '../../controller/errand_cubit.dart';
+import '../../controller/errand_state.dart';
+import '../widgets/errand_request_card.dart';
+import '../widgets/errand_request_form.dart';
 
-class MissionScreen extends StatelessWidget {
-  const MissionScreen({super.key});
+class ErrandScreen extends StatelessWidget {
+  const ErrandScreen({super.key});
 
   void _showRequestForm(BuildContext context) {
     showAppBottomSheet(
       context: context,
-      title: 'Request Mission'.tr(),
-      body: MissionRequestForm(
+      title: 'Request Errand'.tr(),
+      body: ErrandRequestForm(
         onSubmit: (startDate, endDate, days, reason) {
-          context.read<MissionCubit>().addMissionRequest(
+          context.read<ErrandCubit>().addErrandRequest(
             startDate,
             endDate,
             days,
@@ -37,30 +37,30 @@ class MissionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MissionCubit()..loadRequests(),
+      create: (context) => ErrandCubit()..loadRequests(),
       child: Scaffold(
-        appBar: CustomAppBar(title: 'Mission Requests'.tr()),
-        body: BlocBuilder<MissionCubit, MissionState>(
+        appBar: CustomAppBar(title: 'Errand Requests'.tr()),
+        body: BlocBuilder<ErrandCubit, ErrandState>(
           builder: (context, state) {
-            if (state is MissionLoading) {
+            if (state is ErrandLoading) {
               return const Center(child: LoaderWidget());
             }
 
-            if (state is MissionEmpty) {
+            if (state is ErrandEmpty) {
               return EmptyScreen(
-                title: 'No Mission Requests'.tr(),
-                description: "You haven't submitted any mission requests yet."
+                title: 'No Errand Requests'.tr(),
+                description: "You haven't submitted any errand requests yet."
                     .tr(),
-                buttonText: 'Request Mission'.tr(),
+                buttonText: 'Request Errand'.tr(),
                 image: AppAssets.appLogo,
 
                 onTap: () => _showRequestForm(context),
               );
             }
 
-            if (state is MissionLoaded) {
+            if (state is ErrandLoaded) {
               return RefreshIndicator(
-                onRefresh: () => context.read<MissionCubit>().loadRequests(),
+                onRefresh: () => context.read<ErrandCubit>().loadRequests(),
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                   itemCount: state.requests.length,
@@ -78,7 +78,7 @@ class MissionScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: MissionRequestCard(request: state.requests[index]),
+                      child: ErrandRequestCard(request: state.requests[index]),
                     );
                   },
                 ),
@@ -88,9 +88,9 @@ class MissionScreen extends StatelessWidget {
             return const SizedBox();
           },
         ),
-        floatingActionButton: BlocBuilder<MissionCubit, MissionState>(
+        floatingActionButton: BlocBuilder<ErrandCubit, ErrandState>(
           builder: (context, state) {
-            if (state is MissionLoaded) {
+            if (state is ErrandLoaded) {
               return FloatingActionButton(
                 onPressed: () => _showRequestForm(context),
                 backgroundColor: AppColors.primary,
@@ -105,3 +105,4 @@ class MissionScreen extends StatelessWidget {
     );
   }
 }
+

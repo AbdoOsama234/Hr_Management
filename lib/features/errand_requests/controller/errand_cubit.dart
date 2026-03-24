@@ -1,50 +1,50 @@
 import 'package:bloc/bloc.dart';
-import '../data/models/mission_request_model.dart';
-import 'mission_state.dart';
+import '../data/models/errand_request_model.dart';
+import 'errand_state.dart';
 
-class MissionCubit extends Cubit<MissionState> {
-  MissionCubit() : super(MissionInitial());
+class ErrandCubit extends Cubit<ErrandState> {
+  ErrandCubit() : super(ErrandInitial());
 
-  final List<MissionRequestModel> _requests = [];
+  final List<ErrandRequestModel> _requests = [];
 
   Future<void> loadRequests() async {
-    emit(MissionLoading());
+    emit(ErrandLoading());
 
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (_requests.isEmpty) {
-      emit(MissionEmpty());
+      emit(ErrandEmpty());
     } else {
-      emit(MissionLoaded(List.from(_requests)));
+      emit(ErrandLoaded(List.from(_requests)));
     }
   }
 
-  Future<void> addMissionRequest(
+  Future<void> addErrandRequest(
     DateTime startDate,
     DateTime endDate,
     int days,
     String reason,
   ) async {
-    final newRequest = MissionRequestModel(
+    final newRequest = ErrandRequestModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       startDate: startDate,
       endDate: endDate,
       days: days,
       reason: reason,
-      status: MissionStatus.pending,
+      status: ErrandStatus.pending,
     );
 
     _requests.insert(0, newRequest);
 
-    emit(MissionLoaded(List.from(_requests)));
+    emit(ErrandLoaded(List.from(_requests)));
   }
 
   Future<void> deleteRequest(String id) async {
     _requests.removeWhere((request) => request.id == id);
     if (_requests.isEmpty) {
-      emit(MissionEmpty());
+      emit(ErrandEmpty());
     } else {
-      emit(MissionLoaded(List.from(_requests)));
+      emit(ErrandLoaded(List.from(_requests)));
     }
   }
 
@@ -60,6 +60,7 @@ class MissionCubit extends Cubit<MissionState> {
     request.endDate = endDate;
     request.days = days;
     request.reason = reason;
-    emit(MissionLoaded(List.from(_requests)));
+    emit(ErrandLoaded(List.from(_requests)));
   }
 }
+

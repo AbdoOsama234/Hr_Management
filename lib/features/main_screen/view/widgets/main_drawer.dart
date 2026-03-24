@@ -15,7 +15,7 @@ import 'package:hr_manegement/features/holiday__requests/view/screens/holiday_sc
 import 'package:hr_manegement/features/permission_request/view/screens/permission_screen.dart';
 import 'package:hr_manegement/features/loan__requests/view/screens/loan_screen.dart';
 import 'package:hr_manegement/features/business_trip_requests/view/screens/business_trip_screen.dart';
-import 'package:hr_manegement/features/mission_requests/view/screens/mission_screen.dart';
+import 'package:hr_manegement/features/errand_requests/view/screens/errand_screen.dart';
 import 'package:hr_manegement/my_app.dart';
 
 import '../../../my_mission/view/screens/my_mission_screen.dart';
@@ -118,9 +118,9 @@ class MainDrawer extends StatelessWidget {
 
                       DrawerMenuItem(
                         icon: Icons.work_outline_rounded,
-                        title: 'mission_request'.tr(),
+                        title: 'errand_request'.tr(),
                         onTap: () =>
-                            _navigateTo(context, const MissionScreen()),
+                            _navigateTo(context, const ErrandScreen()),
                       ),
                       _buildDivider(),
 

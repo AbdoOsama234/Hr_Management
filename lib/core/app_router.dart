@@ -6,7 +6,7 @@ import 'package:hr_manegement/features/auth/view/screens/login_screen.dart';
 import 'package:hr_manegement/features/main_screen/view/screens/main_screen.dart';
 
 import 'package:hr_manegement/features/holiday__requests/view/screens/holiday_screen.dart';
-import 'package:hr_manegement/features/mission_requests/view/screens/mission_screen.dart';
+import 'package:hr_manegement/features/errand_requests/view/screens/errand_screen.dart';
 import 'package:hr_manegement/features/loan__requests/view/screens/loan_screen.dart';
 import 'package:hr_manegement/features/business_trip_requests/view/screens/business_trip_screen.dart';
 import 'package:hr_manegement/features/permission_request/view/screens/permission_screen.dart';
@@ -22,7 +22,7 @@ class Routes {
 
   /// Requests
   static const String holidayRequest = "/holidayRequest";
-  static const String missionRequest = "/missionRequest";
+  static const String errandRequest = "/errandRequest";
   static const String loanRequest = "/loanRequest";
   static const String businessTripRequest = "/businessTripRequest";
   static const String permissionRequest = "/permissionRequest";
@@ -49,8 +49,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HolidayScreen());
 
       /// Mission Request
-      case Routes.missionRequest:
-        return MaterialPageRoute(builder: (_) => const MissionScreen());
+      case Routes.errandRequest:
+        return MaterialPageRoute(builder: (_) => const ErrandScreen());
 
       /// Loan Request
       case Routes.loanRequest:

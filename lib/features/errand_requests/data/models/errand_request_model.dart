@@ -1,14 +1,14 @@
-enum MissionStatus { pending, approved, rejected }
+enum ErrandStatus { pending, approved, rejected }
 
-class MissionRequestModel {
+class ErrandRequestModel {
   final String id;
   DateTime startDate;
   DateTime endDate;
   int days;
   String reason;
-  MissionStatus status;
+  ErrandStatus status;
 
-  MissionRequestModel({
+  ErrandRequestModel({
     required this.id,
     required this.startDate,
     required this.endDate,
@@ -28,14 +28,15 @@ class MissionRequestModel {
     };
   }
 
-  factory MissionRequestModel.fromJson(Map<String, dynamic> json) {
-    return MissionRequestModel(
+  factory ErrandRequestModel.fromJson(Map<String, dynamic> json) {
+    return ErrandRequestModel(
       id: json['id'],
       startDate: DateTime.parse(json['startDate']),
       endDate: DateTime.parse(json['endDate']),
       days: (json['days'] as num).toInt(),
       reason: json['reason'],
-      status: MissionStatus.values[json['status']],
+      status: ErrandStatus.values[json['status']],
     );
   }
 }
+

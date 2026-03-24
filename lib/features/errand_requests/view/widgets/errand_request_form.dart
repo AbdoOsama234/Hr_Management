@@ -7,13 +7,13 @@ import 'package:hr_manegement/core/app_validation.dart';
 
 import '../../../componnents/date_time_widgets/common.dart';
 import '../../../componnents/date_time_widgets/start_end_date.dart';
-import '../../data/models/mission_request_model.dart';
+import '../../data/models/errand_request_model.dart';
 
-class MissionRequestForm extends StatefulWidget {
+class ErrandRequestForm extends StatefulWidget {
   final Function(DateTime startDate, DateTime endDate, int days, String reason) onSubmit;
-  final MissionRequestModel? request;
+  final ErrandRequestModel? request;
   final String? buttonText;
-  const MissionRequestForm({
+  const ErrandRequestForm({
     super.key,
     required this.onSubmit,
     this.request,
@@ -21,10 +21,10 @@ class MissionRequestForm extends StatefulWidget {
   });
 
   @override
-  State<MissionRequestForm> createState() => _MissionRequestFormState();
+  State<ErrandRequestForm> createState() => _ErrandRequestFormState();
 }
 
-class _MissionRequestFormState extends State<MissionRequestForm> {
+class _ErrandRequestFormState extends State<ErrandRequestForm> {
   final _formKey = GlobalKey<FormState>();
   final _reasonController = TextEditingController();
   final _daysController = TextEditingController();
@@ -78,13 +78,13 @@ class _MissionRequestFormState extends State<MissionRequestForm> {
             ),
             AppSizedBox.h2,
             Text(
-              'Mission Days'.tr(),
+              'Errand Days'.tr(),
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
             AppSizedBox.h1,
             CustomTextField(
               controller: _daysController,
-              hint: 'Mission Days'.tr(),
+              hint: 'Errand Days'.tr(),
               type: const TextInputType.numberWithOptions(decimal: false),
               validator: (value) {
                 return Validations.numberValidation(value);
@@ -131,3 +131,4 @@ class _MissionRequestFormState extends State<MissionRequestForm> {
     );
   }
 }
+

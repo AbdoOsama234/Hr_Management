@@ -8,15 +8,15 @@ import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/features/componnents/date_time_widgets/common.dart';
 import 'package:hr_manegement/features/componnents/icon_button.dart';
 import 'package:hr_manegement/features/componnents/show_bottom_sheet.dart';
-import '../../controller/mission_cubit.dart';
-import '../../data/models/mission_request_model.dart';
+import '../../controller/errand_cubit.dart';
+import '../../data/models/errand_request_model.dart';
 import '../../../../my_app.dart';
-import 'mission_request_form.dart';
+import 'errand_request_form.dart';
 
-class MissionRequestCard extends StatelessWidget {
-  final MissionRequestModel request;
+class ErrandRequestCard extends StatelessWidget {
+  final ErrandRequestModel request;
 
-  const MissionRequestCard({super.key, required this.request});
+  const ErrandRequestCard({super.key, required this.request});
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +98,12 @@ class MissionRequestCard extends StatelessWidget {
                 onTap: () {
                   showAppBottomSheet(
                     context: context,
-                    title: 'Update Mission Request'.tr(),
-                    body: MissionRequestForm(
+                    title: 'Update Errand Request'.tr(),
+                    body: ErrandRequestForm(
                       request: request,
                       buttonText: 'Update Request'.tr(),
                       onSubmit: (startDate, endDate, days, reason) {
-                        context.read<MissionCubit>().editRequest(
+                        context.read<ErrandCubit>().editRequest(
                           request.id,
                           startDate,
                           endDate,
@@ -128,7 +128,7 @@ class MissionRequestCard extends StatelessWidget {
                       backGroundColor: Colors.transparent,
 
                       onTap: () {
-                        context.read<MissionCubit>().deleteRequest(request.id);
+                        context.read<ErrandCubit>().deleteRequest(request.id);
                         Navigator.pop(context);
                       },
                     ),
@@ -150,20 +150,20 @@ class MissionRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(MissionStatus status) {
+  Widget _buildStatusChip(ErrandStatus status) {
     Color color;
     String label;
 
     switch (status) {
-      case MissionStatus.pending:
+      case ErrandStatus.pending:
         color = AppColors.orange;
         label = 'status_pending'.tr();
         break;
-      case MissionStatus.approved:
+      case ErrandStatus.approved:
         color = AppColors.green;
         label = 'status_approved'.tr();
         break;
-      case MissionStatus.rejected:
+      case ErrandStatus.rejected:
         color = AppColors.red;
         label = 'status_rejected'.tr();
         break;
@@ -185,3 +185,4 @@ class MissionRequestCard extends StatelessWidget {
     );
   }
 }
+
