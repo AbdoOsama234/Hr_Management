@@ -19,20 +19,6 @@ Future<DateTime?> showDateEPicker(BuildContext context) async {
     initialDate: DateTime.now(),
     firstDate: DateTime(2000),
     lastDate: DateTime(20100),
-    builder: (BuildContext context, Widget? child) {
-      return Theme(
-        data: ThemeData.light().copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: AppColors.primary,
-            onPrimary: Colors.white,
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-          ),
-        ),
-        child: child!,
-      );
-    },
   );
   if (pickedDate != null) {
     return pickedDate;
