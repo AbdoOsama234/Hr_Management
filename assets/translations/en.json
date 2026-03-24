@@ -157,5 +157,21 @@
   "replace_file": "Replace File",
   "remove_file": "Remove File",
   "no_file_selected": "No file selected",
-  "Please enter a valid link": "Please enter a valid link"
+  "notification_holiday_approved_title": "Holiday Approved",
+  "notification_holiday_approved_body": "Your holiday request for next week has been approved by the manager.",
+  "notification_new_idea_title": "New Idea Submitted",
+  "notification_new_idea_body": "A new idea has been submitted in the Ideas section. Check it out!",
+  "notification_errand_pending_title": "Errand Request Pending",
+  "notification_errand_pending_body": "You have a pending errand request that needs your attention.",
+  "notification_announcement_title": "New Policy Update",
+  "notification_announcement_body": "Please review the updated remote work policy in the documents section.",
+  "notification_welcome_title": "Welcome to HR Portal",
+  "notification_welcome_body": "Welcome to your new employee portal. You can manage your requests and ideas here.",
+  "time_2_min_ago": "2 min ago",
+  "time_1_hour_ago": "1 hour ago",
+  "time_3_hours_ago": "3 hours ago",
+  "time_yesterday": "Yesterday",
+  "time_2_days_ago": "2 days ago",
+  "Please enter a valid link": "Please enter a valid link",
+  "search_by_name": "Search by name"
 }

@@ -157,5 +157,21 @@
   "replace_file": "استبدال الملف",
   "remove_file": "حذف الملف",
   "no_file_selected": "لم يتم اختيار ملف",
-  "Please enter a valid link": "يرجى إدخال رابط صحيح"
+  "Please enter a valid link": "يرجى إدخال رابط صحيح",
+  "notification_holiday_approved_title": "تم الموافقة على الإجازة",
+  "notification_holiday_approved_body": "تمت الموافقة على طلب الإجازة الخاص بك للأسبوع القادم من قبل المدير.",
+  "notification_new_idea_title": "تم تقديم فكرة جديدة",
+  "notification_new_idea_body": "تم تقديم فكرة جديدة في قسم الأفكار. تحقق منها الآن!",
+  "notification_errand_pending_title": "طلب مأمورية معلق",
+  "notification_errand_pending_body": "لديك طلب مأمورية معلق يحتاج إلى انتباهك.",
+  "notification_announcement_title": "تحديث جديد في السياسات",
+  "notification_announcement_body": "يرجى مراجعة سياسة العمل عن بعد المحدثة في قسم المستندات.",
+  "notification_welcome_title": "مرحباً بك في بوابة الموارد البشرية",
+  "notification_welcome_body": "مرحباً بك في بوابة الموظفين الجديدة. يمكنك إدارة طلباتك وأفكارك من هنا.",
+  "time_2_min_ago": "منذ دقيقتين",
+  "time_1_hour_ago": "منذ ساعة",
+  "time_3_hours_ago": "منذ 3 ساعات",
+  "time_yesterday": "أمس",
+  "time_2_days_ago": "منذ يومين",
+  "search_by_name": "البحث بالاسم"
 }

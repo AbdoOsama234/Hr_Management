@@ -10,6 +10,7 @@ import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
+import '../../../notifications/view/screens/notifications_screen.dart';
 import '../../controller/main_screen_cubit.dart';
 import '../widgets/employee_header.dart';
 import '../widgets/today_status_card.dart';
@@ -63,6 +64,14 @@ class _MainScreenBody extends StatelessWidget {
                       profileImageUrl: dashboard.avatar,
                       onMenuTap: () {
                         scaffoldKey.currentState?.openDrawer();
+                      },
+                      onNotificationTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
+                          ),
+                        );
                       },
                     ),
 
@@ -121,8 +130,6 @@ class _MainScreenBody extends StatelessWidget {
 
                             /// Weekly report
                             WeeklyReportList(logs: dashboard.weeklyReport),
-
-
 
                             AppSizedBox.h3,
                           ],
