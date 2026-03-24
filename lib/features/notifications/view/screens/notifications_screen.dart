@@ -89,7 +89,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   print("Search value is $value");
                 });
               },
-              validator: Validations.normalValidation,
+              validator: Validations.noValidation,
             ),
             const SizedBox(height: 24),
             ListView.separated(

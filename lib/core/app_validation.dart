@@ -49,6 +49,10 @@ class Validations {
     }
   }
 
+  static String? noValidation(String? value) {
+    return null;
+  }
+
   static String? linkValidation(String? value) {
     if (value != null && value.isNotEmpty && !Uri.parse(value).isAbsolute) {
       return 'Please enter a valid link'.tr();
