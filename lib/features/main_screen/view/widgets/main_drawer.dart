@@ -18,6 +18,7 @@ import 'package:hr_manegement/features/business_trip_requests/view/screens/busin
 import 'package:hr_manegement/features/errand_requests/view/screens/errand_screen.dart';
 import 'package:hr_manegement/my_app.dart';
 
+import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -74,11 +75,17 @@ class MainDrawer extends StatelessWidget {
                   child: Column(
                     children: [
                       DrawerMenuItem(
-                        icon: Icons.event_note_rounded,
+                        icon: Icons.task_alt_rounded,
                         title: 'my_missions'.tr(),
 
                         onTap: () =>
                             _navigateTo(context, const MyMissionScreen()),
+                      ),
+                      _buildDivider(),
+                      DrawerMenuItem(
+                        icon: Icons.lightbulb_outline_rounded,
+                        title: 'ideas'.tr(),
+                        onTap: () => _navigateTo(context, const IdeasScreen()),
                       ),
                       _buildDivider(),
                       DrawerMenuItem(
@@ -119,8 +126,7 @@ class MainDrawer extends StatelessWidget {
                       DrawerMenuItem(
                         icon: Icons.work_outline_rounded,
                         title: 'errand_request'.tr(),
-                        onTap: () =>
-                            _navigateTo(context, const ErrandScreen()),
+                        onTap: () => _navigateTo(context, const ErrandScreen()),
                       ),
                       _buildDivider(),
 

@@ -49,6 +49,14 @@ class Validations {
     }
   }
 
+  static String? linkValidation(String? value) {
+    if (value != null && value.isNotEmpty && !Uri.parse(value).isAbsolute) {
+      return 'Please enter a valid link'.tr();
+    } else {
+      return null;
+    }
+  }
+
   static String? passwordValidation(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field is required'.tr();

@@ -141,6 +141,21 @@
   "importance_high": "High",
   "mock_mission_1_notes": "Visit Client X to review project progress and discuss new requirements.",
   "mock_mission_2_notes": "Technical Support at Branch Y: Assist the IT team with server maintenance.",
-  "mock_mission_3_notes": "Inventory Audit: Quarterly inventory check at the main warehouse."
+  "mock_mission_3_notes": "Inventory Audit: Quarterly inventory check at the main warehouse.",
+  "ideas": "Ideas",
+  "add_idea": "Add Idea",
+  "update_idea": "Update Idea",
+  "no_ideas": "No ideas",
+  "no_ideas_subtitle": "You haven't submitted any ideas yet.",
+  "idea_explain": "Idea Explanation",
+  "idea_link": "Idea Link",
+  "idea_file": "Idea File",
+  "idea_type": "Idea Type",
+  "programming": "Programming",
+  "marketing": "Marketing",
+  "pick_file": "Pick File",
+  "replace_file": "Replace File",
+  "remove_file": "Remove File",
+  "no_file_selected": "No file selected",
+  "Please enter a valid link": "Please enter a valid link"
 }
-
