@@ -16,12 +16,13 @@ class LateHoursCard extends StatelessWidget {
   });
 
   double get _remaining => lateHoursAllowed - lateHoursUsed;
-  double get _progress => lateHoursUsed / lateHoursAllowed;
+  double get _progress => _remaining / lateHoursAllowed;
 
   Color get _statusColor {
-    if (_progress >= 0.85) return AppColors.primary;
-    if (_progress >= 0.5) return AppColors.orange;
-    return AppColors.green;
+    if (_progress <= 0.2) return AppColors.primary; // Red if less than 20% left
+    if (_progress <= 0.5)
+      return AppColors.orange; // Orange if less than 50% left
+    return AppColors.green; // Green if more than 50% left
   }
 
   @override
@@ -81,7 +82,7 @@ class LateHoursCard extends StatelessWidget {
                   border: Border.all(color: _statusColor.withOpacity(0.2)),
                 ),
                 child: Text(
-                  '${'remaining'.tr()} ${_remaining.toInt()} ${'hours'.tr()}',
+                  '${'used'.tr()} ${lateHoursUsed.toInt()} ${'hours'.tr()}',
                   style: AppTextStyle.smallBody.copyWith(
                     color: _statusColor,
                     fontWeight: FontWeight.w600,
@@ -117,13 +118,16 @@ class LateHoursCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '${lateHoursUsed.toInt()}h',
+                          '${_remaining.toInt()}h',
                           style: AppTextStyle.subHeadline.copyWith(
                             color: AppColors.textMain,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text('used'.tr(), style: AppTextStyle.hint.copyWith()),
+                        Text(
+                          'remaining'.tr(),
+                          style: AppTextStyle.hint.copyWith(),
+                        ),
                       ],
                     ),
                   ],
@@ -136,21 +140,21 @@ class LateHoursCard extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildDetailRow(
+                      'the_remaining'.tr(),
+                      '${_remaining.toInt()} ${'hours'.tr()}',
+                      _statusColor,
+                    ),
+                    SizedBox(height: 1.2.h),
+                    _buildDetailRow(
                       'the_used'.tr(),
                       '${lateHoursUsed.toInt()} ${'hour'.tr()}',
-                      _statusColor,
+                      AppColors.orange,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_allowed'.tr(),
                       '${lateHoursAllowed.toInt()} ${'hours'.tr()}',
                       AppColors.blue,
-                    ),
-                    SizedBox(height: 1.2.h),
-                    _buildDetailRow(
-                      'the_remaining'.tr(),
-                      '${_remaining.toInt()} ${'hours'.tr()}',
-                      AppColors.green,
                     ),
                   ],
                 ),
@@ -164,7 +168,7 @@ class LateHoursCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${lateHoursUsed.toInt()}h ${'used'.tr()} / ${lateHoursAllowed.toInt()}h ${'late_limit'.tr()}',
+                '${_remaining.toInt()}h ${'remaining'.tr()} / ${lateHoursAllowed.toInt()}h ${'late_limit'.tr()}',
                 style: AppTextStyle.smallBody.copyWith(
                   color: AppColors.textSub,
                 ),
