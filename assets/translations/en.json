@@ -138,5 +138,9 @@
   "mission_importance": "Importance",
   "importance_low": "Low",
   "importance_medium": "Medium",
-  "importance_high": "High"
-}
+  "importance_high": "High",
+  "mock_mission_1_notes": "Visit Client X to review project progress and discuss new requirements.",
+  "mock_mission_2_notes": "Technical Support at Branch Y: Assist the IT team with server maintenance.",
+  "mock_mission_3_notes": "Inventory Audit: Quarterly inventory check at the main warehouse."
+}
+

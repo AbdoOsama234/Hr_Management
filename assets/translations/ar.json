@@ -138,5 +138,8 @@
   "mission_importance": "الأهمية",
   "importance_low": "منخفضة",
   "importance_medium": "متوسطة",
-  "importance_high": "عالية"
-}
+  "importance_high": "عالية",
+  "mock_mission_1_notes": "زيارة العميل X لمراجعة تقدم المشروع ومناقشة المتطلبات الجديدة.",
+  "mock_mission_2_notes": "الدعم الفني في الفرع Y: مساعدة فريق تكنولوجيا المعلومات في صيانة الخوادم.",
+  "mock_mission_3_notes": "جرد المخزون: مراجعة المخزون الربع سنوية في المستودع الرئيسي."
+}
