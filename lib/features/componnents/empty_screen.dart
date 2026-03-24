@@ -14,18 +14,18 @@ class EmptyScreen extends StatefulWidget {
     required this.title,
     this.image,
     this.description,
-    required this.buttonText,
-    required this.onTap,
+    this.buttonText,
+    this.onTap,
     this.titleColor,
     this.descriptionColor,
   });
   final String title;
   final String? image;
   final String? description;
-  final String buttonText;
+  final String? buttonText;
   final Color? titleColor;
   final Color? descriptionColor;
-  final Function onTap;
+  final Function? onTap;
   @override
   State<EmptyScreen> createState() => _EmptyScreenState();
 }
@@ -67,15 +67,17 @@ class _EmptyScreenState extends State<EmptyScreen> {
             AppSizedBox.h5,
           ],
 
-          CustomButton(
-            text: widget.buttonText,
-            width: 90.w,
-            height: 6.h,
-            radius: Constants.defaultSearshRadius,
-            onTap: () {
-              widget.onTap();
-            },
-          ),
+          if (widget.buttonText != null && widget.onTap != null) ...[
+            CustomButton(
+              text: widget.buttonText!,
+              width: 90.w,
+              height: 6.h,
+              radius: Constants.defaultSearshRadius,
+              onTap: () {
+                widget.onTap!();
+              },
+            ),
+          ],
         ],
       ),
     );

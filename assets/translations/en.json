@@ -130,5 +130,13 @@
   "personal_info": "Personal Information",
   "profile_updated_successfully": "Profile updated successfully",
   "edit_profile": "Edit Profile",
-  "full_name": "Full Name"
-}
+  "full_name": "Full Name",
+  "my_missions": "My Missions",
+  "no_missions": "No missions",
+  "no_missions_subtitle": "You don't have any missions assigned yet.",
+  "mission_notes": "Notes",
+  "mission_importance": "Importance",
+  "importance_low": "Low",
+  "importance_medium": "Medium",
+  "importance_high": "High"
+}

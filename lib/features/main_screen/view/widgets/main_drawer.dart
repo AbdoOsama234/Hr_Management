@@ -18,6 +18,8 @@ import 'package:hr_manegement/features/business_trip_requests/view/screens/busin
 import 'package:hr_manegement/features/mission_requests/view/screens/mission_screen.dart';
 import 'package:hr_manegement/my_app.dart';
 
+import '../../../my_mission/view/screens/my_mission_screen.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
 
@@ -71,6 +73,14 @@ class MainDrawer extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   child: Column(
                     children: [
+                      DrawerMenuItem(
+                        icon: Icons.event_note_rounded,
+                        title: 'my_missions'.tr(),
+
+                        onTap: () =>
+                            _navigateTo(context, const MyMissionScreen()),
+                      ),
+                      _buildDivider(),
                       DrawerMenuItem(
                         icon: Icons.event_note_rounded,
                         title: 'holiday_request'.tr(),
