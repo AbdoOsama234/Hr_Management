@@ -2,13 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/features/main_screen/view/screens/main_screen.dart';
 
+import '../../../../ sheard/componnents/code_picker_textfield.dart';
+import '../../../../ sheard/componnents/custom_button.dart';
+import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/app_sized_box.dart';
 import '../../../../core/app_validation.dart';
 import '../../../../core/text_style.dart';
-import '../../../componnents/code_picker_textfield.dart';
-import '../../../componnents/custom_button.dart';
-import '../../../componnents/custom_text_field.dart';
+
 import '../widgets/auth_header.dart';
 import '../widgets/title_row.dart';
 import 'forget_password_screen.dart';

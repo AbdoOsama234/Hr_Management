@@ -5,8 +5,10 @@ import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
-import 'package:hr_manegement/features/componnents/app_asset_image.dart';
-import 'package:hr_manegement/features/componnents/custom_button.dart';
+
+
+import 'app_asset_image.dart';
+import 'custom_button.dart';
 
 class EmptyScreen extends StatefulWidget {
   const EmptyScreen({

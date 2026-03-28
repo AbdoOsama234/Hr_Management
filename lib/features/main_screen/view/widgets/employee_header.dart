@@ -5,7 +5,8 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-import '../../../componnents/icon_button.dart';
+import '../../../../ sheard/componnents/icon_button.dart';
+
 
 class EmployeeHeader extends StatelessWidget {
   final String name;

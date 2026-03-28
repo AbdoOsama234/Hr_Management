@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'dart:ui' as ui;
 
+import '../../../../ sheard/componnents/custom_app_bar.dart';
+import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/app_sized_box.dart';
 import '../../../../core/extensions.dart';
 import '../../../../core/text_style.dart';
-import '../../../componnents/custom_app_bar.dart';
-import '../../../componnents/custom_button.dart';
+
 import '../widgets/auth_header.dart';
 import 'change_password_screen.dart';
 

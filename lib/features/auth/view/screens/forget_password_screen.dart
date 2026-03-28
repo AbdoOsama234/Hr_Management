@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../ sheard/componnents/code_picker_textfield.dart';
+import '../../../../ sheard/componnents/custom_app_bar.dart';
+import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_sized_box.dart';
-import '../../../componnents/code_picker_textfield.dart';
-import '../../../componnents/custom_app_bar.dart';
-import '../../../componnents/custom_button.dart';
+
 import '../widgets/auth_header.dart';
 import '../widgets/title_row.dart';
 import 'otp_verification_screen.dart';

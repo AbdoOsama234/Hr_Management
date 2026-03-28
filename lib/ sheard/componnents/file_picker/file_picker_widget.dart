@@ -4,13 +4,13 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hr_manegement/features/componnents/app_dialoge.dart';
 
 import '../../../../../core/app_assets.dart';
 import '../../../../../core/app_colors.dart';
 import '../../../../../core/app_sized_box.dart';
 import '../../../../../core/text_style.dart';
 
+import '../app_dialoge.dart';
 import 'file_picker_cubit/file_picker_cubit.dart';
 import 'file_picker_cubit/file_picker_state.dart';
 

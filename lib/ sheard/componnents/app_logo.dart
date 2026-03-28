@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hr_manegement/features/componnents/app_asset_image.dart'
-    show AppAssetImage;
+
 
 import '../../../../core/app_assets.dart';
+import 'app_asset_image.dart';
 
 class BigAppLogoWidget extends StatelessWidget {
   const BigAppLogoWidget({

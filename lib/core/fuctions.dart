@@ -7,7 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hijri/hijri_calendar.dart';
 
-import '../features/componnents/date_time_widgets/common.dart';
+import '../ sheard/componnents/date_time_widgets/common.dart';
 import 'di/di.dart';
 
 void dPrint(String message, {int level = 1, String? tag}) {

@@ -21,7 +21,7 @@ class MainScreenRepository {
             'https://ui-avatars.com/api/?name=Abdelrahman+Osama&background=e50014&color=fff&size=200&bold=true',
         presentDays: 18,
         leaveDays: 3,
-        lateHoursUsed: 2,
+        lateHoursUsed: 5,
         lateHoursAllowed: 6,
         weeklyReport: [
           DailyWorkLog(

@@ -4,11 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_validation.dart';
-import 'package:hr_manegement/features/componnents/custom_button.dart';
-import 'package:hr_manegement/features/componnents/custom_text_field.dart';
-import 'package:hr_manegement/features/componnents/custom_drop_down.dart';
-import 'package:hr_manegement/features/componnents/custom_file_picker.dart';
-import 'package:hr_manegement/features/componnents/date_time_widgets/common.dart';
+import '../../../../ sheard/componnents/custom_button.dart';
+import '../../../../ sheard/componnents/custom_drop_down.dart';
+import '../../../../ sheard/componnents/custom_file_picker.dart';
+import '../../../../ sheard/componnents/custom_text_field.dart';
+import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../data/models/idea_model.dart';
 
 class IdeaRequestForm extends StatefulWidget {

@@ -2,12 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/features/auth/view/widgets/title_row.dart';
 
+import '../../../../ sheard/componnents/custom_app_bar.dart';
+import '../../../../ sheard/componnents/custom_button.dart';
+import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/app_sized_box.dart';
 import '../../../../core/app_validation.dart' show Validations;
-import '../../../componnents/custom_app_bar.dart';
-import '../../../componnents/custom_button.dart';
-import '../../../componnents/custom_text_field.dart';
+
 import '../widgets/auth_header.dart';
 
 class ChangePasswordScreen extends StatefulWidget {

@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 
+import '../../../../ sheard/componnents/app_asset_image.dart';
+import '../../../../ sheard/componnents/custom_app_bar.dart';
+import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../core/app_assets.dart';
 import '../../../../core/app_colors.dart' show AppColors;
 import '../../../../core/app_validation.dart';
-import '../../../componnents/app_asset_image.dart';
-import '../../../componnents/custom_app_bar.dart';
-import '../../../componnents/custom_text_field.dart';
+
 import '../widgets/notification_card.dart';
 
 class NotificationsScreen extends StatefulWidget {

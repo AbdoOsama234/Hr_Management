@@ -1,8 +1,8 @@
+import 'package:hr_manegement/%20sheard/componnents/search_bar.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_manegement/features/componnents/search_bar.dart';
 
 import 'package:shimmer/shimmer.dart';
 

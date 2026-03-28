@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/extensions.dart';
-import 'package:hr_manegement/features/componnents/custom_app_bar.dart';
+import '../../../../ sheard/componnents/custom_app_bar.dart';
 import '../../controller/ideas_cubit.dart';
 import '../../controller/ideas_state.dart';
 import '../../data/models/idea_model.dart';

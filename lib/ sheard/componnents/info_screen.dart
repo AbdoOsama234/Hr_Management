@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/app_colors.dart';
-import 'package:hr_manegement/features/componnents/custom_button.dart';
 
 import '../../../../core/app_sized_box.dart';
 import '../../../../core/text_style.dart';
+import 'custom_button.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({
