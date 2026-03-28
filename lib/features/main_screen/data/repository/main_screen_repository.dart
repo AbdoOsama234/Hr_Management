@@ -18,10 +18,10 @@ class MainScreenRepository {
         employeeName: 'عبدالرحمن اسامه',
         jobTitle: 'Mobile Develober',
         avatar:
-            'https://ui-avatars.com/api/?name=Abdelrahman+Osama&background=e50014&color=fff&size=200&bold=true',
+        'https://ui-avatars.com/api/?name=Abdelrahman+Osama&background=1C1C1E&color=C362D8&size=200',
         presentDays: 18,
         leaveDays: 3,
-        lateHoursUsed: 5,
+        lateHoursUsed:6,
         lateHoursAllowed: 6,
         weeklyReport: [
           DailyWorkLog(

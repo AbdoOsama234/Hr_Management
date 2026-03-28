@@ -173,5 +173,12 @@
   "time_3_hours_ago": "منذ 3 ساعات",
   "time_yesterday": "أمس",
   "time_2_days_ago": "منذ يومين",
-  "search_by_name": "البحث بالاسم"
+  "search_by_name": "البحث بالاسم",
+  "admin_instructions": "تعليمات الإدارة",
+  "admin_instructions_desc": "يرجى التأكد من إكمال مهامك قبل نهاية اليوم.",
+  "daily_task_title": "إرسال التقرير اليومي",
+  "daily_task_desc": "قم بملء وإرسال تقريرك اليومي قبل المغادرة.",
+  "complete_button": "اتممت المهمه",
+  "completed": "اكتمل"
+
 }

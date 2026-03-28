@@ -1,4 +1,53 @@
 lib/
+├──  sheard/
+│   ├── componnents/
+│       ├── date_time_widgets/
+│       │   ├── common.dart
+│       │   ├── start_end_date.dart
+│       │   └── start_end_time.dart
+│       ├── file_picker/
+│       │   ├── file_picker_cubit/
+│       │   │   ├── file_picker_cubit.dart
+│       │   │   └── file_picker_state.dart
+│       │   ├── file_picker_widget.dart
+│       │   └── image_picker_widget.dart
+│       ├── pdf/
+│       │   └── show_pdf_screen.dart
+│       ├── screen_builder/
+│       │   ├── custom_loading_indicator.dart
+│       │   └── screen_builder.dart
+│       ├── SalarieContainer.dart
+│       ├── app_asset_image.dart
+│       ├── app_common.dart
+│       ├── app_dialoge.dart
+│       ├── app_divider.dart
+│       ├── app_logo.dart
+│       ├── app_network_image.dart
+│       ├── app_shimmers.dart
+│       ├── code_picker_textfield.dart
+│       ├── const_widget.dart
+│       ├── custom_app_bar.dart
+│       ├── custom_button.dart
+│       ├── custom_dialog.dart
+│       ├── custom_display_icon.dart
+│       ├── custom_drop_down.dart
+│       ├── custom_fab.dart
+│       ├── custom_file_picker.dart
+│       ├── custom_search_widget.dart
+│       ├── custom_selection_menu.dart
+│       ├── custom_text_field.dart
+│       ├── empty_screen.dart
+│       ├── file_preview_screen.dart
+│       ├── icon_button.dart
+│       ├── info_screen.dart
+│       ├── internet_check_screen.dart
+│       ├── loading_widget.dart
+│       ├── search_bar.dart
+│       ├── show_bottom_sheet.dart
+│       ├── show_flutter_snackbar.dart
+│       ├── to_cart_icon.dart
+│       ├── update_app_dialog.dart
+│       └── web_page_screen.dart
 ├── core/
 │   ├── app_cubit/
 │   │   ├── app_cubit.dart
@@ -68,62 +117,39 @@ lib/
 │   │   │   └── login_state.dart
 │   │   ├── view/
 │   │       ├── screens/
-│   │       │   └── login_screen.dart
+│   │       │   ├── change_password_screen.dart
+│   │       │   ├── forget_password_screen.dart
+│   │       │   ├── login_screen.dart
+│   │       │   └── otp_verification_screen.dart
 │   │       ├── widgets/
+│   │           ├── auth_header.dart
+│   │           └── title_row.dart
 │   ├── business_trip_requests/
 │   │   ├── controller/
 │   │   │   ├── business_trip_cubit.dart
 │   │   │   └── business_trip_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── business_trip_request_model.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── business_trip_screen.dart
 │   │       ├── widgets/
-│   ├── componnents/
-│   │   ├── date_time_widgets/
-│   │   │   ├── common.dart
-│   │   │   ├── start_end_date.dart
-│   │   │   └── start_end_time.dart
-│   │   ├── file_picker/
-│   │   │   ├── file_picker_cubit/
-│   │   │   │   ├── file_picker_cubit.dart
-│   │   │   │   └── file_picker_state.dart
-│   │   │   ├── file_picker_widget.dart
-│   │   │   └── image_picker_widget.dart
-│   │   ├── pdf/
-│   │   │   └── show_pdf_screen.dart
-│   │   ├── screen_builder/
-│   │   │   ├── custom_loading_indicator.dart
-│   │   │   └── screen_builder.dart
-│   │   ├── SalarieContainer.dart
-│   │   ├── app_asset_image.dart
-│   │   ├── app_common.dart
-│   │   ├── app_dialoge.dart
-│   │   ├── app_divider.dart
-│   │   ├── app_logo.dart
-│   │   ├── app_network_image.dart
-│   │   ├── app_shimmers.dart
-│   │   ├── code_picker_textfield.dart
-│   │   ├── const_widget.dart
-│   │   ├── custom_app_bar.dart
-│   │   ├── custom_button.dart
-│   │   ├── custom_dialog.dart
-│   │   ├── custom_display_icon.dart
-│   │   ├── custom_drop_down.dart
-│   │   ├── custom_fab.dart
-│   │   ├── custom_search_widget.dart
-│   │   ├── custom_selection_menu.dart
-│   │   ├── custom_text_field.dart
-│   │   ├── empty_screen.dart
-│   │   ├── icon_button.dart
-│   │   ├── info_screen.dart
-│   │   ├── internet_check_screen.dart
-│   │   ├── loading_widget.dart
-│   │   ├── search_bar.dart
-│   │   ├── show_bottom_sheet.dart
-│   │   ├── show_flutter_snackbar.dart
-│   │   ├── to_cart_icon.dart
-│   │   ├── update_app_dialog.dart
-│   │   └── web_page_screen.dart
+│   │           ├── business_trip_request_card.dart
+│   │           └── business_trip_request_form.dart
+│   ├── errand_requests/
+│   │   ├── controller/
+│   │   │   ├── errand_cubit.dart
+│   │   │   └── errand_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── errand_request_model.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── errand_screen.dart
+│   │       ├── widgets/
+│   │           ├── errand_request_card.dart
+│   │           └── errand_request_form.dart
 │   ├── holiday__requests/
 │   │   ├── controller/
 │   │   │   ├── holiday_cubit.dart
@@ -135,17 +161,36 @@ lib/
 │   │       ├── screens/
 │   │       │   └── holiday_screen.dart
 │   │       ├── widgets/
-│   │           ├── holiday_empty_state.dart
 │   │           ├── holiday_request_card.dart
 │   │           └── holiday_request_form.dart
+│   ├── ideas/
+│   │   ├── controller/
+│   │   │   ├── ideas_cubit.dart
+│   │   │   └── ideas_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── idea_model.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   ├── add_idea_screen.dart
+│   │       │   ├── ideas_screen.dart
+│   │       │   └── update_idea_screen.dart
+│   │       ├── widgets/
+│   │           ├── idea_request_card.dart
+│   │           └── idea_request_form.dart
 │   ├── loan__requests/
 │   │   ├── controller/
 │   │   │   ├── loan_cubit.dart
 │   │   │   └── loan_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── loan_request_model.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── loan_screen.dart
 │   │       ├── widgets/
+│   │           ├── loan_request_card.dart
+│   │           └── loan_request_form.dart
 │   ├── main_screen/
 │   │   ├── controller/
 │   │   │   ├── main_screen_cubit.dart
@@ -160,7 +205,9 @@ lib/
 │   │       ├── screens/
 │   │       │   └── main_screen.dart
 │   │       ├── widgets/
+│   │           ├── admin_instructions_widget.dart
 │   │           ├── attendance_summary_card.dart
+│   │           ├── daily_tasks_widget.dart
 │   │           ├── drawer_menu_item.dart
 │   │           ├── drawer_profile_header.dart
 │   │           ├── employee_header.dart
@@ -168,33 +215,51 @@ lib/
 │   │           ├── main_drawer.dart
 │   │           ├── today_status_card.dart
 │   │           └── weekly_report_list.dart
-│   ├── mission_requests/
+│   ├── my_mission/
 │   │   ├── controller/
 │   │   │   ├── mission_cubit.dart
 │   │   │   └── mission_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── mission_model.dart
 │   │   ├── view/
 │   │       ├── screens/
-│   │       │   └── mission_screen.dart
+│   │       │   └── my_mission_screen.dart
 │   │       ├── widgets/
+│   │           └── mission_item_card.dart
 │   ├── notifications/
 │   │   ├── controller/
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── notifications_screen.dart
 │   │       ├── widgets/
+│   │           └── notification_card.dart
 │   ├── permission_request/
 │   │   ├── controller/
 │   │   │   ├── permission/
+│   │   │   ├── permission_cubit.dart
+│   │   │   └── permission_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── permission_request_model.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── permission_screen.dart
 │   │       ├── widgets/
+│   │           ├── permission_request_card.dart
+│   │           └── permission_request_form.dart
 │   ├── profile/
 │   │   ├── controller/
+│   │   │   ├── profile_cubit.dart
+│   │   │   └── profile_state.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── profile_screen.dart
 │   │       ├── widgets/
+│   │           ├── profile_edit_form.dart
+│   │           ├── profile_header.dart
+│   │           ├── profile_info_section.dart
+│   │           └── profile_shimmer.dart
 │   ├── reports/
 │   │   ├── controller/
 │   │   ├── view/

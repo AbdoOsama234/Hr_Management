@@ -9,6 +9,7 @@ class EmployeeDashboard {
   final double lateHoursUsed;
   final double lateHoursAllowed;
   final List<DailyWorkLog> weeklyReport;
+  final bool isTaskCompleted;
 
   EmployeeDashboard({
     required this.employeeName,
@@ -19,6 +20,7 @@ class EmployeeDashboard {
     required this.lateHoursUsed,
     required this.lateHoursAllowed,
     required this.weeklyReport,
+    this.isTaskCompleted = false,
   });
 
   factory EmployeeDashboard.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class EmployeeDashboard {
       weeklyReport: (json['weeklyReport'] as List? ?? [])
           .map((e) => DailyWorkLog.fromJson(e))
           .toList(),
+      isTaskCompleted: json['isTaskCompleted'] ?? false,
     );
   }
 
@@ -46,6 +49,31 @@ class EmployeeDashboard {
       'lateHoursUsed': lateHoursUsed,
       'lateHoursAllowed': lateHoursAllowed,
       'weeklyReport': weeklyReport.map((e) => e.toJson()).toList(),
+      'isTaskCompleted': isTaskCompleted,
     };
+  }
+
+  EmployeeDashboard copyWith({
+    String? employeeName,
+    String? jobTitle,
+    String? avatar,
+    int? presentDays,
+    int? leaveDays,
+    double? lateHoursUsed,
+    double? lateHoursAllowed,
+    List<DailyWorkLog>? weeklyReport,
+    bool? isTaskCompleted,
+  }) {
+    return EmployeeDashboard(
+      employeeName: employeeName ?? this.employeeName,
+      jobTitle: jobTitle ?? this.jobTitle,
+      avatar: avatar ?? this.avatar,
+      presentDays: presentDays ?? this.presentDays,
+      leaveDays: leaveDays ?? this.leaveDays,
+      lateHoursUsed: lateHoursUsed ?? this.lateHoursUsed,
+      lateHoursAllowed: lateHoursAllowed ?? this.lateHoursAllowed,
+      weeklyReport: weeklyReport ?? this.weeklyReport,
+      isTaskCompleted: isTaskCompleted ?? this.isTaskCompleted,
+    );
   }
 }

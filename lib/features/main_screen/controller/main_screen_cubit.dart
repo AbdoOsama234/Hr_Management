@@ -20,4 +20,15 @@ class MainScreenCubit extends Cubit<MainScreenState> {
       (dashboard) => emit(MainScreenLoaded(dashboard: dashboard)),
     );
   }
+
+  void toggleTaskCompletion() {
+    final currentState = state;
+    if (currentState is MainScreenLoaded) {
+      emit(MainScreenLoaded(
+        dashboard: currentState.dashboard.copyWith(
+          isTaskCompleted: !currentState.dashboard.isTaskCompleted,
+        ),
+      ));
+    }
+  }
 }

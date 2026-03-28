@@ -173,5 +173,12 @@
   "time_yesterday": "Yesterday",
   "time_2_days_ago": "2 days ago",
   "Please enter a valid link": "Please enter a valid link",
-  "search_by_name": "Search by name"
+  "search_by_name": "Search by name",
+  "admin_instructions": "Admin Instructions",
+  "admin_instructions_desc": "Please make sure to complete your tasks before the end of the day.",
+  "daily_task_title": "Submit Daily Report",
+  "daily_task_desc": "Fill and submit your daily report before leaving.",
+  "complete_button": "Mark as Complete",
+  "completed": "Completed"
+
 }

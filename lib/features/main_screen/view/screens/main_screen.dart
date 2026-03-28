@@ -9,9 +9,13 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/features/main_screen/view/widgets/admin_instructions_widget.dart';
 
+import '../../../my_mission/data/models/mission_model.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 import '../../controller/main_screen_cubit.dart';
+import '../widgets/daily_tasks_widget.dart';
+import '../../data/models/daily_task_model.dart';
 import '../widgets/employee_header.dart';
 import '../widgets/today_status_card.dart';
 import '../widgets/attendance_summary_card.dart';
@@ -92,6 +96,26 @@ class _MainScreenBody extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            AppSizedBox.h3,
+
+                            /// Admin Instructions
+                             AdminInstructionsWidget(),
+
+                            AppSizedBox.h3,
+
+                            DailyTasksWidget(
+                              mission: MyMissionModel(
+                                id: '1',
+                                date: DateTime.now(),
+                                notes: 'daily_task_desc'.tr(),
+                                importance: MissionImportance.medium,
+                                status: MissionStatus.pending,
+                              ),
+                            ),
+
+                            AppSizedBox.h3,
+
+                            AppSizedBox.h3,
 
                             SizedBox(height: .5.h),
 
