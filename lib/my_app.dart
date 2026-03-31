@@ -10,6 +10,7 @@ import 'core/theme_manager.dart';
 import 'core/di/di.dart';
 import 'features/main_screen/controller/main_screen_cubit.dart'
     show MainScreenCubit;
+import 'features/profile/controller/profile_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => getIt<AppCubit>()),
         BlocProvider(create: (context) => getIt<MainScreenCubit>()),
+        BlocProvider(create: (context) => ProfileCubit()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, local) {

@@ -197,6 +197,7 @@ lib/
 │   │   │   └── main_screen_state.dart
 │   │   ├── data/
 │   │   │   ├── models/
+│   │   │   │   ├── daily_task_model.dart
 │   │   │   │   ├── daily_work_log.dart
 │   │   │   │   └── employee_dashboard.dart
 │   │   │   ├── repository/

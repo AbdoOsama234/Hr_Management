@@ -14,64 +14,67 @@ import '../widgets/profile_edit_form.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/profile_info_section.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    /// Feed dashboard data into the shared ProfileCubit (only once)
+    final profileCubit = context.read<ProfileCubit>();
+    if (profileCubit.state is! ProfileLoaded) {
+      final mainState = context.read<MainScreenCubit>().state;
+      if (mainState is MainScreenLoaded) {
+        profileCubit.loadProfile(mainState);
+      } else {
+        profileCubit.loadProfile();
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      /// ✅ نعمل Cubit هنا (حل آمن)
-      create: (context) {
-        final cubit = ProfileCubit();
+    return Scaffold(
+      backgroundColor: AppColors.backGround,
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          /// 🔄 Loading
+          if (state is ProfileInitial || state is ProfileLoading) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
+            );
+          }
 
-        final mainState = context.read<MainScreenCubit>().state;
+          /// ❌ Error
+          if (state is ProfileError) {
+            return const Center(
+              child: Text("Something went wrong"),
+            );
+          }
 
-        /// 🔥 init مرة واحدة
-        if (mainState is MainScreenLoaded) {
-          cubit.loadProfile(mainState);
-        } else {
-          cubit.loadProfile();
-        }
+          /// ✅ Loaded
+          if (state is ProfileLoaded) {
+            return _buildContent(
+              context: context,
+              name: state.name,
+              phone: state.phone,
+              jobTitle: state.jobTitle,
+              imagePath: state.imagePath,
+              isEditMode: state.isEditMode,
+              showSuccessSnack: state.isUpdated,
+            );
+          }
 
-        return cubit;
-      },
-
-      child: Scaffold(
-        backgroundColor: AppColors.backGround,
-        body: BlocBuilder<ProfileCubit, ProfileState>(
-          builder: (context, state) {
-            /// 🔄 Loading
-            if (state is ProfileInitial || state is ProfileLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
-                ),
-              );
-            }
-
-            /// ❌ Error
-            if (state is ProfileError) {
-              return const Center(
-                child: Text("Something went wrong"),
-              );
-            }
-
-            /// ✅ Loaded
-            if (state is ProfileLoaded) {
-              return _buildContent(
-                context: context,
-                name: state.name,
-                phone: state.phone,
-                jobTitle: state.jobTitle,
-                imagePath: state.imagePath,
-                isEditMode: state.isEditMode,
-                showSuccessSnack: state.isUpdated,
-              );
-            }
-
-            return const SizedBox();
-          },
-        ),
+          return const SizedBox();
+        },
       ),
     );
   }
