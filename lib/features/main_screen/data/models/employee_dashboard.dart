@@ -3,7 +3,7 @@ import 'daily_work_log.dart';
 class EmployeeDashboard {
   final String employeeName;
   final String jobTitle;
-  final String avatar;
+  final String? avatar;
   final int presentDays;
   final int leaveDays;
   final double lateHoursUsed;
@@ -14,7 +14,7 @@ class EmployeeDashboard {
   EmployeeDashboard({
     required this.employeeName,
     required this.jobTitle,
-    required this.avatar,
+    this.avatar,
     required this.presentDays,
     required this.leaveDays,
     required this.lateHoursUsed,

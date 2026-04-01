@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +8,6 @@ import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
 import 'package:hr_manegement/core/app_cubit/app_state.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/features/auth/view/screens/login_screen.dart';
-import 'package:hr_manegement/features/main_screen/controller/main_screen_cubit.dart';
 import 'package:hr_manegement/features/main_screen/view/widgets/drawer_menu_item.dart';
 import 'package:hr_manegement/features/main_screen/view/widgets/drawer_profile_header.dart';
 import 'package:hr_manegement/features/profile/view/screens/profile_screen.dart';
@@ -18,8 +19,11 @@ import 'package:hr_manegement/features/errand_requests/view/screens/errand_scree
 import 'package:hr_manegement/my_app.dart';
 
 import '../../../../ sheard/componnents/custom_button.dart';
+import '../../../../core/app_assets.dart';
 import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
+import '../../../profile/controller/profile_cubit.dart';
+import '../../../profile/controller/profile_state.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -31,194 +35,227 @@ class MainDrawer extends StatelessWidget {
 
     // final isArabic = context.locale.languageCode == 'ar';
 
-    final state = context.watch<MainScreenCubit>().state;
+    //final state = context.watch<MainScreenCubit>().state;
 
-    String name = "Employee Name";
-    String jobTitle = "Job Title";
-    String profileImage = "https://ui-avatars.com/api/?name=User";
+    // String name = "Employee Name";
+    // String jobTitle = "Job Title";
+    // String? profileImage;
 
-    if (state is MainScreenLoaded) {
-      name = state.dashboard.employeeName;
-      jobTitle = state.dashboard.jobTitle;
-      profileImage = state.dashboard.avatar;
-    }
+    // if (state is MainScreenLoaded) {
+    //   name = state.dashboard.employeeName;
+    //   jobTitle = state.dashboard.jobTitle;
+    //   profileImage = state.dashboard.avatar;
+    // }
 
-    return BlocBuilder<AppCubit, AppState>(
+    return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        return Drawer(
-          backgroundColor: AppColors.backGround,
-          width: 80.w,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadiusDirectional.only(
-              topEnd: Radius.circular(30),
-              bottomEnd: Radius.circular(30),
-            ),
-          ),
-          child: Column(
-            children: [
-              /// Profile Header
-              DrawerProfileHeader(
-                name: name,
-                jobTitle: jobTitle,
-                profileImageUrl: profileImage,
+        String name = '';
+        String jobTitle = '';
+        ImageProvider? imageProvider;
 
-                onTap: () {
-                  _navigateTo(context, const ProfileScreen());
-                },
+        if (state is ProfileLoaded) {
+          name = state.name;
+          jobTitle = state.jobTitle;
+
+          /// 🔥 الصورة (File أو Network)
+          if (state.imagePath != null && state.imagePath!.isNotEmpty) {
+            imageProvider = FileImage(File(state.imagePath!));
+          } else if (state.avatarUrl != null && state.avatarUrl!.isNotEmpty) {
+            imageProvider = NetworkImage(state.avatarUrl!);
+          } else {
+            imageProvider = AssetImage(AppAssets.avatar2);
+          }
+        }
+        return BlocBuilder<AppCubit, AppState>(
+          builder: (context, state) {
+            return Drawer(
+              backgroundColor: AppColors.backGround,
+              width: 80.w,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(30),
+                  bottomEnd: Radius.circular(30),
+                ),
               ),
+              child: Column(
+                children: [
+                  /// Profile Header
+                  DrawerProfileHeader(
+                    name: name,
+                    jobTitle: jobTitle,
+                    profileImageProvider: imageProvider,
 
-              /// Menu Items
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-                  child: Column(
-                    children: [
-                      DrawerMenuItem(
-                        icon: Icons.task_alt_rounded,
-                        title: 'my_missions'.tr(),
+                    onTap: () {
+                      _navigateTo(context, const ProfileScreen());
+                    },
+                  ),
 
-                        onTap: () =>
-                            _navigateTo(context, const MyMissionScreen()),
+                  /// Menu Items
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4.w,
+                        vertical: 2.h,
                       ),
-                      _buildDivider(),
-                      DrawerMenuItem(
-                        icon: Icons.lightbulb_outline_rounded,
-                        title: 'ideas'.tr(),
-                        onTap: () => _navigateTo(context, const IdeasScreen()),
-                      ),
-                      _buildDivider(),
-                      DrawerMenuItem(
-                        icon: Icons.event_note_rounded,
-                        title: 'holiday_request'.tr(),
+                      child: Column(
+                        children: [
+                          DrawerMenuItem(
+                            icon: Icons.task_alt_rounded,
+                            title: 'my_missions'.tr(),
 
-                        onTap: () =>
-                            _navigateTo(context, const HolidayScreen()),
-                      ),
-                      _buildDivider(),
+                            onTap: () =>
+                                _navigateTo(context, const MyMissionScreen()),
+                          ),
+                          _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.lightbulb_outline_rounded,
+                            title: 'ideas'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const IdeasScreen()),
+                          ),
+                          _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.event_note_rounded,
+                            title: 'holiday_request'.tr(),
 
-                      DrawerMenuItem(
-                        icon: Icons.access_time_rounded,
-                        title: 'permission_request'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const HolidayScreen()),
+                          ),
+                          _buildDivider(),
 
-                        onTap: () =>
-                            _navigateTo(context, const PermissionScreen()),
-                      ),
-                      _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.access_time_rounded,
+                            title: 'permission_request'.tr(),
 
-                      DrawerMenuItem(
-                        icon: Icons.account_balance_wallet_outlined,
-                        title: 'loan_request'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const PermissionScreen()),
+                          ),
+                          _buildDivider(),
 
-                        onTap: () => _navigateTo(context, const LoanScreen()),
-                      ),
-                      _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.account_balance_wallet_outlined,
+                            title: 'loan_request'.tr(),
 
-                      DrawerMenuItem(
-                        icon: Icons.flight_takeoff_rounded,
-                        title: 'business_trip_request'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const LoanScreen()),
+                          ),
+                          _buildDivider(),
 
-                        onTap: () =>
-                            _navigateTo(context, const BusinessTripScreen()),
-                      ),
-                      _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.flight_takeoff_rounded,
+                            title: 'business_trip_request'.tr(),
 
-                      DrawerMenuItem(
-                        icon: Icons.work_outline_rounded,
-                        title: 'errand_request'.tr(),
-                        onTap: () => _navigateTo(context, const ErrandScreen()),
-                      ),
-                      _buildDivider(),
-
-                      /// Dark Mode Toggle
-                      DrawerMenuItem(
-                        icon: Icons.dark_mode_rounded,
-                        title: 'change_theme'.tr(),
-
-                        trailingIcon: MyApp.isDark
-                            ? Icons.light_mode_rounded
-                            : Icons.dark_mode_rounded,
-                        onTap: () {
-                          appCubit.changeTheme();
-                        },
-                      ),
-
-                      _buildDivider(),
-
-                      /// Language Toggle
-                      DrawerMenuItem(
-                        icon: Icons.language_rounded,
-                        title: 'change_language'.tr(),
-
-                        trailingIcon: null,
-                        onTap: () {
-                          appCubit.changeLang(
-                            appCubit.locale.languageCode == 'ar' ? 'en' : 'ar',
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 6.w,
-                          vertical: 0.5.h,
-                        ),
-                        child: Row(
-                          mainAxisAlignment:
-                              appCubit.locale.languageCode == "ar"
-                              ? MainAxisAlignment.end
-                              : MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              appCubit.locale.languageCode == "ar"
-                                  ? 'العربية'
-                                  : 'English',
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11.sp,
-                              ),
+                            onTap: () => _navigateTo(
+                              context,
+                              const BusinessTripScreen(),
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                child: CustomButton(
-                  text: 'logout'.tr(),
-                  width: 300,
-                  fontsize: 12,
-                  height: 50,
-                  butcolor: MyApp.isDark
-                      ? AppColors.primary
-                      : AppColors.primary,
-                  radius: 12,
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                      (route) => false,
-                    );
-                  },
-                ),
-              ),
+                          ),
+                          _buildDivider(),
 
-              /// Version
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 2.h),
-                child: Text(
-                  '${'version'.tr()} 1.0.0',
-                  style: TextStyle(
-                    color: MyApp.isDark ? Colors.white24 : Colors.black26,
-                    fontSize: 10.sp,
+                          DrawerMenuItem(
+                            icon: Icons.work_outline_rounded,
+                            title: 'errand_request'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const ErrandScreen()),
+                          ),
+                          _buildDivider(),
+
+                          /// Dark Mode Toggle
+                          DrawerMenuItem(
+                            icon: Icons.dark_mode_rounded,
+                            title: 'change_theme'.tr(),
+
+                            trailingIcon: MyApp.isDark
+                                ? Icons.light_mode_rounded
+                                : Icons.dark_mode_rounded,
+                            onTap: () {
+                              appCubit.changeTheme();
+                            },
+                          ),
+
+                          _buildDivider(),
+
+                          /// Language Toggle
+                          DrawerMenuItem(
+                            icon: Icons.language_rounded,
+                            title: 'change_language'.tr(),
+
+                            trailingIcon: null,
+                            onTap: () {
+                              appCubit.changeLang(
+                                appCubit.locale.languageCode == 'ar'
+                                    ? 'en'
+                                    : 'ar',
+                              );
+                            },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                              vertical: 0.5.h,
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                                  appCubit.locale.languageCode == "ar"
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  appCubit.locale.languageCode == "ar"
+                                      ? 'العربية'
+                                      : 'English',
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2.w),
+                    child: CustomButton(
+                      text: 'logout'.tr(),
+                      width: 300,
+                      fontsize: 12,
+                      height: 50,
+                      butcolor: MyApp.isDark
+                          ? AppColors.primary
+                          : AppColors.primary,
+                      radius: 12,
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                    ),
+                  ),
+
+                  /// Version
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 2.h),
+                    child: Text(
+                      '${'version'.tr()} 1.0.0',
+                      style: TextStyle(
+                        color: MyApp.isDark ? Colors.white24 : Colors.black26,
+                        fontSize: 10.sp,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );

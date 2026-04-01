@@ -36,7 +36,7 @@ class ProfileLoaded extends ProfileState {
     required this.phone,
     required this.jobTitle,
     this.imagePath,
-    this.avatarUrl=AppAssets.avatar2,
+    this.avatarUrl = AppAssets.avatar2,
     this.isEditMode = false,
     this.isUpdated = false,
   });

@@ -6,14 +6,14 @@ import 'package:hr_manegement/core/text_style.dart';
 class DrawerProfileHeader extends StatelessWidget {
   final String name;
   final String jobTitle;
-  final String profileImageUrl;
+  final ImageProvider? profileImageProvider;
   final VoidCallback onTap;
 
   const DrawerProfileHeader({
     super.key,
     required this.name,
     required this.jobTitle,
-    required this.profileImageUrl,
+    required this.profileImageProvider,
     required this.onTap,
   });
 
@@ -62,7 +62,7 @@ class DrawerProfileHeader extends StatelessWidget {
               child: CircleAvatar(
                 radius: 7.w,
                 backgroundColor: AppColors.backGround,
-                backgroundImage: NetworkImage(profileImageUrl),
+                backgroundImage: profileImageProvider,
               ),
             ),
             SizedBox(width: 4.w),

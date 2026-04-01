@@ -10,19 +10,15 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
 import '../../../../ sheard/componnents/icon_button.dart';
+import '../../../../core/app_assets.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
-
 
 class EmployeeHeader extends StatelessWidget {
   final VoidCallback? onNotificationTap;
   final VoidCallback? onMenuTap;
 
-  const EmployeeHeader({
-    super.key,
-    this.onNotificationTap,
-    this.onMenuTap,
-  });
+  const EmployeeHeader({super.key, this.onNotificationTap, this.onMenuTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +35,10 @@ class EmployeeHeader extends StatelessWidget {
           /// 🔥 الصورة (File أو Network)
           if (state.imagePath != null && state.imagePath!.isNotEmpty) {
             imageProvider = FileImage(File(state.imagePath!));
-          } else if (state.avatarUrl != null &&
-              state.avatarUrl!.isNotEmpty) {
+          } else if (state.avatarUrl != null && state.avatarUrl!.isNotEmpty) {
             imageProvider = NetworkImage(state.avatarUrl!);
+          } else {
+            imageProvider = AssetImage(AppAssets.avatar2);
           }
         }
 
@@ -117,8 +114,7 @@ class EmployeeHeader extends StatelessWidget {
 
               /// Name & Job
               Column(
-                crossAxisAlignment:
-                context.locale.languageCode == 'ar'
+                crossAxisAlignment: context.locale.languageCode == 'ar'
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -134,7 +130,9 @@ class EmployeeHeader extends StatelessWidget {
                   SizedBox(height: 0.4.h),
                   Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 3.w, vertical: 0.4.h),
+                      horizontal: 3.w,
+                      vertical: 0.4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(20),
@@ -178,11 +176,7 @@ class EmployeeHeader extends StatelessWidget {
                   backgroundColor: AppColors.avatarBg,
                   backgroundImage: imageProvider,
                   child: imageProvider == null
-                      ? Icon(
-                    Icons.person,
-                    size: 6.w,
-                    color: AppColors.textSub,
-                  )
+                      ? Icon(Icons.person, size: 6.w, color: AppColors.textSub)
                       : null,
                 ),
               ),
