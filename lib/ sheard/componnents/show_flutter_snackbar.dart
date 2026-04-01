@@ -6,7 +6,7 @@ import '../../core/app_colors.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showFlutterSnackBar({
   required String message,
-  Color toastColor = AppColors.green,
+  Color? toastColor
 }) {
   return ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
     SnackBar(
@@ -14,7 +14,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showFlutterSnackBar({
         message,
         style: AppTextStyle.body.copyWith(color: Colors.white),
       ),
-      backgroundColor: toastColor,
+      backgroundColor: toastColor??AppColors.green,
     ),
   );
 }

@@ -42,7 +42,7 @@ class DailyTasksWidget extends StatelessWidget {
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 3.8.w,
-                    color: AppColors.primary.withOpacity(0.7),
+                    color: AppColors.primary
                   ),
                   SizedBox(width: 1.8.w),
                   Text(
@@ -123,15 +123,15 @@ class DailyTasksWidget extends StatelessWidget {
 
     switch (importance) {
       case MissionImportance.low:
-        color = Colors.blue;
+        color = AppColors.green;
         label = 'importance_low'.tr();
         break;
       case MissionImportance.medium:
-        color = Colors.orange;
+        color = AppColors.orange;
         label = 'importance_medium'.tr();
         break;
       case MissionImportance.high:
-        color = Colors.red;
+        color = AppColors.red;
         label = 'importance_high'.tr();
         break;
     }

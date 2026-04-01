@@ -10,6 +10,8 @@ class AppAssets {
   static const noWishList = '${imagesPath}no_wish_list.png';
   static const noCrt = '${imagesPath}no_cart.png';
 
+
+
   ///////////////////////////////////////////////////////////
   static const String car1 = '${imagesPath}car1.png';
   static const String car2 = '${imagesPath}car2.png';

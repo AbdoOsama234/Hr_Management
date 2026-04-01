@@ -1,3 +1,5 @@
+import 'package:hr_manegement/core/app_assets.dart';
+
 abstract class ProfileState {
   const ProfileState();
 }
@@ -34,7 +36,7 @@ class ProfileLoaded extends ProfileState {
     required this.phone,
     required this.jobTitle,
     this.imagePath,
-    this.avatarUrl,
+    this.avatarUrl=AppAssets.avatar2,
     this.isEditMode = false,
     this.isUpdated = false,
   });

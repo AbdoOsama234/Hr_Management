@@ -59,7 +59,7 @@ class AppColors {
       MyApp.isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF0F0F5);
 
   // 💜 Primary Colors (UPDATED)
-  static const Color primary = Color(0xFFC362D8);
+  static const Color primary = Color(0xFFce6fd4);
   static const Color primaryDark = Color(0xFFA24FC0);
   static const Color primaryLight = Color(0xFFD8A4E8);
 
@@ -103,12 +103,14 @@ class AppColors {
   // 💜 border مناسب للون الجديد
   static const Color border = Color(0xFFE9D5FF);
 
-  static const Color green = Color(0xff0EAB00);
+  // static const Color green = Color(0xff68f7eb);
+  static Color get green =>
+      MyApp.isDark ? const Color(0xff68f7eb) : const Color(0xFF14afa2);
 
   // 💜 بدل deepPurple الافتراضي
   static const Color deepPurple = Color(0xFFC362D8);
 
-  static const Color red = Color(0xffAB0000);
+  static const Color red = Color(0xffbf5a6b);
 
   static const Color darkBlue = Color(0xff182775);
 
@@ -123,7 +125,8 @@ class AppColors {
   static const Color textFieldHint = Color(0xff8E8E93);
 
   // 🎯 Accent
-  static const Color orange = Color(0xFFC362D8); // نفس الاسم بس لونك الجديد
+  static const Color orange = Color(0xFFFF9800);
+
   static const Color blue = Color(0xff0087FF);
 
   static const Color error = red;
