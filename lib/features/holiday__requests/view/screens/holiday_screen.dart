@@ -6,7 +6,6 @@ import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
@@ -89,8 +88,8 @@ class _HolidayScreenState extends State<HolidayScreen> {
 
                     if (state is HolidayEmpty) {
                       return EmptyScreen(
-                        title: 'no_requests'.tr(),
-                        description: 'no_requests_subtitle'.tr(),
+                        title: 'no_holiday_requests'.tr(),
+                        description: 'no_holiday_requests_subtitle'.tr(),
                         buttonText: 'request_holiday'.tr(),
                         image: AppAssets.appLogo,
 
