@@ -11,14 +11,14 @@ import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 import '../../../../ sheard/componnents/file_preview_screen.dart';
 import '../../../../core/helpers/luanch_url.dart';
-import '../../data/models/my_request_model.dart';
-import '../../controller/my_requests_cubit.dart';
+import '../../data/models/employees_requests_model.dart';
+import '../../controller/employees_requests_cubit.dart';
 import '../../../../my_app.dart';
 
-class MyRequestItemCard extends StatelessWidget {
-  final MyRequestModel request;
+class EmployeesRequestsItemCard extends StatelessWidget {
+  final EmployeesRequestsModel request;
 
-  const MyRequestItemCard({super.key, required this.request});
+  const EmployeesRequestsItemCard({super.key, required this.request});
 
   void _showActionBottomSheet(BuildContext context, RequestStatus newStatus) {
     final notesController = TextEditingController(text: request.changeStateNotes);
@@ -42,7 +42,7 @@ class MyRequestItemCard extends StatelessWidget {
             CustomButton(
               onTap: () {
                 if (formKey.currentState!.validate()) {
-                  context.read<MyRequestsCubit>().updateRequestState(
+                  context.read<EmployeesRequestsCubit>().updateRequestState(
                         requestId: request.id,
                         newStatus: newStatus,
                         changeStateNotes: notesController.text,

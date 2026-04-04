@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../data/models/my_request_model.dart';
-import 'my_requests_state.dart';
+import '../data/models/employees_requests_model.dart';
+import 'employees_requests_state.dart';
 import '../../ideas/data/models/idea_model.dart';
 import '../../business_trip_requests/data/models/business_trip_request_model.dart';
 import '../../errand_requests/data/models/errand_request_model.dart';
@@ -9,20 +9,20 @@ import '../../holiday__requests/data/models/holiday_request_model.dart';
 import '../../loan__requests/data/models/loan_request_model.dart';
 import '../../permission_request/data/models/permission_request_model.dart';
 
-class MyRequestsCubit extends Cubit<MyRequestsState> {
-  MyRequestsCubit() : super(MyRequestsInitial());
+class EmployeesRequestsCubit extends Cubit<EmployeesRequestsState> {
+  EmployeesRequestsCubit() : super(EmployeesRequestsInitial());
 
-  final List<MyRequestModel> _requests = [];
+  final List<EmployeesRequestsModel> _requests = [];
 
   Future<void> loadRequests() async {
-    emit(MyRequestsLoading());
+    emit(EmployeesRequestsLoading());
 
     // Simulating network delay
     await Future.delayed(const Duration(milliseconds: 400));
 
     if (_requests.isEmpty) {
       _requests.addAll([
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '1',
           date: DateTime.now().subtract(const Duration(days: 1)),
           changeStateNotes: '',
@@ -36,7 +36,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
             status: HolidayStatus.pending,
           ),
         ),
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '2',
           date: DateTime.now().subtract(const Duration(days: 2)),
           changeStateNotes: 'Looks good.'.tr(),
@@ -51,7 +51,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
             status: BusinessTripStatus.approved,
           ),
         ),
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '3',
           date: DateTime.now().subtract(const Duration(days: 3)),
           changeStateNotes: 'Not feasible right now.'.tr(),
@@ -67,7 +67,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
             status: IdeaStatus.rejected,
           ),
         ),
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '4',
           date: DateTime.now(),
           changeStateNotes: '',
@@ -82,7 +82,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
             status: ErrandStatus.pending,
           ),
         ),
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '5',
           date: DateTime.now().subtract(const Duration(days: 5)),
           changeStateNotes: 'Insufficient funds.'.tr(),
@@ -96,7 +96,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
             status: LoanStatus.rejected,
           ),
         ),
-        MyRequestModel(
+        EmployeesRequestsModel(
           id: '6',
           date: DateTime.now().subtract(const Duration(hours: 5)),
           changeStateNotes: '',
@@ -115,9 +115,9 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
     }
 
     if (_requests.isEmpty) {
-      emit(MyRequestsEmpty());
+      emit(EmployeesRequestsEmpty());
     } else {
-      emit(MyRequestsLoaded(List.from(_requests)));
+      emit(EmployeesRequestsLoaded(List.from(_requests)));
     }
   }
 
@@ -131,8 +131,8 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
       _requests[index].status = newStatus;
       _requests[index].changeStateNotes = changeStateNotes;
 
-      if (state is MyRequestsLoaded) {
-        emit(MyRequestsLoaded(List.from(_requests)));
+      if (state is EmployeesRequestsLoaded) {
+        emit(EmployeesRequestsLoaded(List.from(_requests)));
       }
     }
   }

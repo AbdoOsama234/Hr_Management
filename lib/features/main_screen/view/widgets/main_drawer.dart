@@ -22,7 +22,7 @@ import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_assets.dart';
 import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
-import '../../../my_requests/view/screens/my_requests_screen.dart';
+import '../../../employees_requests/view/screens/employees_requests_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
 
@@ -103,10 +103,8 @@ class MainDrawer extends StatelessWidget {
                         children: [
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
-                            title: 'my_requests'.tr(),
-
-                            onTap: () =>
-                                _navigateTo(context, const MyRequestsScreen()),
+                            title: 'employees_requests'.tr(),
+                            onTap: () => _navigateTo(context, const EmployeesRequestsScreen()),
                           ),
                           _buildDivider(),
                           DrawerMenuItem(

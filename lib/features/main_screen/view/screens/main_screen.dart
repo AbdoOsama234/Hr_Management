@@ -16,7 +16,6 @@ import '../../../notifications/view/screens/notifications_screen.dart';
 
 import '../../../profile/controller/profile_cubit.dart';
 import '../../controller/main_screen_cubit.dart';
-import '../widgets/daily_tasks_widget.dart';
 
 import '../widgets/employee_header.dart';
 import '../widgets/today_status_card.dart';

@@ -20,7 +20,7 @@ enum RequestStatus {
   pindding
 }
 
-class MyRequestModel {
+class EmployeesRequestsModel {
   final String id;
   DateTime date;
   String changeStateNotes;
@@ -34,7 +34,7 @@ class MyRequestModel {
   LoanRequestModel? loanRequestModel;
   PermissionRequestModel? permissionRequestModel;
 
-  MyRequestModel({
+  EmployeesRequestsModel({
     required this.id,
     required this.date,
     required this.changeStateNotes,

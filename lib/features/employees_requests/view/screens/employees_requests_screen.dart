@@ -14,19 +14,19 @@ import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../ sheard/componnents/search_bar.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 
-import '../../data/models/my_request_model.dart';
-import '../../controller/my_requests_cubit.dart';
-import '../../controller/my_requests_state.dart';
-import '../widgets/my_request_item_card.dart';
+import '../../data/models/employees_requests_model.dart';
+import '../../controller/employees_requests_cubit.dart';
+import '../../controller/employees_requests_state.dart';
+import '../widgets/employees_requests_item_card.dart';
 
-class MyRequestsScreen extends StatefulWidget {
-  const MyRequestsScreen({super.key});
+class EmployeesRequestsScreen extends StatefulWidget {
+  const EmployeesRequestsScreen({super.key});
 
   @override
-  State<MyRequestsScreen> createState() => _MyRequestsScreenState();
+  State<EmployeesRequestsScreen> createState() => _EmployeesRequestsScreenState();
 }
 
-class _MyRequestsScreenState extends State<MyRequestsScreen> {
+class _EmployeesRequestsScreenState extends State<EmployeesRequestsScreen> {
   var searchController = TextEditingController();
   Timer? _debounce;
   RequestStatus? _selectedStatusFilter;
@@ -127,9 +127,9 @@ class _MyRequestsScreenState extends State<MyRequestsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MyRequestsCubit()..loadRequests(),
+      create: (context) => EmployeesRequestsCubit()..loadRequests(),
       child: Scaffold(
-        appBar: CustomAppBar(title: 'my_requests'.tr()),
+        appBar: CustomAppBar(title: 'employees_requests'.tr()),
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
@@ -148,13 +148,13 @@ class _MyRequestsScreenState extends State<MyRequestsScreen> {
               ),
               AppSizedBox.h2,
               Expanded(
-                child: BlocBuilder<MyRequestsCubit, MyRequestsState>(
+                child: BlocBuilder<EmployeesRequestsCubit, EmployeesRequestsState>(
                   builder: (context, state) {
-                    if (state is MyRequestsLoading) {
+                    if (state is EmployeesRequestsLoading) {
                       return const Center(child: LoaderWidget());
                     }
 
-                    if (state is MyRequestsEmpty) {
+                    if (state is EmployeesRequestsEmpty) {
                       return EmptyScreen(
                         title: 'no_requests'.tr(),
                         description: 'no_requests_subtitle'.tr(),
@@ -162,8 +162,8 @@ class _MyRequestsScreenState extends State<MyRequestsScreen> {
                       );
                     }
 
-                    if (state is MyRequestsLoaded) {
-                      List<MyRequestModel> filteredRequests = state.requests;
+                    if (state is EmployeesRequestsLoaded) {
+                      List<EmployeesRequestsModel> filteredRequests = state.requests;
 
                       if (_selectedStatusFilter != null) {
                         filteredRequests = filteredRequests
@@ -187,7 +187,7 @@ class _MyRequestsScreenState extends State<MyRequestsScreen> {
 
                       return RefreshIndicator(
                         onRefresh: () =>
-                            context.read<MyRequestsCubit>().loadRequests(),
+                            context.read<EmployeesRequestsCubit>().loadRequests(),
                         child: ListView.builder(
                           itemCount: filteredRequests.length,
                           itemBuilder: (context, index) {
@@ -206,7 +206,7 @@ class _MyRequestsScreenState extends State<MyRequestsScreen> {
                                   ),
                                 );
                               },
-                              child: MyRequestItemCard(
+                              child: EmployeesRequestsItemCard(
                                 request: filteredRequests[index],
                               ),
                             );
