@@ -77,7 +77,7 @@ class AttendanceSummaryCard extends StatelessWidget {
             children: [
               _buildStatItem(
                 icon: Icons.check_circle_rounded,
-                iconColor: AppColors.green,
+                iconColor: AppColors.primary,
                 label: 'attendance'.tr(),
                 value: '$presentDays',
                 valueSuffix: 'day'.tr(),
@@ -88,7 +88,7 @@ class AttendanceSummaryCard extends StatelessWidget {
               _buildDivider(AppColors.dividerColor),
               _buildStatItem(
                 icon: Icons.beach_access_rounded,
-                iconColor: AppColors.orange,
+                iconColor: AppColors.primary,
                 label: 'leaves'.tr(),
                 value: '$leaveDays',
                 valueSuffix: 'days'.tr(),
@@ -99,7 +99,7 @@ class AttendanceSummaryCard extends StatelessWidget {
               _buildDivider(AppColors.dividerColor),
               _buildStatItem(
                 icon: Icons.schedule_rounded,
-                iconColor: AppColors.blue,
+                iconColor: AppColors.primary,
                 label: 'late_limit'.tr(),
                 value: '${allowedLateHours.toInt()}',
                 valueSuffix: 'hours'.tr(),

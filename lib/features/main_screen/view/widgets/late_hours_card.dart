@@ -142,19 +142,20 @@ class LateHoursCard extends StatelessWidget {
                     _buildDetailRow(
                       'the_remaining'.tr(),
                       '${_remaining.toInt()} ${'hours'.tr()}',
-                      _statusColor,
+                      AppColors.primary,
+                      // _statusColor,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_used'.tr(),
                       '${lateHoursUsed.toInt()} ${'hour'.tr()}',
-                      AppColors.orange,
+                      AppColors.primary,
                     ),
                     SizedBox(height: 1.2.h),
                     _buildDetailRow(
                       'the_allowed'.tr(),
                       '${lateHoursAllowed.toInt()} ${'hours'.tr()}',
-                      AppColors.blue,
+                      AppColors.primary,
                     ),
                   ],
                 ),
