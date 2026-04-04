@@ -8,10 +8,69 @@ import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../data/models/mission_model.dart';
 import '../../../../my_app.dart';
 
-class MyMissionItemCard extends StatelessWidget {
+import '../../../../ sheard/componnents/show_bottom_sheet.dart';
+
+class MyMissionItemCard extends StatefulWidget {
   final MyMissionModel mission;
 
   const MyMissionItemCard({super.key, required this.mission});
+
+  @override
+  State<MyMissionItemCard> createState() => _MyMissionItemCardState();
+}
+
+class _MyMissionItemCardState extends State<MyMissionItemCard> {
+  late MissionStatus _currentStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentStatus = widget.mission.status;
+  }
+
+  @override
+  void didUpdateWidget(covariant MyMissionItemCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.mission != widget.mission) {
+      _currentStatus = widget.mission.status;
+    }
+  }
+
+  void _showChangeStatusBottomSheet() {
+    showAppBottomSheet(
+      context: context,
+      title: 'change_status'.tr(),
+      body: Column(
+        children: MissionStatus.values.map((status) {
+          final isSelected = _currentStatus == status;
+          return ListTile(
+            title: Text(_getStatusLabel(status)),
+            trailing: isSelected
+                ? const Icon(Icons.check, color: AppColors.primary)
+                : null,
+            onTap: () {
+              setState(() {
+                _currentStatus = status;
+                widget.mission.status = status;
+              });
+              Navigator.pop(context);
+            },
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  String _getStatusLabel(MissionStatus status) {
+    switch (status) {
+      case MissionStatus.pending:
+        return 'status_pending'.tr();
+      case MissionStatus.approved:
+        return 'status_approved'.tr();
+      case MissionStatus.rejected:
+        return 'status_rejected'.tr();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +104,7 @@ class MyMissionItemCard extends StatelessWidget {
                   ),
                   SizedBox(width: 2.w),
                   Text(
-                    dateFoemated(mission.date.toString()),
+                    dateFoemated(widget.mission.date.toString()),
                     style: AppTextStyle.hint.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.bold,
@@ -53,30 +112,51 @@ class MyMissionItemCard extends StatelessWidget {
                   ),
                 ],
               ),
-              _buildStatusChip(mission.status),
+              _buildStatusChip(_currentStatus),
             ],
           ),
           AppSizedBox.h2,
+          Text(
+            widget.mission.notes,
+            style: AppTextStyle.title.copyWith(
+              color: AppColors.textMain,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          AppSizedBox.h2,
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      mission.notes,
-                      style: AppTextStyle.title.copyWith(
-                        color: AppColors.textMain,
-                        fontWeight: FontWeight.w600,
-                      ),
+              _buildImportanceChip(widget.mission.importance),
+              const Spacer(),
+              InkWell(
+                onTap: _showChangeStatusBottomSheet,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 2.w,
+                    vertical: 0.8.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.primary.withOpacity(0.3),
                     ),
-                    AppSizedBox.h1,
-                    _buildImportanceChip(mission.importance),
-                  ],
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit, size: 4.w, color: AppColors.primary),
+                      SizedBox(width: 1.w),
+                      Text(
+                        'change_status'.tr(),
+                        style: AppTextStyle.hint.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              // No edit or delete buttons here
             ],
           ),
         ],

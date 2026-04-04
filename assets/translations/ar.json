@@ -179,6 +179,9 @@
   "daily_task_title": "إرسال التقرير اليومي",
   "daily_task_desc": "قم بملء وإرسال تقريرك اليومي قبل المغادرة.",
   "complete_button": "اتممت المهمه",
-  "completed": "اكتمل"
-
+  "completed": "اكتمل",
+  "change_status": "تغيير الحالة",
+  "filter_by_status": "تصفية حسب الحالة",
+  "mock_mission_4_notes": "حضور اجتماع مزامنة المشروع وتدوين الملاحظات.",
+  "mock_mission_5_notes": "مراجعة طلبات السحب وتقديم الملاحظات."
 }

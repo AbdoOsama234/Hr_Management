@@ -37,6 +37,20 @@ class MyMissionCubit extends Cubit<MyMissionState> {
           importance: MissionImportance.low,
           notes: 'mock_mission_3_notes'.tr(),
         ),
+        MyMissionModel(
+          id: '4',
+          date: DateTime.now().add(const Duration(days: 4)),
+          status: MissionStatus.pending,
+          importance: MissionImportance.low,
+          notes: 'mock_mission_4_notes'.tr(),
+        ),
+        MyMissionModel(
+          id: '5',
+          date: DateTime.now().subtract(const Duration(days: 3)),
+          status: MissionStatus.approved,
+          importance: MissionImportance.high,
+          notes: 'mock_mission_5_notes'.tr(),
+        ),
       ]);
     }
 

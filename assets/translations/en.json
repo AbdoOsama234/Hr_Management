@@ -179,6 +179,9 @@
   "daily_task_title": "Submit Daily Report",
   "daily_task_desc": "Fill and submit your daily report before leaving.",
   "complete_button": "Mark as Complete",
-  "completed": "Completed"
-
+  "completed": "Completed",
+  "change_status": "Change Status",
+  "filter_by_status": "Filter by Status",
+  "mock_mission_4_notes": "Attending project sync meeting and taking notes.",
+  "mock_mission_5_notes": "Reviewing pull requests and providing feedback."
 }

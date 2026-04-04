@@ -44,7 +44,7 @@ class AppSearchBar extends StatelessWidget {
           child: CustomTextField(
             readOnly: readOnly,
             controller: controller,
-            hint: hint ?? 'Search by name'.tr(),
+            hint: hint ?? 'search_by_name'.tr(),
             type: type ?? TextInputType.text,
             onChange: onChange,
             onFieldSubmitted: onFieldSubmitted,
