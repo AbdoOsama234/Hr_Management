@@ -11,6 +11,7 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
 import '../../../my_mission/data/models/mission_model.dart';
+import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 
 import '../../../profile/controller/profile_cubit.dart';
@@ -112,7 +113,7 @@ class _MainScreenBody extends StatelessWidget {
                               AppSizedBox.h3,
 
                               /// Daily Tasks
-                              DailyTasksWidget(
+                              MyMissionItemCard(
                                 mission: MyMissionModel(
                                   id: '1',
                                   date: DateTime.now(),
@@ -121,7 +122,6 @@ class _MainScreenBody extends StatelessWidget {
                                   status: MissionStatus.pending,
                                 ),
                               ),
-
                               SizedBox(height: .5.h),
 
                               /// Today Status

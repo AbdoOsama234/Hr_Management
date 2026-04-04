@@ -42,9 +42,10 @@ class _EmptyScreenState extends State<EmptyScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+
           AppAssetImage(
             uri: widget.image ?? AppAssets.bill,
-            width: 80.w,
+            width: 50.w,
 
             fit: BoxFit.contain,
           ),
