@@ -137,6 +137,23 @@ lib/
 │   │       ├── widgets/
 │   │           ├── business_trip_request_card.dart
 │   │           └── business_trip_request_form.dart
+│   ├── employee/
+│   │   ├── controller/
+│   │   │   ├── employee_cubit.dart
+│   │   │   └── employee_state.dart
+│   │   ├── data/
+│   │   │   ├── datasource/
+│   │   │   │   └── employee_local_data_source.dart
+│   │   │   ├── models/
+│   │   │   │   └── employee_model.dart
+│   │   │   ├── repository/
+│   │   │       └── employee_repository.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   ├── branch_employees_screen.dart
+│   │       │   └── employee_screen.dart
+│   │       ├── widgets/
+│   │           └── branch_card.dart
 │   ├── errand_requests/
 │   │   ├── controller/
 │   │   │   ├── errand_cubit.dart

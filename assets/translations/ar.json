@@ -183,5 +183,14 @@
   "change_status": "تغيير الحالة",
   "filter_by_status": "تصفية حسب الحالة",
   "mock_mission_4_notes": "حضور اجتماع مزامنة المشروع وتدوين الملاحظات.",
-  "mock_mission_5_notes": "مراجعة طلبات السحب وتقديم الملاحظات."
+  "mock_mission_5_notes": "مراجعة طلبات السحب وتقديم الملاحظات.",
+  "employees": "الموظفين",
+  "company_branches": "فروع الشركة",
+  "branch_riyadh": "فرع الرياض",
+  "branch_jeddah": "فرع جدة",
+  "branch_digital_tracks": "فرع ديجيتال تريكس",
+  "branch_cairo": "فرع القاهرة",
+  "view_employees": "عرض الموظفين",
+  "no_employees_found": "لم يتم العثور على موظفين",
+  "no_employees_found_desc": "لا يوجد موظفين مسجلين في هذا الفرع حالياً."
 }

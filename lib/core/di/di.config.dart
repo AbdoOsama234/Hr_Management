@@ -27,6 +27,9 @@ import '../storage/local/app_prefs.dart' as _i15;
 import '../storage/remote/dio_helper/dio_helper.dart' as _i327;
 import 'module/di_module.dart' as _i495;
 import 'module/dio_module.dart' as _i556;
+import '../../features/employee/data/datasource/employee_local_data_source.dart' as _i101;
+import '../../features/employee/data/repository/employee_repository.dart' as _i102;
+import '../../features/employee/controller/employee_cubit.dart' as _i103;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> $initGetIt(
@@ -63,6 +66,13 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i97.MainScreenCubit>(
     () => _i97.MainScreenCubit(gh<_i984.MainScreenRepository>()),
+  );
+  gh.factory<_i101.EmployeeLocalDataSource>(() => _i101.EmployeeLocalDataSourceImpl());
+  gh.factory<_i102.EmployeeRepository>(
+    () => _i102.EmployeeRepositoryImpl(gh<_i101.EmployeeLocalDataSource>()),
+  );
+  gh.factory<_i103.EmployeeCubit>(
+    () => _i103.EmployeeCubit(gh<_i102.EmployeeRepository>()),
   );
   return getIt;
 }

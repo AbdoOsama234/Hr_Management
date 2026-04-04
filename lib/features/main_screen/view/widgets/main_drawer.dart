@@ -20,6 +20,7 @@ import 'package:hr_manegement/my_app.dart';
 
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_assets.dart';
+import '../../../employee/view/screens/employee_screen.dart';
 import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
@@ -100,6 +101,13 @@ class MainDrawer extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
+                          DrawerMenuItem(
+                            icon: Icons.people_alt_rounded,
+                            title: 'employees'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const EmployeeScreen()),
+                          ),
+                          _buildDivider(),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
                             title: 'my_missions'.tr(),
