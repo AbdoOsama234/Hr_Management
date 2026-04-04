@@ -93,14 +93,14 @@ class WeeklyReportList extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(isDark ? 0.1 : 0.07),
+                  // color: AppColors.primary.withOpacity(isDark ? 0.1 : 0.07),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   log.day,
                   style: AppTextStyle.body.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+                    color: AppColors.textMain,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -174,7 +174,7 @@ class WeeklyReportList extends StatelessWidget {
                 Icons.login_rounded,
                 'check_in'.tr(),
                 log.checkIn,
-                AppColors.green,
+                AppColors.primary,
                 isDark,
               ),
               SizedBox(width: 2.w),
@@ -190,7 +190,7 @@ class WeeklyReportList extends StatelessWidget {
                 Icons.access_time_filled,
                 'working_hours'.tr(),
                 log.workHours,
-                AppColors.blue,
+                AppColors.primary,
                 isDark,
               ),
             ],
