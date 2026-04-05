@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
 import '../../../../ sheard/componnents/empty_screen.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
+import '../../../../core/app_router.dart';
 import '../../controller/employee_cubit.dart';
 import '../../controller/employee_state.dart';
 import '../widgets/employee_card.dart';
@@ -79,8 +80,16 @@ class BranchEmployeesScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: EmployeeCard(employee: employee),
-                  );
+                    child: EmployeeCard(
+                      employee: employee,
+                      onTrack: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.tracking,
+                          arguments: employee.name,
+                        );
+                      },
+                    ),                  );
                 },
               );
             }

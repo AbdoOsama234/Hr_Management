@@ -151,9 +151,12 @@ lib/
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   ├── branch_employees_screen.dart
-│   │       │   └── employee_screen.dart
+│   │       │   ├── employee_screen.dart
+│   │       │   └── tracking_screen.dart
 │   │       ├── widgets/
-│   │           └── branch_card.dart
+│   │           ├── branch_card.dart
+│   │           ├── employee_card.dart
+│   │           └── map_icon.dart
 │   ├── errand_requests/
 │   │   ├── controller/
 │   │   │   ├── errand_cubit.dart

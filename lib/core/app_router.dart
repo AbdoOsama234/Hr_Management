@@ -17,6 +17,8 @@ import 'package:hr_manegement/features/notifications/view/screens/notifications_
 import 'package:hr_manegement/features/employee/view/screens/employee_screen.dart';
 import 'package:hr_manegement/features/employee/view/screens/branch_employees_screen.dart';
 
+import '../features/employee/view/screens/tracking_screen.dart';
+
 class Routes {
   static const String splash = "/";
   static const String login = "/login";
@@ -37,6 +39,8 @@ class Routes {
   /// Employee Screens
   static const String employee = "/employee";
   static const String branchEmployees = "/branchEmployees";
+  static const String tracking = "/tracking";
+
 }
 
 class AppRouter {
@@ -91,6 +95,16 @@ class AppRouter {
         final branchName = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => BranchEmployeesScreen(branchName: branchName),
+        );
+    /// Tracking Screen
+      case Routes.tracking:
+        final employeeName = settings.arguments as String;
+
+        return MaterialPageRoute(
+          builder: (_) => const TrackingScreen(),
+          settings: RouteSettings(
+            arguments: employeeName,
+          ),
         );
 
       default:

@@ -4,12 +4,12 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hr_manegement/%20sheard/componnents/icon_button.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
-import '../widgets/map_icon.dart';
+import 'package:hr_manegement/core/app_colors.dart';
 
-/// 🔹 IMPORT YOUR MAP ICON
+import '../../../../ sheard/componnents/icon_button.dart';
+import '../widgets/map_icon.dart';
 
 class TrackingScreen extends StatefulWidget {
   const TrackingScreen({super.key});
@@ -24,13 +24,19 @@ class _TrackingScreenState extends State<TrackingScreen> {
   LatLng? _currentLatLng;
   BitmapDescriptor? _customMarker;
 
+  String? employeeName;
+
   @override
-  void initState() {
-    super.initState();
-    _init();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (employeeName == null) {
+      employeeName =
+      ModalRoute.of(context)!.settings.arguments as String?;
+      _init();
+    }
   }
 
-  /// 🔹 Initialize location + marker
   Future<void> _init() async {
     await _handleLocationPermission();
 
@@ -40,9 +46,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     _currentLatLng = LatLng(position.latitude, position.longitude);
 
-    /// 🔹 Create custom marker using your widget
     _customMarker = await MapIcon(
-      name: "Abdelrahman",
+      name: employeeName ?? "Employee",
       image: "assets/images/avatar1.png",
       onTap: () {
         debugPrint("Marker tapped");
@@ -52,7 +57,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
     setState(() {});
   }
 
-  /// 🔹 Handle permissions
   Future<void> _handleLocationPermission() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -70,7 +74,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
     }
   }
 
-  /// 🔹 Move camera to current location
   Future<void> _goToMyLocation() async {
     final position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
@@ -87,17 +90,18 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /// 🔹 Loading state
     if (_currentLatLng == null || _customMarker == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+      return Scaffold(
+        backgroundColor: AppColors.backGround,
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
+      backgroundColor: AppColors.backGround,
       body: Stack(
         children: [
-          /// 🔹 GOOGLE MAP
+          /// 🔹 MAP
           GoogleMap(
             initialCameraPosition: CameraPosition(
               target: _currentLatLng!,
@@ -105,9 +109,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
             ),
             markers: {
               Marker(
-                markerId: const MarkerId("driver_marker"),
+                markerId: const MarkerId("employee"),
                 position: _currentLatLng!,
                 icon: _customMarker!,
+                infoWindow: InfoWindow(
+                  title: employeeName ?? "Employee",
+                ),
               ),
             },
             myLocationEnabled: true,
@@ -121,49 +128,108 @@ class _TrackingScreenState extends State<TrackingScreen> {
           /// 🔹 GPS BUTTON
           Positioned(
             bottom: 200,
-            left: 12,
+            left: 16,
             child: GestureDetector(
               onTap: _goToMyLocation,
               child: Container(
-                width: 45,
-                height: 45,
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black26, blurRadius: 5),
-                  ],
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.primary,
+                      AppColors.primary.withOpacity(0.8),
+                    ],
+                  ),
+                  shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.my_location),
+                child: Icon(
+                  Icons.my_location,
+                  size: 20,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),
 
-          /// 🔹 TOP RIGHT INFO CARD
+          /// 🔹 EMPLOYEE CARD
           PositionedDirectional(
-            top: 50,
-            end: 20,
+            bottom: 40,
+            start: 16,
+            end: 16,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 8,
-              ),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.black87,
-                borderRadius: BorderRadius.circular(12),
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadowColor,
+                    blurRadius: 12,
+                  ),
+                ],
               ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    "Tracking in progress",
-                    style: TextStyle(color: Colors.white),
+                  const CircleAvatar(
+                    radius: 22,
+                    backgroundImage:
+                    AssetImage("assets/images/avatar1.png"),
                   ),
-                  SizedBox(height: 4),
-                  Text(
-                    "Driver Name",
-                    style: TextStyle(color: Colors.white70),
+                  const SizedBox(width: 10),
+
+                  /// NAME
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          employeeName ?? "Employee",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: AppColors.textMain,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          "Tracking Active",
+                          style: TextStyle(
+                            color: AppColors.textSub,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+
+                  /// STATUS
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          color: AppColors.green,
+                          size: 8,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "Active",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors.textMain,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -174,10 +240,10 @@ class _TrackingScreenState extends State<TrackingScreen> {
             top: 50,
             start: 10,
             child: AppIcon(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-            )
+            ),
           ),
         ],
       ),

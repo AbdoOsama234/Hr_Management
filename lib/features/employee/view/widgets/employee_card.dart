@@ -95,9 +95,7 @@ class EmployeeCard extends StatelessWidget {
               /// تتبع
               Expanded(
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TrackingScreen()));
-                  },
+                  onTap: onTrack,
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 1.2.h),
                     decoration: BoxDecoration(
