@@ -14,6 +14,10 @@ import 'package:hr_manegement/features/permission_request/view/screens/permissio
 import 'package:hr_manegement/features/reports/view/screens/reports_screen.dart';
 import 'package:hr_manegement/features/profile/view/screens/profile_screen.dart';
 import 'package:hr_manegement/features/notifications/view/screens/notifications_screen.dart';
+import 'package:hr_manegement/features/employee/view/screens/employee_screen.dart';
+import 'package:hr_manegement/features/employee/view/screens/branch_employees_screen.dart';
+
+import '../features/employee/view/screens/tracking_screen.dart';
 
 class Routes {
   static const String splash = "/";
@@ -31,6 +35,12 @@ class Routes {
   static const String reports = "/reports";
   static const String profile = "/profile";
   static const String notifications = "/notifications";
+
+  /// Employee Screens
+  static const String employee = "/employee";
+  static const String branchEmployees = "/branchEmployees";
+  static const String tracking = "/tracking";
+
 }
 
 class AppRouter {
@@ -75,6 +85,27 @@ class AppRouter {
       /// Notifications
       case Routes.notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+
+      /// Employee Screen
+      case Routes.employee:
+        return MaterialPageRoute(builder: (_) => const EmployeeScreen());
+
+      /// Branch Employees Screen
+      case Routes.branchEmployees:
+        final branchName = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => BranchEmployeesScreen(branchName: branchName),
+        );
+    /// Tracking Screen
+      case Routes.tracking:
+        final employeeName = settings.arguments as String;
+
+        return MaterialPageRoute(
+          builder: (_) => const TrackingScreen(),
+          settings: RouteSettings(
+            arguments: employeeName,
+          ),
+        );
 
       default:
         return unDefinedRoute();
