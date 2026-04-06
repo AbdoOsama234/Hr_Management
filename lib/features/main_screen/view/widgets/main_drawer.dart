@@ -26,6 +26,7 @@ import '../../../my_mission/view/screens/my_mission_screen.dart';
 import '../../../employees_requests/view/screens/employees_requests_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
+import 'DrawerSection.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -33,21 +34,6 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appCubit = context.watch<AppCubit>();
-    // final isDark = appCubit.isDark;
-
-    // final isArabic = context.locale.languageCode == 'ar';
-
-    //final state = context.watch<MainScreenCubit>().state;
-
-    // String name = "Employee Name";
-    // String jobTitle = "Job Title";
-    // String? profileImage;
-
-    // if (state is MainScreenLoaded) {
-    //   name = state.dashboard.employeeName;
-    //   jobTitle = state.dashboard.jobTitle;
-    //   profileImage = state.dashboard.avatar;
-    // }
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
@@ -59,7 +45,6 @@ class MainDrawer extends StatelessWidget {
           name = state.name;
           jobTitle = state.jobTitle;
 
-          /// 🔥 الصورة (File أو Network)
           if (state.imagePath != null && state.imagePath!.isNotEmpty) {
             imageProvider = FileImage(File(state.imagePath!));
           } else if (state.avatarUrl != null && state.avatarUrl!.isNotEmpty) {
@@ -68,39 +53,41 @@ class MainDrawer extends StatelessWidget {
             imageProvider = AssetImage(AppAssets.avatar2);
           }
         }
-        return BlocBuilder<AppCubit, AppState>(
-          builder: (context, state) {
-            return Drawer(
-              backgroundColor: AppColors.backGround,
-              width: 80.w,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.only(
-                  topEnd: Radius.circular(30),
-                  bottomEnd: Radius.circular(30),
-                ),
+
+        return Drawer(
+          backgroundColor: AppColors.backGround,
+          width: 80.w,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadiusDirectional.only(
+              topEnd: Radius.circular(30),
+              bottomEnd: Radius.circular(30),
+            ),
+          ),
+          child: Column(
+            children: [
+              /// Profile
+              DrawerProfileHeader(
+                name: name,
+                jobTitle: jobTitle,
+                profileImageProvider: imageProvider,
+                onTap: () {
+                  _navigateTo(context, const ProfileScreen());
+                },
               ),
-              child: Column(
-                children: [
-                  /// Profile Header
-                  DrawerProfileHeader(
-                    name: name,
-                    jobTitle: jobTitle,
-                    profileImageProvider: imageProvider,
 
-                    onTap: () {
-                      _navigateTo(context, const ProfileScreen());
-                    },
+              /// Menu
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 4.w,
+                    vertical: 2.h,
                   ),
-
-                  /// Menu Items
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 4.w,
-                        vertical: 2.h,
-                      ),
-                      child: Column(
+                  child: Column(
+                    children: [
+                      /// 🔹 General
+                      DrawerSection(
+                        title: "general".tr(),
+                        icon: Icons.dashboard_rounded,
                         children: [
                           DrawerMenuItem(
                             icon: Icons.people_alt_rounded,
@@ -108,79 +95,74 @@ class MainDrawer extends StatelessWidget {
                             onTap: () =>
                                 _navigateTo(context, const EmployeeScreen()),
                           ),
-                          _buildDivider(),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
                             title: 'employees_requests'.tr(),
-                            onTap: () => _navigateTo(context, const EmployeesRequestsScreen()),
+                            onTap: () => _navigateTo(
+                                context, const EmployeesRequestsScreen()),
                           ),
-                          _buildDivider(),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
                             title: 'my_missions'.tr(),
-
                             onTap: () =>
                                 _navigateTo(context, const MyMissionScreen()),
                           ),
-                          _buildDivider(),
-                          DrawerMenuItem(
-                            icon: Icons.lightbulb_outline_rounded,
-                            title: 'ideas'.tr(),
-                            onTap: () =>
-                                _navigateTo(context, const IdeasScreen()),
-                          ),
-                          _buildDivider(),
+                        ],
+                      ),
+
+                      /// 🔹 Requests
+                      DrawerSection(
+                        title: "requests".tr(),
+                        icon: Icons.request_page_rounded,
+                        children: [
                           DrawerMenuItem(
                             icon: Icons.event_note_rounded,
                             title: 'holiday_request'.tr(),
-
                             onTap: () =>
                                 _navigateTo(context, const HolidayScreen()),
                           ),
-                          _buildDivider(),
-
                           DrawerMenuItem(
                             icon: Icons.access_time_rounded,
                             title: 'permission_request'.tr(),
-
                             onTap: () =>
                                 _navigateTo(context, const PermissionScreen()),
                           ),
-                          _buildDivider(),
-
                           DrawerMenuItem(
                             icon: Icons.account_balance_wallet_outlined,
                             title: 'loan_request'.tr(),
-
                             onTap: () =>
                                 _navigateTo(context, const LoanScreen()),
                           ),
-                          _buildDivider(),
-
                           DrawerMenuItem(
                             icon: Icons.flight_takeoff_rounded,
                             title: 'business_trip_request'.tr(),
-
                             onTap: () => _navigateTo(
-                              context,
-                              const BusinessTripScreen(),
-                            ),
+                                context, const BusinessTripScreen()),
                           ),
-                          _buildDivider(),
-
                           DrawerMenuItem(
                             icon: Icons.work_outline_rounded,
                             title: 'errand_request'.tr(),
                             onTap: () =>
                                 _navigateTo(context, const ErrandScreen()),
                           ),
-                          _buildDivider(),
+                          DrawerMenuItem(
+                            icon: Icons.lightbulb_outline_rounded,
+                            title: 'ideas'.tr(),
+                            onTap: () =>
+                                _navigateTo(context, const IdeasScreen()),
+                          ),
 
-                          /// Dark Mode Toggle
+                        ],
+                      ),
+
+                      /// 🔹 Settings
+                      DrawerSection(
+                        title: "settings".tr(),
+                        icon: Icons.settings_rounded,
+                        children: [
                           DrawerMenuItem(
                             icon: Icons.dark_mode_rounded,
                             title: 'change_theme'.tr(),
-
                             trailingIcon: MyApp.isDark
                                 ? Icons.light_mode_rounded
                                 : Icons.dark_mode_rounded,
@@ -188,15 +170,9 @@ class MainDrawer extends StatelessWidget {
                               appCubit.changeTheme();
                             },
                           ),
-
-                          _buildDivider(),
-
-                          /// Language Toggle
                           DrawerMenuItem(
                             icon: Icons.language_rounded,
                             title: 'change_language'.tr(),
-
-                            trailingIcon: null,
                             onTap: () {
                               appCubit.changeLang(
                                 appCubit.locale.languageCode == 'ar'
@@ -205,72 +181,47 @@ class MainDrawer extends StatelessWidget {
                               );
                             },
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 6.w,
-                              vertical: 0.5.h,
-                            ),
-                            child: Row(
-                              mainAxisAlignment:
-                                  appCubit.locale.languageCode == "ar"
-                                  ? MainAxisAlignment.end
-                                  : MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  appCubit.locale.languageCode == "ar"
-                                      ? 'العربية'
-                                      : 'English',
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w),
-                    child: CustomButton(
-                      text: 'logout'.tr(),
-                      width: 300,
-                      fontsize: 12,
-                      height: 50,
-                      butcolor: MyApp.isDark
-                          ? AppColors.primary
-                          : AppColors.primary,
-                      radius: 12,
-                      onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                          (route) => false,
-                        );
-                      },
-                    ),
-                  ),
-
-                  /// Version
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.h),
-                    child: Text(
-                      '${'version'.tr()} 1.0.0',
-                      style: TextStyle(
-                        color: MyApp.isDark ? Colors.white24 : Colors.black26,
-                        fontSize: 10.sp,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            );
-          },
+
+              /// Logout
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                child: CustomButton(
+                  text: 'logout'.tr(),
+                  width: 300,
+                  fontsize: 12,
+                  height: 50,
+                  radius: 12,
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                          (route) => false,
+                    );
+                  },
+                ),
+              ),
+
+              /// Version
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.h),
+                child: Text(
+                  '${'version'.tr()} 1.0.0',
+                  style: TextStyle(
+                    color: MyApp.isDark ? Colors.white24 : Colors.black26,
+                    fontSize: 10.sp,
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -279,15 +230,5 @@ class MainDrawer extends StatelessWidget {
   void _navigateTo(BuildContext context, Widget screen) {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
-  }
-
-  Widget _buildDivider() {
-    return Divider(
-      color: MyApp.isDark
-          ? Colors.white.withOpacity(0.05)
-          : Colors.black.withOpacity(0.05),
-      indent: 14.w,
-      endIndent: 2.w,
-    );
   }
 }

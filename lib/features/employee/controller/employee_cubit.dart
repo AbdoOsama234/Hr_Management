@@ -9,20 +9,68 @@ class EmployeeCubit extends Cubit<EmployeeState> {
 
   EmployeeCubit(this._repository) : super(EmployeeInitial());
 
+  /// 👥 Fetch employees
   Future<void> getEmployeesByBranch(String branch) async {
     emit(EmployeeLoading());
 
     final result = await _repository.getEmployeesByBranch(branch);
 
     result.fold(
-      (failure) => emit(EmployeeError(failure.message)),
-      (employees) {
-        if (employees.isEmpty) {
-          emit(const EmployeeLoaded([]));
-        } else {
-          emit(EmployeeLoaded(employees));
-        }
-      },
+          (failure) => emit(EmployeeError(failure.message)),
+          (employees) => emit(EmployeeLoaded(employees)),
     );
+  }
+
+  /// 🟢 Init Attendance Form
+  void initAttendanceForm() {
+    if (state is EmployeeLoaded) {
+      final current = state as EmployeeLoaded;
+
+      emit(
+        current.copyWith(
+          selectedDate: DateTime.now(),
+          notes: "",
+          isSubmitting: false,
+        ),
+      );
+    }
+  }
+
+  /// 📅 Change Date
+  void changeDate(DateTime date) {
+    if (state is EmployeeLoaded) {
+      final current = state as EmployeeLoaded;
+
+      emit(current.copyWith(selectedDate: date));
+    }
+  }
+
+  /// 📝 Change Notes
+  void changeNotes(String notes) {
+    if (state is EmployeeLoaded) {
+      final current = state as EmployeeLoaded;
+
+      emit(current.copyWith(notes: notes));
+    }
+  }
+
+  /// 🚀 Submit
+  Future<void> submitAttendance(int employeeId) async {
+    if (state is! EmployeeLoaded) return;
+
+    final current = state as EmployeeLoaded;
+
+    /// loading
+    emit(current.copyWith(isSubmitting: true));
+
+    try {
+      await Future.delayed(const Duration(milliseconds: 800));
+
+      /// success → رجع نفس state بدون loading
+      /// ✅ هنا الحل الحقيقي
+      emit(current.copyWith(isSubmitting: false, isSuccess: true));
+    } catch (e) {
+      emit(current.copyWith(isSubmitting: false, isSuccess: false));
+    }
   }
 }

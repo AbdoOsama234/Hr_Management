@@ -16,7 +16,7 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
 
     return [
       /// 📍 Riyadh Branch
-      EmployeeModel(id: 1, name: "Ahmed Salah", position: "Software Engineer", branch: "branch_riyadh".tr()),
+      EmployeeModel(id: 1, name: "Ahmed Salah", position: "Software Engineer", branch: "branch_riyadh".tr(),),
       EmployeeModel(id: 2, name: "Fhad Al-Otaibi", position: "HR Manager", branch: "branch_riyadh".tr()),
       EmployeeModel(id: 3, name: "Sara Mohammed", position: "UI/UX Designer", branch: "branch_riyadh".tr()),
       EmployeeModel(id: 4, name: "Khalid Ibrahim", position: "Project Manager", branch: "branch_riyadh".tr()),

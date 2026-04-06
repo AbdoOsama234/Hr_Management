@@ -157,6 +157,18 @@ lib/
 │   │           ├── branch_card.dart
 │   │           ├── employee_card.dart
 │   │           └── map_icon.dart
+│   ├── employees_requests/
+│   │   ├── controller/
+│   │   │   ├── employees_requests_cubit.dart
+│   │   │   └── employees_requests_state.dart
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │       └── employees_requests_model.dart
+│   │   ├── view/
+│   │       ├── screens/
+│   │       │   └── employees_requests_screen.dart
+│   │       ├── widgets/
+│   │           └── employees_requests_item_card.dart
 │   ├── errand_requests/
 │   │   ├── controller/
 │   │   │   ├── errand_cubit.dart
