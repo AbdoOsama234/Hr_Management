@@ -22,11 +22,9 @@ class AppColors {
   static Color get backGround2 =>
       MyApp.isDark ? backGroundDark2 : backGroundLight2;
 
-  static Color get textMain =>
-      MyApp.isDark ? textMainDark : textMainLight;
+  static Color get textMain => MyApp.isDark ? textMainDark : textMainLight;
 
-  static Color get textSub =>
-      MyApp.isDark ? textSubDark : textSubLight;
+  static Color get textSub => MyApp.isDark ? textSubDark : textSubLight;
 
   // 🧱 Borders & Dividers
   static Color get borderColor => MyApp.isDark
@@ -78,15 +76,15 @@ class AppColors {
 
   static LinearGradient get primaryGradient => MyApp.isDark
       ? const LinearGradient(
-    colors: headerGradientDark,
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  )
+          colors: headerGradientDark,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )
       : const LinearGradient(
-    colors: headerGradientLight,
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
+          colors: headerGradientLight,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
 
   // 🎨 Extra Colors
   static const Color darkGrey = Color(0xff6E6A7C);
@@ -123,6 +121,13 @@ class AppColors {
   static const Color fillerBackGround = Color(0xff1C1C1E);
 
   static const Color textFieldHint = Color(0xff8E8E93);
+
+  static Color get shimmerGradientColorStart =>
+      MyApp.isDark ? Color(0xff333639) : Colors.grey.shade300;
+
+  static Color get shimmerGradientColorEnd => MyApp.isDark
+      ? Color(0xff333639).withValues(alpha: 0.3)
+      : Colors.grey.shade100;
 
   // 🎯 Accent
   static const Color orange = Color(0xFFFF9800);

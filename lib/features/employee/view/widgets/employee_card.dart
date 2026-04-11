@@ -1,21 +1,23 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
-import '../../data/models/employee_model.dart';
+import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
+import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
 import '../../../../my_app.dart';
-import '../screens/tracking_screen.dart';
 
 class EmployeeCard extends StatelessWidget {
-  final EmployeeModel employee;
+  final BrancheModel branche;
   final VoidCallback? onTrack;
   final VoidCallback? onAttendance;
+  final UsersModel user;
 
   const EmployeeCard({
     super.key,
-    required this.employee,
+    required this.branche,
     this.onTrack,
-    this.onAttendance,
+    this.onAttendance, required this.user,
   });
 
   @override
@@ -44,7 +46,8 @@ class EmployeeCard extends StatelessWidget {
                 padding: EdgeInsets.all(3.w),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withOpacity(
-                      MyApp.isDark ? 0.12 : 0.08),
+                    MyApp.isDark ? 0.12 : 0.08,
+                  ),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -60,7 +63,7 @@ class EmployeeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      employee.name,
+                      user.name.orEmpty(),
                       style: AppTextStyle.title.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textMain,
@@ -68,7 +71,7 @@ class EmployeeCard extends StatelessWidget {
                     ),
                     SizedBox(height: 0.5.h),
                     Text(
-                      employee.position,
+                      'employees'.tr(),
                       style: AppTextStyle.body.copyWith(
                         color: AppColors.textSub,
                         fontSize: 11.sp,

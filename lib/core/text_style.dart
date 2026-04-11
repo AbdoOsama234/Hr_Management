@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/di/di.dart';
-import 'package:hr_manegement/core/storage/local/app_prefs.dart';
+import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 
 import 'app_colors.dart';
 import 'extensions.dart';

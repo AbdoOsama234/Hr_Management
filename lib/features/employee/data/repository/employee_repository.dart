@@ -1,30 +1,50 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
+import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:hr_manegement/core/network/error_handler.dart';
+import 'package:retrofit/http.dart';
+import '../../../../core/api_urls.dart';
+import '../../../../core/network/save_api.dart';
+import '../../../../data/models/base_response.dart';
 import '../datasource/employee_local_data_source.dart';
 import '../models/employee_model.dart';
+import 'package:retrofit/error_logger.dart';
 
-abstract class EmployeeRepository {
-  Future<Either<FailureException, List<EmployeeModel>>> getEmployeesByBranch(String branch);
+part 'employee_repository.g.dart';
+
+@RestApi(baseUrl: ApiUrls.baseApiUrl)
+abstract class EmployeeServiceClient {
+  factory EmployeeServiceClient(Dio dio, {String baseUrl}) = _EmployeeServiceClient;
+
+  @GET(ApiUrls.allBranches)
+  Future<BaseResponse<AllBranches>> getAllBranches();
+
+    @GET("${ApiUrls.allUsers}{id}")
+    Future<BaseResponse<AllUsers>> getAllUsers(@Path("id")String id);
+
+
 }
 
 @injectable
-class EmployeeRepositoryImpl implements EmployeeRepository {
-  final EmployeeLocalDataSource _localDataSource;
+class EmployeeRepository {
+  final EmployeeServiceClient _employeeServiceClient;
+  final SafeApi _safeApi;
 
-  EmployeeRepositoryImpl(this._localDataSource);
+  EmployeeRepository(this._employeeServiceClient, this._safeApi);
 
-  @override
-  Future<Either<FailureException, List<EmployeeModel>>> getEmployeesByBranch(String branch) async {
-    try {
-      final allEmployees = await _localDataSource.getEmployees();
-      
-      /// 🔍 Filter employees by branch name
-      final filteredEmployees = allEmployees.where((e) => e.branch == branch).toList();
-      
-      return Right(filteredEmployees);
-    } catch (e) {
-      return Left(ServerFailure("Failed to load employees for $branch"));
-    }
+  Future<Either<Failure, BaseResponse<AllBranches>>> getAllBranches() async {
+    return await _safeApi.call(apiCall: _employeeServiceClient.getAllBranches());
   }
+
+  Future<Either<Failure,BaseResponse<AllUsers>>>getAllUsers(String id)async{
+    return await _safeApi.call(apiCall: _employeeServiceClient.getAllUsers(id));
+  }
+
+
 }
+
+
+
+

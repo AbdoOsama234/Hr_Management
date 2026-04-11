@@ -1,5 +1,4 @@
-enum MissionStatus { pending, approved, rejected }
-
+enum MissionStatus { newTask, progressing, reviewing, completed }
 enum MissionImportance { low, medium, high }
 
 class MyMissionModel {

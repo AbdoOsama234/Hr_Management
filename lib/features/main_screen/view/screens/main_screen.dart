@@ -113,12 +113,18 @@ class _MainScreenBody extends StatelessWidget {
 
                               /// Daily Tasks
                               MyMissionItemCard(
+                                taxt: "daily_task".tr(),
+                                icon: Icon(
+                                  Icons.task_alt, // 👈 غيرناها لأيقونة تاسك
+                                  size: 4.w,
+                                  color: AppColors.primary.withOpacity(0.6),
+                                ),
                                 mission: MyMissionModel(
                                   id: '1',
                                   date: DateTime.now(),
                                   notes: 'daily_task_desc'.tr(),
                                   importance: MissionImportance.medium,
-                                  status: MissionStatus.pending,
+                                  status: MissionStatus.newTask,
                                 ),
                               ),
                               SizedBox(height: .5.h),

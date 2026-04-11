@@ -227,7 +227,16 @@
   "no_holiday_requests_subtitle": "لم يتم تقديم أي طلبات إجازة حتى الآن",
   "general": "عام",
   "requests": "الطلبات",
-  "settings": "الإعدادات"
+  "settings": "الإعدادات",
+
+  "daily_task": "المهمه اليوميه",
+
+  "status_newTask": "مهمه جديده",
+
+  "status_progressing": "جاري التنفيذ",
+  "status_reviewing": "قيد المراجعة",
+  "status_completed": "مكتملة"
+
 
 
 }

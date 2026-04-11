@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/di/di.dart';
-import 'package:hr_manegement/core/storage/local/app_prefs.dart';
+import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';

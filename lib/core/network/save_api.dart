@@ -23,7 +23,8 @@ class SafeApi {
         //   throw response as Exception;
         // }
         log("Response: $response");
-        if (response.statusCode == 1) {
+        log("Response: ${response.status}");
+        if (response.status == true) {
           // success
           // return right
           return Right(response);
