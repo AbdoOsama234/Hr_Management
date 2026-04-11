@@ -17,6 +17,11 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/employee/controller/employee_cubit.dart' as _i222;
+import '../../features/employee/data/datasource/employee_local_data_source.dart'
+    as _i73;
+import '../../features/employee/data/repository/employee_repository.dart'
+    as _i611;
 import '../../features/main_screen/controller/main_screen_cubit.dart' as _i97;
 import '../../features/main_screen/data/repository/main_screen_repository.dart'
     as _i984;
@@ -27,9 +32,6 @@ import '../storage/local/app_prefs.dart' as _i15;
 import '../storage/remote/dio_helper/dio_helper.dart' as _i327;
 import 'module/di_module.dart' as _i495;
 import 'module/dio_module.dart' as _i556;
-import '../../features/employee/data/datasource/employee_local_data_source.dart' as _i101;
-import '../../features/employee/data/repository/employee_repository.dart' as _i102;
-import '../../features/employee/controller/employee_cubit.dart' as _i103;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> $initGetIt(
@@ -40,12 +42,21 @@ Future<_i174.GetIt> $initGetIt(
   final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   final dIModule = _$DIModule();
   final dioModule = _$DioModule();
+  gh.factory<_i73.EmployeeLocalDataSourceImpl>(
+    () => _i73.EmployeeLocalDataSourceImpl(),
+  );
   await gh.factoryAsync<_i460.SharedPreferences>(
     () => dIModule.prefs,
     preResolve: true,
   );
   gh.factory<_i973.InternetConnectionChecker>(() => dIModule.connectionChecker);
   gh.factory<_i409.Key>(() => dIModule.getKey());
+  gh.factory<_i222.EmployeeCubit>(
+    () => _i222.EmployeeCubit(gh<_i611.EmployeeRepository>()),
+  );
+  gh.factory<_i611.EmployeeRepositoryImpl>(
+    () => _i611.EmployeeRepositoryImpl(gh<_i73.EmployeeLocalDataSource>()),
+  );
   gh.factory<_i932.NetworkInfo>(
     () => _i932.NetworkInfoImpl(gh<_i973.InternetConnectionChecker>()),
   );
@@ -66,13 +77,6 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i97.MainScreenCubit>(
     () => _i97.MainScreenCubit(gh<_i984.MainScreenRepository>()),
-  );
-  gh.factory<_i101.EmployeeLocalDataSource>(() => _i101.EmployeeLocalDataSourceImpl());
-  gh.factory<_i102.EmployeeRepository>(
-    () => _i102.EmployeeRepositoryImpl(gh<_i101.EmployeeLocalDataSource>()),
-  );
-  gh.factory<_i103.EmployeeCubit>(
-    () => _i103.EmployeeCubit(gh<_i102.EmployeeRepository>()),
   );
   return getIt;
 }
