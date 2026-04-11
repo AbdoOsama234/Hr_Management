@@ -1,25 +1,74 @@
-import 'package:bloc/bloc.dart';
-import 'package:injectable/injectable.dart';
-import '../data/repository/employee_repository.dart';
-import 'employee_state.dart';
+  import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+  import 'package:flutter/material.dart';
+  import 'package:flutter_bloc/flutter_bloc.dart';
+  import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
+  import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
+  import 'package:injectable/injectable.dart';
+  import '../data/repository/employee_repository.dart';
+  import 'employee_state.dart';
 
-@injectable
-class EmployeeCubit extends Cubit<EmployeeState> {
-  final EmployeeRepository _repository;
+  @injectable
+  class EmployeeCubit extends Cubit<EmployeeState> {
+    final EmployeeRepository _repository;
+    static EmployeeCubit get(BuildContext context) =>
+        context.read<EmployeeCubit>();
 
-  EmployeeCubit(this._repository) : super(EmployeeInitial());
+    EmployeeCubit(this._repository) : super(EmployeeInitial());
+
+   List<BrancheModel> branches=[];
+
+    Future<void>getAllBranches()async{
+      branches = [];
+      emit(GetAllBranchesLoading());
+      _repository.getAllBranches().then((value) {
+        value.fold(
+              (l) {
+            emit(GetAllBranchesError(error: l.message));
+            print("get all brancheserror ${l.message}");
+          },
+              (r) {
+                branches = r.result?.branches ?? [];
+            print("get all bbranches ${branches.length}");
+            emit(GetAllBranchesLoaded());
+          },
+        );
+      });
+
+    }
+    List<UsersModel>users=[];
+    Future<void>getAllUsers(String id)async{
+      users=[];
+      emit(GetAllUsersLoading());
+      _repository.getAllUsers(id).then((value){
+        value.fold(
+            (l){
+              emit(GetAllUsersError(error: l.message));
+              print("get all Userserror ${l.message}");
+
+
+            },
+            (r){
+          users= r.result?.users??[];
+          emit(GetAllUsersLoaded());
+            },
+        );
+      });
+
+    }
+
 
   /// 👥 Fetch employees
-  Future<void> getEmployeesByBranch(String branch) async {
-    emit(EmployeeLoading());
-
-    final result = await _repository.getEmployeesByBranch(branch);
-
-    result.fold(
-          (failure) => emit(EmployeeError(failure.message)),
-          (employees) => emit(EmployeeLoaded(employees)),
-    );
-  }
+  // Future<void> getEmployeesByBranch(String branch) async {
+  //   emit(EmployeeLoading());
+  //
+  //   final result = await _repository.getEmployeesByBranch(branch);
+  //
+  //   result.fold(
+  //         (failure) => emit(EmployeeError(failure.message)),
+  //         (employees) => emit(EmployeeLoaded(employees)),
+  //   );
+  // }
 
   /// 🟢 Init Attendance Form
   void initAttendanceForm() {

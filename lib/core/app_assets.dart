@@ -86,6 +86,9 @@ class AppAssets {
   static const String add = '${iconsPath}add.png';
   static const String calendar2 = '${iconsPath}calendar2.png';
 
+  static const empty = '${imagesPath}empty.png';
+  static const error = '${imagesPath}erorr.png';
+
   // /// new App Images
   static const String appLogo = '${imagesPath}logo.png';
   static const String appLogoAr = '${imagesPath}logo.png';

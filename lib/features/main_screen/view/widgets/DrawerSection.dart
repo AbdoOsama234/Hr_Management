@@ -52,6 +52,8 @@ class _DrawerSectionState extends State<DrawerSection> {
                       fontWeight: FontWeight.bold,
                       fontSize: 12.sp,
                       color: AppColors.textMain,
+                      overflow: TextOverflow.ellipsis,
+
                     ),
                   ),
                 ),

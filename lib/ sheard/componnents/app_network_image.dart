@@ -13,11 +13,17 @@ class AppNetworkImage extends StatelessWidget {
     this.height,
     this.width,
     this.fit,
+    this.cacheWidth,
+    this.cacheHeight,
+    this.filterQuality = FilterQuality.low,
   });
   final String uri;
   final double? height;
   final double? width;
   final BoxFit? fit;
+  final int? cacheWidth;
+  final int? cacheHeight;
+  final FilterQuality filterQuality;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,9 @@ class AppNetworkImage extends StatelessWidget {
       height: height ?? 15.w,
       fit: fit ?? BoxFit.cover,
       imageUrl: uri,
+      maxWidthDiskCache: cacheWidth,
+      maxHeightDiskCache: cacheHeight,
+      filterQuality: filterQuality,
       placeholder: (context, url) {
         return LoadingAnimationWidget.inkDrop(
           size: 30,

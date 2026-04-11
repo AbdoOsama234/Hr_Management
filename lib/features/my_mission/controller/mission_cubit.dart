@@ -11,7 +11,7 @@ class MyMissionCubit extends Cubit<MyMissionState> {
   Future<void> loadMissions() async {
     emit(MyMissionLoading());
 
-    // Simulating network delay as in holiday_cubit
+    // Simulating network delay
     await Future.delayed(const Duration(milliseconds: 300));
 
     if (_missions.isEmpty) {
@@ -19,37 +19,30 @@ class MyMissionCubit extends Cubit<MyMissionState> {
         MyMissionModel(
           id: '1',
           date: DateTime.now(),
-          status: MissionStatus.pending,
+          status: MissionStatus.newTask,
           importance: MissionImportance.high,
-          notes: 'mock_mission_1_notes'.tr(),
+          notes: 'status_newTask'.tr(),
         ),
         MyMissionModel(
           id: '2',
-          date: DateTime.now().add(const Duration(days: 2)),
-          status: MissionStatus.approved,
+          date: DateTime.now(),
+          status: MissionStatus.progressing,
           importance: MissionImportance.medium,
-          notes: 'mock_mission_2_notes'.tr(),
+          notes: 'status_progressing'.tr(),
         ),
         MyMissionModel(
           id: '3',
-          date: DateTime.now().subtract(const Duration(days: 1)),
-          status: MissionStatus.rejected,
+          date: DateTime.now().add(const Duration(days: 1)),
+          status: MissionStatus.reviewing,
           importance: MissionImportance.low,
-          notes: 'mock_mission_3_notes'.tr(),
+          notes: 'status_reviewing'.tr(),
         ),
         MyMissionModel(
           id: '4',
-          date: DateTime.now().add(const Duration(days: 4)),
-          status: MissionStatus.pending,
-          importance: MissionImportance.low,
-          notes: 'mock_mission_4_notes'.tr(),
-        ),
-        MyMissionModel(
-          id: '5',
-          date: DateTime.now().subtract(const Duration(days: 3)),
-          status: MissionStatus.approved,
+          date: DateTime.now().subtract(const Duration(days: 1)),
+          status: MissionStatus.completed,
           importance: MissionImportance.high,
-          notes: 'mock_mission_5_notes'.tr(),
+          notes: 'status_completed'.tr(),
         ),
       ]);
     }

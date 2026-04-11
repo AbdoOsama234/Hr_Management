@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../../storage/local/app_prefs.dart';
+import '../../../data/storage/local/app_prefs.dart';
 import '../../api_urls.dart';
 import '../../constants.dart';
 

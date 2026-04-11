@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_colors.dart';
+import 'package:hr_manegement/core/app_router.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
 
 class BranchCard extends StatelessWidget {
-  final String name;
-  final IconData icon;
-  final Color iconColor;
-  final VoidCallback onTap;
+  final BrancheModel branche;
 
-  const BranchCard({
-    super.key,
-    required this.name,
-    required this.icon,
-    required this.iconColor,
-    required this.onTap,
-  });
+  const BranchCard({super.key, required this.branche});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          Routes.branchEmployees,
+          arguments: branche,
+        );
+      },
       borderRadius: BorderRadius.circular(20),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
@@ -41,24 +40,9 @@ class BranchCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            /// Icon with circular background
-            Container(
-              padding: EdgeInsets.all(3.w),
-              decoration: BoxDecoration(
-                color: iconColor.withOpacity(0.12),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: iconColor,
-                size: 8.w,
-              ),
-            ),
-            SizedBox(height: 2.h),
-
             /// Branch Name
             Text(
-              name.tr(),
+              branche.localName,
               textAlign: TextAlign.center,
               style: AppTextStyle.title.copyWith(
                 fontWeight: FontWeight.bold,

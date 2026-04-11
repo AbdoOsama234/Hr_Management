@@ -48,3 +48,33 @@ class EmployeeError extends EmployeeState {
   final String message;
   const EmployeeError(this.message);
 }
+
+
+
+class GetAllBranchesLoading extends EmployeeState {}
+
+class GetAllBranchesLoaded extends EmployeeState {}
+
+class GetAllBranchesError extends EmployeeState {
+  final String error;
+  GetAllBranchesError({required this.error});
+
+}
+
+
+
+///Users State
+
+
+class GetAllUsersLoading extends EmployeeState {}
+
+class GetAllUsersLoaded extends EmployeeState {}
+
+class GetAllUsersError extends EmployeeState {
+  final String error;
+  GetAllUsersError({required this.error});
+
+}
+
+
+

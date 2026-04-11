@@ -5,15 +5,21 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
+import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 import '../../data/models/mission_model.dart';
 import '../../../../my_app.dart';
 
-import '../../../../ sheard/componnents/show_bottom_sheet.dart';
-
 class MyMissionItemCard extends StatefulWidget {
   final MyMissionModel mission;
+  final String? taxt;
+  final Icon? icon;
 
-  const MyMissionItemCard({super.key, required this.mission});
+  const MyMissionItemCard({
+    super.key,
+    required this.mission,
+    this.taxt,
+    this.icon,
+  });
 
   @override
   State<MyMissionItemCard> createState() => _MyMissionItemCardState();
@@ -63,12 +69,14 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
 
   String _getStatusLabel(MissionStatus status) {
     switch (status) {
-      case MissionStatus.pending:
-        return 'status_pending'.tr();
-      case MissionStatus.approved:
-        return 'status_approved'.tr();
-      case MissionStatus.rejected:
-        return 'status_rejected'.tr();
+      case MissionStatus.newTask:
+        return 'status_newTask'.tr(); // مهام جديدة
+      case MissionStatus.progressing:
+        return 'status_progressing'.tr(); // جاري التنفيذ
+      case MissionStatus.reviewing:
+        return 'status_reviewing'.tr(); // قيد المراجعة
+      case MissionStatus.completed:
+        return 'status_completed'.tr(); // مكتملة
     }
   }
 
@@ -92,6 +100,22 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              if (widget.icon != null) ...[
+                widget.icon!,
+                SizedBox(width: 2.w),
+              ],
+              if (widget.taxt != null && widget.taxt!.isNotEmpty)
+                Text(
+                  widget.taxt ?? "",
+                  style: AppTextStyle.title.copyWith(
+                    color: AppColors.textMain,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -131,10 +155,7 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
               InkWell(
                 onTap: _showChangeStatusBottomSheet,
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 2.w,
-                    vertical: 0.8.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.8.h),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -169,17 +190,21 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
     String label;
 
     switch (status) {
-      case MissionStatus.pending:
+      case MissionStatus.newTask:
+        color = Colors.blue;
+        label = 'status_newTask'.tr();
+        break;
+      case MissionStatus.progressing:
         color = AppColors.orange;
-        label = 'status_pending'.tr();
+        label = 'status_progressing'.tr();
         break;
-      case MissionStatus.approved:
-        color = AppColors.green;
-        label = 'status_approved'.tr();
-        break;
-      case MissionStatus.rejected:
+      case MissionStatus.reviewing:
         color = AppColors.red;
-        label = 'status_rejected'.tr();
+        label = 'status_reviewing'.tr();
+        break;
+      case MissionStatus.completed:
+        color = AppColors.green;
+        label = 'status_completed'.tr();
         break;
     }
 

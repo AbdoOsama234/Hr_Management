@@ -235,7 +235,14 @@
 
   "general": "General",
   "requests": "Requests",
-  "settings": "Settings"
+  "settings": "Settings",
+
+  "daily_task": "Daily Task",
+
+  "status_newTask": "New Task",
+  "status_progressing": "In Progress",
+  "status_reviewing": "Under Review",
+  "status_completed": "Completed"
 
 
 }

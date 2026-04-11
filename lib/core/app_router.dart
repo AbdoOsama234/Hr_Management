@@ -3,6 +3,7 @@ import 'package:hr_manegement/core/strings_manager.dart';
 
 /// SCREENS
 import 'package:hr_manegement/features/auth/view/screens/login_screen.dart';
+import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
 import 'package:hr_manegement/features/main_screen/view/screens/main_screen.dart';
 
 import 'package:hr_manegement/features/holiday__requests/view/screens/holiday_screen.dart';
@@ -14,8 +15,8 @@ import 'package:hr_manegement/features/permission_request/view/screens/permissio
 import 'package:hr_manegement/features/reports/view/screens/reports_screen.dart';
 import 'package:hr_manegement/features/profile/view/screens/profile_screen.dart';
 import 'package:hr_manegement/features/notifications/view/screens/notifications_screen.dart';
-import 'package:hr_manegement/features/employee/view/screens/employee_screen.dart';
-import 'package:hr_manegement/features/employee/view/screens/branch_employees_screen.dart';
+import 'package:hr_manegement/features/employee/view/screens/branches_screen.dart';
+import 'package:hr_manegement/features/employee/view/screens/employees_screen.dart';
 
 import '../features/employee/view/screens/tracking_screen.dart';
 
@@ -89,13 +90,13 @@ class AppRouter {
 
       /// Employee Screen
       case Routes.employee:
-        return MaterialPageRoute(builder: (_) => const EmployeeScreen());
+        return MaterialPageRoute(builder: (_) => const BranchesScreen());
 
       /// Branch Employees Screen
       case Routes.branchEmployees:
-        final branchName = settings.arguments as String;
+        final branch = settings.arguments as BrancheModel;
         return MaterialPageRoute(
-          builder: (_) => BranchEmployeesScreen(branchName: branchName),
+          builder: (_) => EmployeesScreen(brancheModel: branch,),
         );
     /// Tracking Screen
       case Routes.tracking:

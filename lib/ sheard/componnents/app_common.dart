@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:hr_manegement/core/storage/local/app_prefs.dart';
+import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
