@@ -91,7 +91,7 @@ class _BranchesScreenState extends State<_BranchesScreen> {
 
   Widget branchesList(List<BrancheModel> branches) {
     return GridView.builder(
-      controller: ScrollController(),
+      controller: scrollController,
       padding: EdgeInsets.zero,
       physics: const BouncingScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -51,7 +51,7 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
     super.initState();
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent-200) {
+          scrollController.position.maxScrollExtent) {
         EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString(),loadMore: true);
       }
     });
@@ -96,84 +96,89 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
     );
   }
 
-  ListView allUsers(List<UsersModel> users) {
-    return ListView.builder(
-      controller: ScrollController(),
-     padding: EdgeInsets.zero,
-      physics: const BouncingScrollPhysics(),
-      itemCount: users.length,
-      itemBuilder: (context, index) {
-        final user = users[index];
-
-        return TweenAnimationBuilder<double>(
-          duration: Duration(milliseconds: 300 + (index * 100)),
-          tween: Tween(begin: 0.0, end: 1.0),
-          curve: Curves.easeOut,
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 30 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: EmployeeCard(
-            user: user,
-            branche:widget.brancheModel,
-            onTrack: () {
-              Navigator.pushNamed(
-                context,
-                Routes.tracking,
-                arguments: user.name,
+  Widget allUsers(List<UsersModel> users) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString());
+      },
+      child: ListView.builder(
+        controller: scrollController,
+       padding: EdgeInsets.zero,
+        physics: const BouncingScrollPhysics(),
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+          final user = users[index];
+      
+          return TweenAnimationBuilder<double>(
+            duration: Duration(milliseconds: 300 + (index * 100)),
+            tween: Tween(begin: 0.0, end: 1.0),
+            curve: Curves.easeOut,
+            builder: (context, value, child) {
+              return Opacity(
+                opacity: value,
+                child: Transform.translate(
+                  offset: Offset(0, 30 * (1 - value)),
+                  child: child,
+                ),
               );
             },
-
-            /// ✅ FIXED Attendance
-            // onAttendance: () {
-            //   final cubit = context.read<EmployeeCubit>();
-            //
-            //   cubit.initAttendanceForm();
-            //
-            //   final notesController = TextEditingController();
-            //
-            //   showAppBottomSheet(
-            //     context: context,
-            //     title: "attendance".tr(),
-            //     body: Builder(
-            //       builder: (sheetContext) {
-            //         return BlocProvider.value(
-            //           value: cubit,
-            //           child: BlocListener<EmployeeCubit, EmployeeState>(
-            //             listener: (context, state) {
-            //               /// ✅ Success باستخدام flag
-            //               if (state is GetAllUsersLoaded ) {
-            //                 Navigator.pop(sheetContext);
-            //
-            //                 showFlutterSnackBar(
-            //                   message: "attendance_submitted".tr(),
-            //                 );
-            //               }
-            //             },
-            //             child: BlocBuilder<EmployeeCubit, EmployeeState>(
-            //               builder: (context, state) {
-            //                 if (state is! GetAllUsersLoaded) {
-            //                   return const SizedBox();
-            //                 }
-            //
-            //                 final current = state;
-            //
-            //                 return const SizedBox();                          },
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   );
-            // },
-          ),
-        );
-      },
+            child: EmployeeCard(
+              user: user,
+              branche:widget.brancheModel,
+              onTrack: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.tracking,
+                  arguments: user.name,
+                );
+              },
+      
+              /// ✅ FIXED Attendance
+              // onAttendance: () {
+              //   final cubit = context.read<EmployeeCubit>();
+              //
+              //   cubit.initAttendanceForm();
+              //
+              //   final notesController = TextEditingController();
+              //
+              //   showAppBottomSheet(
+              //     context: context,
+              //     title: "attendance".tr(),
+              //     body: Builder(
+              //       builder: (sheetContext) {
+              //         return BlocProvider.value(
+              //           value: cubit,
+              //           child: BlocListener<EmployeeCubit, EmployeeState>(
+              //             listener: (context, state) {
+              //               /// ✅ Success باستخدام flag
+              //               if (state is GetAllUsersLoaded ) {
+              //                 Navigator.pop(sheetContext);
+              //
+              //                 showFlutterSnackBar(
+              //                   message: "attendance_submitted".tr(),
+              //                 );
+              //               }
+              //             },
+              //             child: BlocBuilder<EmployeeCubit, EmployeeState>(
+              //               builder: (context, state) {
+              //                 if (state is! GetAllUsersLoaded) {
+              //                   return const SizedBox();
+              //                 }
+              //
+              //                 final current = state;
+              //
+              //                 return const SizedBox();                          },
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   );
+              // },
+            ),
+          );
+        },
+      ),
     );
   }
 }
