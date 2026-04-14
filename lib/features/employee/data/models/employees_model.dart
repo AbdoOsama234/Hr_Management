@@ -11,6 +11,7 @@ part 'employees_model.g.dart';
   @JsonSerializable()
   class AllUsers {
     Pagination? pagination;
+    @JsonKey(name: "branches") // 👈 أهم سطر
     List<UsersModel>? users;
 
     AllUsers({this.pagination, this.users});

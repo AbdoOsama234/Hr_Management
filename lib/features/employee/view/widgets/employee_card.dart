@@ -71,7 +71,7 @@ class EmployeeCard extends StatelessWidget {
                     ),
                     SizedBox(height: 0.5.h),
                     Text(
-                      'employees'.tr(),
+                      branche.localName,
                       style: AppTextStyle.body.copyWith(
                         color: AppColors.textSub,
                         fontSize: 11.sp,

@@ -196,19 +196,63 @@ class AppShimmer {
   }
 
   // -------------------- VERTICAL LIST --------------------
-  static Widget verticalList({double? width, double? height}) {
-    return wrapper(
-      child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (_, __) =>
-            box(width: width ?? double.infinity, height: height ?? 12.h),
-        separatorBuilder: (_, __) => SizedBox(height: 2.h),
-        itemCount: 5,
-      ),
-    );
-  }
+    static Widget verticalList({double? width}) {
+      return wrapper(
+        child: ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 5,
+          separatorBuilder: (_, __) => SizedBox(height: 2.h),
+          itemBuilder: (_, __) => Container(
+            padding: EdgeInsets.all(4.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                /// 👤 Row (avatar + text)
+                Row(
+                  children: [
+                    /// avatar circle
+                    box(width: 12.w, height: 12.w, radius: 50),
 
+                    SizedBox(width: 4.w),
+
+                    /// name + subtitle
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          box(height: 2.h, width: 40.w),
+                          SizedBox(height: 1.h),
+                          box(height: 1.5.h, width: 25.w),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 2.h),
+
+                /// 🔘 buttons row
+                Row(
+                  children: [
+                    Expanded(
+                      child: box(height: 4.h, radius: 10),
+                    ),
+                    SizedBox(width: 3.w),
+                    Expanded(
+                      child: box(height: 4.h, radius: 10),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
   // -------------------- DASHBOARD --------------------
   static Widget dashboard() {
     return SingleChildScrollView(

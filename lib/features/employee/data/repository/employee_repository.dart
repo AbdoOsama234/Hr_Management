@@ -19,10 +19,10 @@ abstract class EmployeeServiceClient {
   factory EmployeeServiceClient(Dio dio, {String baseUrl}) = _EmployeeServiceClient;
 
   @GET(ApiUrls.allBranches)
-  Future<BaseResponse<AllBranches>> getAllBranches();
+  Future<BaseResponse<AllBranches>> getAllBranches(@Query('page') int page);
 
     @GET("${ApiUrls.allUsers}{id}")
-    Future<BaseResponse<AllUsers>> getAllUsers(@Path("id")String id);
+    Future<BaseResponse<AllUsers>> getAllUsers(@Query('page') int page,@Path("id")String id);
 
 
 }
@@ -34,12 +34,14 @@ class EmployeeRepository {
 
   EmployeeRepository(this._employeeServiceClient, this._safeApi);
 
-  Future<Either<Failure, BaseResponse<AllBranches>>> getAllBranches() async {
-    return await _safeApi.call(apiCall: _employeeServiceClient.getAllBranches());
+  Future<Either<Failure, BaseResponse<AllBranches>>> getAllBranches(
+      int page
+      ) async {
+    return await _safeApi.call(apiCall: _employeeServiceClient.getAllBranches(page));
   }
 
-  Future<Either<Failure,BaseResponse<AllUsers>>>getAllUsers(String id)async{
-    return await _safeApi.call(apiCall: _employeeServiceClient.getAllUsers(id));
+  Future<Either<Failure,BaseResponse<AllUsers>>>getAllUsers(int page,String id)async{
+    return await _safeApi.call(apiCall: _employeeServiceClient.getAllUsers(page,id));
   }
 
 

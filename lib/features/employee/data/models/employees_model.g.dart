@@ -10,14 +10,14 @@ AllUsers _$AllUsersFromJson(Map<String, dynamic> json) => AllUsers(
   pagination: json['pagination'] == null
       ? null
       : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
-  users: (json['users'] as List<dynamic>?)
+  users: (json['branches'] as List<dynamic>?)
       ?.map((e) => UsersModel.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
 Map<String, dynamic> _$AllUsersToJson(AllUsers instance) => <String, dynamic>{
   'pagination': ?instance.pagination?.toJson(),
-  'users': ?instance.users?.map((e) => e.toJson()).toList(),
+  'branches': ?instance.users?.map((e) => e.toJson()).toList(),
 };
 
 UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => UsersModel(
