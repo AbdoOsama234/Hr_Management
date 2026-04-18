@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBw7xI7vkZAbWdsrD3vknh8rEx-fjWZX-w',
-    appId: '1:997390790709:android:4d2e02878d1b07c8f9817c',
+    appId: '1:997390790709:android:9b93c08976af007af9817c',
     messagingSenderId: '997390790709',
     projectId: 'hr-manegement',
     storageBucket: 'hr-manegement.firebasestorage.app',
@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDl_FnvH_neYTs-3Lny0_pfecjMouWTttU',
-    appId: '1:997390790709:ios:2cb182393ce9d8e1f9817c',
+    appId: '1:997390790709:ios:d5f270b476f8e60ff9817c',
     messagingSenderId: '997390790709',
     projectId: 'hr-manegement',
     storageBucket: 'hr-manegement.firebasestorage.app',
-    iosBundleId: 'com.example.halaCar',
+    iosBundleId: 'com.halacar.hrmanagement',
   );
 }

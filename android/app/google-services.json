@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:997390790709:android:4d2e02878d1b07c8f9817c",
+        "mobilesdk_app_id": "1:997390790709:android:9b93c08976af007af9817c",
         "android_client_info": {
-          "package_name": "com.example.hr_hala_car"
+          "package_name": "com.halacar.hrmanagement"
         }
       },
       "oauth_client": [],

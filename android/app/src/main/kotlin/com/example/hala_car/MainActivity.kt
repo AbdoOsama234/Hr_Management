@@ -1,4 +1,4 @@
-package com.example.hr_hala_car
+package com.halacar.hrmanagement
 
 import io.flutter.embedding.android.FlutterActivity
 
