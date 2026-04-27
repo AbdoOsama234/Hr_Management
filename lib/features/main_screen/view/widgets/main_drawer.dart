@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_cubit/app_cubit.dart';
-import 'package:hr_manegement/core/app_cubit/app_state.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/features/auth/view/screens/login_screen.dart';
 import 'package:hr_manegement/features/main_screen/view/widgets/drawer_menu_item.dart';
@@ -78,10 +77,7 @@ class MainDrawer extends StatelessWidget {
               /// Menu
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 4.w,
-                    vertical: 2.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
                   child: Column(
                     children: [
                       /// 🔹 General
@@ -99,7 +95,9 @@ class MainDrawer extends StatelessWidget {
                             icon: Icons.task_alt_rounded,
                             title: 'employees_requests'.tr(),
                             onTap: () => _navigateTo(
-                                context, const EmployeesRequestsScreen()),
+                              context,
+                              const EmployeesRequestsScreen(),
+                            ),
                           ),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
@@ -137,7 +135,9 @@ class MainDrawer extends StatelessWidget {
                             icon: Icons.flight_takeoff_rounded,
                             title: 'business_trip_request'.tr(),
                             onTap: () => _navigateTo(
-                                context, const BusinessTripScreen()),
+                              context,
+                              const BusinessTripScreen(),
+                            ),
                           ),
                           DrawerMenuItem(
                             icon: Icons.work_outline_rounded,
@@ -151,7 +151,6 @@ class MainDrawer extends StatelessWidget {
                             onTap: () =>
                                 _navigateTo(context, const IdeasScreen()),
                           ),
-
                         ],
                       ),
 
@@ -200,10 +199,8 @@ class MainDrawer extends StatelessWidget {
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ),
-                          (route) => false,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      (route) => false,
                     );
                   },
                 ),

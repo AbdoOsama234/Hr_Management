@@ -79,7 +79,7 @@ ThemeData lightTheme() {
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error),
+        borderSide: BorderSide(color: AppColors.red),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       focusedErrorBorder: OutlineInputBorder(
@@ -179,7 +179,7 @@ ThemeData darkTheme() {
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error),
+        borderSide: BorderSide(color: AppColors.red),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       focusedErrorBorder: OutlineInputBorder(

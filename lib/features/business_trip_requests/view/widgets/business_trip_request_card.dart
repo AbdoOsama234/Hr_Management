@@ -136,8 +136,7 @@ class BusinessTripRequestCard extends StatelessWidget {
                 onTap: () {
                   showAppOptionBottomSheet(
                     context: context,
-                    title:
-                    "Are you sure you want to delete this request?".tr(),
+                    title: "Are you sure you want to delete this request?".tr(),
 
                     option1: BottomSheetOption(
                       title: "Yes".tr(),
@@ -145,9 +144,7 @@ class BusinessTripRequestCard extends StatelessWidget {
                       onTap: () {
                         Navigator.pop(context);
 
-                        context
-                            .read<BusinessTripCubit>()
-                            .deleteTrip(trip.id!);
+                        context.read<BusinessTripCubit>().deleteTrip(trip.id!);
                       },
                     ),
 
@@ -184,11 +181,11 @@ class BusinessTripRequestCard extends StatelessWidget {
 
     switch (status) {
       case "approved":
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case "rejected":
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
       default:

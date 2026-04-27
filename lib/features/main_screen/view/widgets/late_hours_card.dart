@@ -22,7 +22,7 @@ class LateHoursCard extends StatelessWidget {
     if (_progress <= 0.2) return AppColors.primary; // Red if less than 20% left
     if (_progress <= 0.5)
       return AppColors.orange; // Orange if less than 50% left
-    return AppColors.green; // Green if more than 50% left
+    return AppColors.mintGreen; // Green if more than 50% left
   }
 
   @override

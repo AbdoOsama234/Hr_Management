@@ -54,7 +54,9 @@ class CustomFilePicker extends StatelessWidget {
               color: AppColors.backGround2,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: selectedFile != null ? AppColors.primary : AppColors.borderColor,
+                color: selectedFile != null
+                    ? AppColors.primary
+                    : AppColors.borderColor,
                 width: 1.5,
               ),
               boxShadow: [
@@ -97,7 +99,9 @@ class CustomFilePicker extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              selectedFile!.path.split(Platform.pathSeparator).last,
+                              selectedFile!.path
+                                  .split(Platform.pathSeparator)
+                                  .last,
                               style: AppTextStyle.body.copyWith(
                                 color: AppColors.textMain,
                                 fontWeight: FontWeight.w500,
@@ -118,7 +122,7 @@ class CustomFilePicker extends StatelessWidget {
                         onPressed: onFileRemoved,
                         icon: const Icon(
                           Icons.cancel_rounded,
-                          color: AppColors.red,
+                          color: AppColors.rose,
                         ),
                       ),
                     ],

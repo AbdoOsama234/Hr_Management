@@ -13,7 +13,7 @@ showSuccessesAppDialog({
 }) {
   showAppDialog(
     context,
-    color: color ?? AppColors.green,
+    color: color ?? AppColors.mintGreen,
     message: message ?? 'Your booking has been ',
     title: title ?? 'Successes',
     icon: icon ?? Icons.done,
@@ -29,7 +29,7 @@ showErorrAppDialog({
 }) {
   showAppDialog(
     context,
-    color: color ?? AppColors.error,
+    color: color ?? AppColors.red,
     message: message ?? 'Your booking has been',
     title: title ?? 'Erorr',
     icon: icon ?? Icons.close,

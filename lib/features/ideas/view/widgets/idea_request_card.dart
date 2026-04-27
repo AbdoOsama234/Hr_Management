@@ -200,11 +200,11 @@ class IdeaRequestCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case IdeaStatus.approved:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case IdeaStatus.rejected:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
     }

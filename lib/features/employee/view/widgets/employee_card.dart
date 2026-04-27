@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/extensions.dart';
@@ -17,7 +16,8 @@ class EmployeeCard extends StatelessWidget {
     super.key,
     required this.branche,
     this.onTrack,
-    this.onAttendance, required this.user,
+    this.onAttendance,
+    required this.user,
   });
 
   @override
@@ -127,14 +127,14 @@ class EmployeeCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 1.2.h),
                     decoration: BoxDecoration(
-                      color: AppColors.green.withOpacity(0.1),
+                      color: AppColors.mintGreen.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(
                         "تحضير",
                         style: AppTextStyle.body.copyWith(
-                          color: AppColors.green,
+                          color: AppColors.mintGreen,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

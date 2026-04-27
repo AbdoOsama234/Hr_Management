@@ -102,10 +102,7 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
         children: [
           Row(
             children: [
-              if (widget.icon != null) ...[
-                widget.icon!,
-                SizedBox(width: 2.w),
-              ],
+              if (widget.icon != null) ...[widget.icon!, SizedBox(width: 2.w)],
               if (widget.taxt != null && widget.taxt!.isNotEmpty)
                 Text(
                   widget.taxt ?? "",
@@ -155,7 +152,10 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
               InkWell(
                 onTap: _showChangeStatusBottomSheet,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.8.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 2.w,
+                    vertical: 0.8.h,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -199,11 +199,11 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
         label = 'status_progressing'.tr();
         break;
       case MissionStatus.reviewing:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_reviewing'.tr();
         break;
       case MissionStatus.completed:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_completed'.tr();
         break;
     }

@@ -47,17 +47,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           /// 🔄 Loading
           if (state is ProfileInitial || state is ProfileLoading) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
 
           /// ❌ Error
           if (state is ProfileError) {
-            return const Center(
-              child: Text("Something went wrong"),
-            );
+            return const Center(child: Text("Something went wrong"));
           }
 
           /// ✅ Loaded
@@ -95,8 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle,
-                    color: Colors.white, size: 20),
+                const Icon(Icons.check_circle, color: Colors.white, size: 20),
                 SizedBox(width: 2.w),
                 Text(
                   'profile_updated_successfully'.tr(),
@@ -107,13 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.green,
+            backgroundColor: AppColors.mintGreen,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            margin:
-            EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+            margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -160,8 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   top: MediaQuery.of(context).padding.top + 1.h,
                   end: 4.w,
                   child: GestureDetector(
-                    onTap: () =>
-                        context.read<ProfileCubit>().toggleEditMode(),
+                    onTap: () => context.read<ProfileCubit>().toggleEditMode(),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 4.w,
@@ -201,17 +194,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             duration: const Duration(milliseconds: 350),
             child: isEditMode
                 ? ProfileEditForm(
-              key: const ValueKey('edit'),
-              name: name,
-              phone: phone,
-              jobTitle: jobTitle,
-            )
+                    key: const ValueKey('edit'),
+                    name: name,
+                    phone: phone,
+                    jobTitle: jobTitle,
+                  )
                 : ProfileInfoSection(
-              key: const ValueKey('info'),
-              name: name,
-              phone: phone,
-              jobTitle: jobTitle,
-            ),
+                    key: const ValueKey('info'),
+                    name: name,
+                    phone: phone,
+                    jobTitle: jobTitle,
+                  ),
           ),
 
           AppSizedBox.h5,

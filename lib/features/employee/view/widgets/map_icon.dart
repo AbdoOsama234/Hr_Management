@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/%20sheard/componnents/app_asset_image.dart';
 
-import '../../../../ sheard/componnents/app_network_image.dart';
-import '../../../../core/app_assets.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/text_style.dart';
-
 
 class MapIcon extends StatefulWidget {
   const MapIcon({
@@ -45,20 +42,19 @@ class _MapIconState extends State<MapIcon> {
                 // placeHolder: widget.placeHolder ?? AppAssets.avatar,
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+                color: AppColors.primary,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 widget.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.smallBody.copyWith(
-                  color: AppColors.white,
-                ),
+                style: AppTextStyle.smallBody.copyWith(color: AppColors.white),
               ),
             ),
           ],

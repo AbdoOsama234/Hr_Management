@@ -156,11 +156,11 @@ class LoanRequestCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case LoanStatus.approved:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case LoanStatus.rejected:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
     }

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../ sheard/componnents/show_app_toast.dart';
-import '../../../../ sheard/componnents/show_flutter_snackbar.dart';
 import '../../../../core/app_assets.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/app_sized_box.dart';
@@ -85,17 +84,12 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
   Widget build(BuildContext context) {
     return BlocListener<BusinessTripCubit, BusinessTripState>(
       listenWhen: (prev, current) =>
-      current is DeleteTripSuccess || current is DeleteTripError,
+          current is DeleteTripSuccess || current is DeleteTripError,
       listener: (context, state) {
         if (state is DeleteTripSuccess) {
-          showFlutterSnackBar(
-            message: state.error ?? "تم الحذف بنجاح",
-            toastColor: AppColors.red,
-          );
+          CustomToast.show(message: state.error ?? "تم الحذف بنجاح");
         }
-
-
-        },
+      },
       child: Scaffold(
         appBar: CustomAppBar(title: 'Business Trip Requests'.tr()),
         body: Padding(
@@ -112,8 +106,7 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
                 ),
                 onChange: (value) {
                   if (_debounce?.isActive ?? false) _debounce!.cancel();
-                  _debounce =
-                      Timer(const Duration(milliseconds: 500), () {});
+                  _debounce = Timer(const Duration(milliseconds: 500), () {});
                 },
                 validator: Validations.noValidation,
               ),
@@ -171,7 +164,8 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
               child: const Icon(Icons.add),
             );
           },
-        ),      ),
+        ),
+      ),
     );
   }
 }

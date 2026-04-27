@@ -1,96 +1,119 @@
+import 'dart:async';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import '../../core/app_colors.dart';
-import '../../core/text_style.dart';
+import 'package:hr_manegement/core/app_colors.dart';
 
-void showAppToast(
-    BuildContext context,
-    String message, ) {
-  final overlay = Overlay.of(context);
-  if (overlay == null) return;
+import '../../my_app.dart';
 
+enum ToastType { success, error, info }
 
-  late OverlayEntry entry;
+class CustomToast {
+  CustomToast._();
 
-  entry = OverlayEntry(
-    builder: (context) => Positioned(
-      bottom: 90,
-      left: 16,
-      right: 16,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0, end: 1),
-        duration: const Duration(milliseconds: 250),
-        builder: (context, value, child) {
-          return Opacity(
+  static Color _getColor(ToastType type) {
+    switch (type) {
+      case ToastType.success:
+        return AppColors.green;
+      case ToastType.error:
+        return AppColors.red;
+      case ToastType.info:
+        return AppColors.primary;
+    }
+  }
+
+  static IconData _getIcon(ToastType type) {
+    switch (type) {
+      case ToastType.success:
+        return Icons.check_circle_outline;
+      case ToastType.error:
+        return Icons.error_outline;
+      case ToastType.info:
+        return Icons.info_outline;
+    }
+  }
+
+  static void show({
+    required String message,
+    ToastType type = ToastType.success,
+    Duration duration = const Duration(seconds: 2),
+  }) {
+    final overlay = navigatorKey.currentState!.overlay!;
+    late OverlayEntry entry;
+    final color = _getColor(type);
+
+    entry = OverlayEntry(
+      builder: (context) => Positioned(
+        bottom: 50,
+        left: 20,
+        right: 20,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: 1),
+          duration: const Duration(milliseconds: 300),
+          builder: (context, value, child) => Opacity(
             opacity: value,
             child: Transform.translate(
               offset: Offset(0, (1 - value) * 20),
               child: child,
             ),
-          );
-        },
-        child: Material(
-          color: Colors.transparent,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(14),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-              child: Container(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85), // 👈 subtle glass
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.15),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 14,
+                    horizontal: 18,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
                     ),
-                  ],
-                ),
-
-                child: Row(
-                  children: [
-                    /// 🔹 Icon
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.2),
+                        blurRadius: 20,
+                        spreadRadius: 10,
+                        offset: const Offset(0, 3),
                       ),
-
-                    ),
-
-                    const SizedBox(width: 10),
-
-                    /// 🔹 Text
-                    Expanded(
-                      child: Text(
-                        message,
-                        style: AppTextStyle.body.copyWith(
-                          color: AppColors.textMain,
-                          fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(_getIcon(type), color: color, size: 22),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          message,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.textMain,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
 
-  overlay.insert(entry);
+    overlay.insert(entry);
 
-  /// ⏱️ remove
-  Future.delayed(const Duration(seconds: 2), () {
-    entry.remove();
-  });
+    Timer(duration, () {
+      if (entry.mounted) {
+        entry.remove();
+      }
+    });
+  }
 }

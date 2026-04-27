@@ -1,103 +1,92 @@
-  import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-  import 'package:flutter/material.dart';
-  import 'package:flutter_bloc/flutter_bloc.dart';
-  import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
-  import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
-  import 'package:injectable/injectable.dart';
-  import '../data/repository/employee_repository.dart';
-  import 'employee_state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
+import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
+import 'package:injectable/injectable.dart';
+import '../data/repository/employee_repository.dart';
+import 'employee_state.dart';
 
-  @injectable
-  class EmployeeCubit extends Cubit<EmployeeState> {
-    final EmployeeRepository _repository;
-    static EmployeeCubit get(BuildContext context) =>
-        context.read<EmployeeCubit>();
+@injectable
+class EmployeeCubit extends Cubit<EmployeeState> {
+  final EmployeeRepository _repository;
+  static EmployeeCubit get(BuildContext context) =>
+      context.read<EmployeeCubit>();
 
-    EmployeeCubit(this._repository) : super(EmployeeInitial());
+  EmployeeCubit(this._repository) : super(EmployeeInitial());
 
-   List<BrancheModel> branches=[];
-   int _currentPage=1;
-   bool _hasNext=true;
+  List<BrancheModel> branches = [];
+  int _currentPage = 1;
+  bool _hasNext = true;
 
-    Future<void>getAllBranches({bool loadMore=false})async{
-
-
-      if(state is GetAllBranchesLoading||
-      state is PaginationLoading ||
-          (loadMore &&!_hasNext)){
-        return;
-      }
-      if(loadMore){
-        emit(PaginationLoading());
-      }else{
-        branches.clear();
-        _currentPage=1;
-        _hasNext=true;
-        emit(GetAllBranchesLoading());
-      }
+  Future<void> getAllBranches({bool loadMore = false}) async {
+    if (state is GetAllBranchesLoading ||
+        state is PaginationLoading ||
+        (loadMore && !_hasNext)) {
+      return;
+    }
+    if (loadMore) {
+      emit(PaginationLoading());
+    } else {
+      branches.clear();
+      _currentPage = 1;
+      _hasNext = true;
       emit(GetAllBranchesLoading());
-      _repository.getAllBranches(_currentPage).then((value) {
-        value.fold(
-              (l) {
-            emit(GetAllBranchesError(error: l.message));
-            print("get all brancheserror ${l.message}");
-          },
-              (r) {
-                branches.addAll(r.result?.branches ?? []) ;
-                _hasNext=r.result?.pagination?.hasNext??false;
-
-                if(_hasNext){
-                  _currentPage++;
-                }
-            emit(GetAllBranchesLoaded());
-          },
-        );
-      });
-
     }
+    emit(GetAllBranchesLoading());
+    _repository.getAllBranches(_currentPage).then((value) {
+      value.fold(
+        (l) {
+          emit(GetAllBranchesError(error: l.message));
+          print("get all brancheserror ${l.message}");
+        },
+        (r) {
+          branches.addAll(r.result?.branches ?? []);
+          _hasNext = r.result?.pagination?.hasNext ?? false;
 
+          if (_hasNext) {
+            _currentPage++;
+          }
+          emit(GetAllBranchesLoaded());
+        },
+      );
+    });
+  }
+
+  ///
+  List<UsersModel> users = [];
+  Future<void> getAllUsers(String id, {bool loadMore = false}) async {
     ///
-    List<UsersModel>users=[];
-    Future<void>getAllUsers(String id,{bool loadMore=false})async{
-      ///
-      if(state is GetAllUsersLoading||
-          state is PaginationLoading ||
-          (loadMore &&!_hasNext)){
-        return;
-      }
-      if(loadMore){
-        emit(PaginationLoading());
-      }else{
-        users.clear();
-        _currentPage=1;
-        _hasNext=true;
-        emit(GetAllUsersLoading());
-      }
-
-      _repository.getAllUsers(_currentPage,id).then((value){
-        value.fold(
-            (l){
-              emit(GetAllUsersError(error: l.message));
-
-
-            },
-            (r){
-
-              users.addAll(r.result?.users ?? []) ;
-              _hasNext=r.result?.pagination?.hasNext??false;
-
-              if(_hasNext){
-                _currentPage++;
-              }
-          emit(GetAllUsersLoaded());
-
-            },
-        );
-      });
-
+    if (state is GetAllUsersLoading ||
+        state is PaginationLoading ||
+        (loadMore && !_hasNext)) {
+      return;
+    }
+    if (loadMore) {
+      emit(PaginationLoading());
+    } else {
+      users.clear();
+      _currentPage = 1;
+      _hasNext = true;
+      emit(GetAllUsersLoading());
     }
 
+    _repository.getAllUsers(_currentPage, id).then((value) {
+      value.fold(
+        (l) {
+          emit(GetAllUsersError(error: l.message));
+        },
+        (r) {
+          users.addAll(r.result?.users ?? []);
+          _hasNext = r.result?.pagination?.hasNext ?? false;
+
+          if (_hasNext) {
+            _currentPage++;
+          }
+          emit(GetAllUsersLoaded());
+        },
+      );
+    });
+  }
 
   /// 👥 Fetch employees
   // Future<void> getEmployeesByBranch(String branch) async {

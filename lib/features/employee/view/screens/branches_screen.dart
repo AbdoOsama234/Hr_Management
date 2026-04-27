@@ -13,6 +13,7 @@ import '../../../../ sheard/componnents/custom_app_bar.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../core/app_sized_box.dart';
 import '../widgets/branch_card.dart';
+
 class BranchesScreen extends StatelessWidget {
   const BranchesScreen({super.key});
 
@@ -24,8 +25,9 @@ class BranchesScreen extends StatelessWidget {
     );
   }
 }
+
 class _BranchesScreen extends StatefulWidget {
-  const _BranchesScreen({super.key});
+  const _BranchesScreen();
 
   @override
   State<_BranchesScreen> createState() => _BranchesScreenState();
@@ -57,31 +59,27 @@ class _BranchesScreenState extends State<_BranchesScreen> {
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
         child: BlocBuilder<EmployeeCubit, EmployeeState>(
           buildWhen: (previous, current) =>
-          current is GetAllBranchesLoading ||
+              current is GetAllBranchesLoading ||
               current is GetAllBranchesLoaded ||
               current is GetAllBranchesError ||
               current is PaginationLoading,
           builder: (context, state) {
             var cubit = EmployeeCubit.get(context);
             return CustomApiBuilderView(
-
               isLoading: state is GetAllBranchesLoading,
               isError: state is GetAllBranchesError,
               isEmpty: cubit.branches.isEmpty,
-              contentBuilder: ()=>Column(
-              children: [
-                Expanded(child: branchesList(cubit.branches)),
-                AppSizedBox.h1,
-                if (state is PaginationLoading)
-                  const Center(child: LoaderWidget()),
-
-              ],
-            ),
+              contentBuilder: () => Column(
+                children: [
+                  Expanded(child: branchesList(cubit.branches)),
+                  AppSizedBox.h1,
+                  if (state is PaginationLoading)
+                    const Center(child: LoaderWidget()),
+                ],
+              ),
               loadingWidget: AppShimmer.grid(),
               onRetry: () => cubit.getAllBranches(),
               errorMessage: state is GetAllBranchesError ? state.error : null,
-
-
             );
           },
         ),

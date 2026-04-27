@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/app_sized_box.dart';
 
 import '../custom_text_field.dart' show CustomTextField;
-import '../show_flutter_snackbar.dart';
+import '../show_app_toast.dart';
 import 'common.dart';
 
 class TimesRow extends StatefulWidget {
@@ -106,9 +106,9 @@ class _TimesRowState extends State<TimesRow> {
               double endVal = toDouble(end);
               if (startVal > endVal) {
                 log('start time must be befor end tome');
-                showFlutterSnackBar(
+                CustomToast.show(
                   message: 'start time must be befor end time',
-                  toastColor: Colors.red,
+                  type: ToastType.error,
                 );
                 return 'start time must be befor end time';
               }

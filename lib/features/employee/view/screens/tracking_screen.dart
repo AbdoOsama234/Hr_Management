@@ -205,12 +205,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.green.withOpacity(0.1),
+                      color: AppColors.mintGreen.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.circle, color: AppColors.green, size: 8),
+                        Icon(Icons.circle, color: AppColors.mintGreen, size: 8),
                         const SizedBox(width: 4),
                         Text(
                           "Active",

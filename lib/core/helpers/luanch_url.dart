@@ -1,27 +1,25 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../ sheard/componnents/show_flutter_snackbar.dart';
-
+import '../../ sheard/componnents/show_app_toast.dart';
 
 class LaunchHelper {
-  static callPhoneNumber(String phone) async {
+  static Future<void> callPhoneNumber(String phone) async {
     if (!await launchUrl(Uri.parse('tel:$phone'))) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
 
-  static openLink(String link) async {
+  static Future<void> openLink(String link) async {
     if (!await launchUrl(Uri.parse(link))) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
@@ -42,14 +40,14 @@ class LaunchHelper {
 
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "No email app found. Email copied.".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
 
-  static sendWhatsappNumber({
+  static Future<void> sendWhatsappNumber({
     required String phone,
     String message = "",
   }) async {
@@ -57,9 +55,9 @@ class LaunchHelper {
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
     } else {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
@@ -69,15 +67,15 @@ class LaunchHelper {
       final Uri parsedUri = Uri.parse(website);
       print(parsedUri.toString());
       if (!await launchUrl(parsedUri, mode: LaunchMode.externalApplication)) {
-        showFlutterSnackBar(
+        CustomToast.show(
           message: "Something went wrong, try again later".tr(),
-          toastColor: Colors.red,
+          type: ToastType.error,
         );
       }
     } catch (e) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
       print("launchURLFunction erorr $e");
     }
@@ -102,15 +100,15 @@ class LaunchHelper {
           Uri.parse(fallbackUrl),
           mode: LaunchMode.externalApplication,
         );
-        showFlutterSnackBar(
+        CustomToast.show(
           message: "Something went wrong, try again later".tr(),
-          toastColor: Colors.red,
+          type: ToastType.error,
         );
       }
     } catch (e) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
@@ -129,15 +127,15 @@ class LaunchHelper {
       if (await canLaunchUrl(url)) {
         await launchUrl(url, mode: LaunchMode.externalApplication);
       } else {
-        showFlutterSnackBar(
+        CustomToast.show(
           message: "Something went wrong, try again later".tr(),
-          toastColor: Colors.red,
+          type: ToastType.error,
         );
       }
     } catch (e) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }
@@ -147,9 +145,9 @@ class LaunchHelper {
 
     final ok = await launchUrl(uri); // no mode
     if (!ok) {
-      showFlutterSnackBar(
+      CustomToast.show(
         message: "Something went wrong, try again later".tr(),
-        toastColor: Colors.red,
+        type: ToastType.error,
       );
     }
   }

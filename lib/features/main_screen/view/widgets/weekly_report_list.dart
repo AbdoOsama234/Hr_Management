@@ -141,7 +141,7 @@ class WeeklyReportList extends StatelessWidget {
                     vertical: 0.3.h,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.green.withOpacity(isDark ? 0.1 : 0.07),
+                    color: AppColors.mintGreen.withOpacity(isDark ? 0.1 : 0.07),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -149,14 +149,14 @@ class WeeklyReportList extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.check_circle_outline,
-                        color: AppColors.green,
+                        color: AppColors.mintGreen,
                         size: 3.5.w,
                       ),
                       SizedBox(width: 1.w),
                       Text(
                         'on_time'.tr(),
                         style: AppTextStyle.hint.copyWith(
-                          color: AppColors.green,
+                          color: AppColors.mintGreen,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

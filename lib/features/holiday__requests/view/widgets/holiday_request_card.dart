@@ -142,11 +142,11 @@ class HolidayRequestCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case HolidayStatus.approved:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case HolidayStatus.rejected:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
     }

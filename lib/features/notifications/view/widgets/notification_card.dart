@@ -167,7 +167,7 @@ class NotificationCard extends StatelessWidget {
   Color _getIconColor() {
     switch (notification.type) {
       case NotificationType.holiday:
-        return AppColors.green;
+        return AppColors.mintGreen;
       case NotificationType.idea:
         return AppColors.orange;
       case NotificationType.errand:

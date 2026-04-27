@@ -161,11 +161,11 @@ class ErrandRequestCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case ErrandStatus.approved:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case ErrandStatus.rejected:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
     }
@@ -186,4 +186,3 @@ class ErrandRequestCard extends StatelessWidget {
     );
   }
 }
-

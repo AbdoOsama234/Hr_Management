@@ -48,7 +48,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
 
     final errorPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: AppColors.error),
+      border: Border.all(color: AppColors.red),
     );
 
     return Scaffold(

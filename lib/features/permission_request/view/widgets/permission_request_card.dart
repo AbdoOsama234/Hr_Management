@@ -129,7 +129,9 @@ class PermissionRequestCard extends StatelessWidget {
                       backGroundColor: Colors.transparent,
 
                       onTap: () {
-                        context.read<PermissionCubit>().deleteRequest(request.id);
+                        context.read<PermissionCubit>().deleteRequest(
+                          request.id,
+                        );
                         Navigator.pop(context);
                       },
                     ),
@@ -161,11 +163,11 @@ class PermissionRequestCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case PermissionStatus.approved:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
       case PermissionStatus.rejected:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
     }

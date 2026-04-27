@@ -5,16 +5,11 @@ import 'package:hr_manegement/%20sheard/componnents/screen_builder/screen_builde
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
 import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
 
 import '../../../../ sheard/componnents/custom_app_bar.dart';
-import '../../../../ sheard/componnents/custom_button.dart';
-import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
-import '../../../../ sheard/componnents/show_bottom_sheet.dart';
-import '../../../../ sheard/componnents/show_flutter_snackbar.dart';
 import '../../../../core/app_router.dart';
 import '../../../../core/app_sized_box.dart';
 import '../../controller/employee_cubit.dart';
@@ -29,16 +24,15 @@ class EmployeesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<EmployeeCubit>(),
-      child:  _EmployeesScreen(brancheModel: brancheModel,),
+      child: _EmployeesScreen(brancheModel: brancheModel),
     );
   }
 }
 
-
 class _EmployeesScreen extends StatefulWidget {
-final BrancheModel brancheModel;
+  final BrancheModel brancheModel;
 
-  const _EmployeesScreen({super.key, required this.brancheModel});
+  const _EmployeesScreen({required this.brancheModel});
 
   @override
   State<_EmployeesScreen> createState() => _EmployeesScreenState();
@@ -52,22 +46,24 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
-        EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString(),loadMore: true);
+        EmployeeCubit.get(
+          context,
+        ).getAllUsers(widget.brancheModel.id.toString(), loadMore: true);
       }
     });
-    EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString(),);
+    EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: widget.brancheModel.localName),
       backgroundColor: AppColors.backGround,
-      body:
-      Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
         child: BlocBuilder<EmployeeCubit, EmployeeState>(
           buildWhen: (previous, current) =>
-          current is GetAllUsersLoading ||
+              current is GetAllUsersLoading ||
               current is GetAllUsersLoaded ||
               current is GetAllUsersError ||
               current is PaginationLoading,
@@ -76,18 +72,18 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
             return CustomApiBuilderView(
               isLoading: state is GetAllUsersLoading,
               isError: state is GetAllUsersError,
-              isEmpty:  cubit.users.isEmpty,
-              contentBuilder:  ()=>Column(
+              isEmpty: cubit.users.isEmpty,
+              contentBuilder: () => Column(
                 children: [
                   Expanded(child: allUsers(cubit.users)),
                   AppSizedBox.h1,
                   if (state is PaginationLoading)
                     const Center(child: LoaderWidget()),
-
                 ],
               ),
               loadingWidget: AppShimmer.verticalList(),
-              onRetry: () => cubit.getAllUsers(widget.brancheModel.id.toString()),
+              onRetry: () =>
+                  cubit.getAllUsers(widget.brancheModel.id.toString()),
               errorMessage: state is GetAllUsersError ? state.error : null,
             );
           },
@@ -99,16 +95,18 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
   Widget allUsers(List<UsersModel> users) {
     return RefreshIndicator(
       onRefresh: () async {
-        await EmployeeCubit.get(context).getAllUsers(widget.brancheModel.id.toString());
+        await EmployeeCubit.get(
+          context,
+        ).getAllUsers(widget.brancheModel.id.toString());
       },
       child: ListView.builder(
         controller: scrollController,
-       padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         physics: const BouncingScrollPhysics(),
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
-      
+
           return TweenAnimationBuilder<double>(
             duration: Duration(milliseconds: 300 + (index * 100)),
             tween: Tween(begin: 0.0, end: 1.0),
@@ -124,7 +122,7 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
             },
             child: EmployeeCard(
               user: user,
-              branche:widget.brancheModel,
+              branche: widget.brancheModel,
               onTrack: () {
                 Navigator.pushNamed(
                   context,
@@ -132,7 +130,7 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
                   arguments: user.name,
                 );
               },
-      
+
               /// ✅ FIXED Attendance
               // onAttendance: () {
               //   final cubit = context.read<EmployeeCubit>();

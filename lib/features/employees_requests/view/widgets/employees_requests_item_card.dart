@@ -21,12 +21,16 @@ class EmployeesRequestsItemCard extends StatelessWidget {
   const EmployeesRequestsItemCard({super.key, required this.request});
 
   void _showActionBottomSheet(BuildContext context, RequestStatus newStatus) {
-    final notesController = TextEditingController(text: request.changeStateNotes);
+    final notesController = TextEditingController(
+      text: request.changeStateNotes,
+    );
     final formKey = GlobalKey<FormState>();
 
     showAppBottomSheet(
       context: context,
-      title: newStatus == RequestStatus.accepted ? 'accept_request'.tr() : 'refuse_request'.tr(),
+      title: newStatus == RequestStatus.accepted
+          ? 'accept_request'.tr()
+          : 'refuse_request'.tr(),
       body: Form(
         key: formKey,
         child: Column(
@@ -43,10 +47,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
               onTap: () {
                 if (formKey.currentState!.validate()) {
                   context.read<EmployeesRequestsCubit>().updateRequestState(
-                        requestId: request.id,
-                        newStatus: newStatus,
-                        changeStateNotes: notesController.text,
-                      );
+                    requestId: request.id,
+                    newStatus: newStatus,
+                    changeStateNotes: notesController.text,
+                  );
                   Navigator.pop(context);
                 }
               },
@@ -104,9 +108,7 @@ class EmployeesRequestsItemCard extends StatelessWidget {
           AppSizedBox.h1,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildStatusChip(request.status),
-            ],
+            children: [_buildStatusChip(request.status)],
           ),
           AppSizedBox.h2,
           _buildRequestContent(context),
@@ -146,24 +148,31 @@ class EmployeesRequestsItemCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () => _showActionBottomSheet(context, RequestStatus.accepted),
+                    onTap: () =>
+                        _showActionBottomSheet(context, RequestStatus.accepted),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 1.2.h),
                       decoration: BoxDecoration(
-                        color: AppColors.green.withOpacity(0.1),
+                        color: AppColors.mintGreen.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColors.green.withOpacity(0.3)),
+                        border: Border.all(
+                          color: AppColors.mintGreen.withOpacity(0.3),
+                        ),
                       ),
                       alignment: Alignment.center,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.check_circle_outline, color: AppColors.green, size: 4.5.w),
+                          Icon(
+                            Icons.check_circle_outline,
+                            color: AppColors.mintGreen,
+                            size: 4.5.w,
+                          ),
                           SizedBox(width: 2.w),
                           Text(
                             'accept'.tr(),
                             style: AppTextStyle.body.copyWith(
-                              color: AppColors.green,
+                              color: AppColors.mintGreen,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -175,24 +184,31 @@ class EmployeesRequestsItemCard extends StatelessWidget {
                 SizedBox(width: 3.w),
                 Expanded(
                   child: InkWell(
-                    onTap: () => _showActionBottomSheet(context, RequestStatus.refused),
+                    onTap: () =>
+                        _showActionBottomSheet(context, RequestStatus.refused),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 1.2.h),
                       decoration: BoxDecoration(
-                        color: AppColors.red.withOpacity(0.1),
+                        color: AppColors.rose.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColors.red.withOpacity(0.3)),
+                        border: Border.all(
+                          color: AppColors.rose.withOpacity(0.3),
+                        ),
                       ),
                       alignment: Alignment.center,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.cancel_outlined, color: AppColors.red, size: 4.5.w),
+                          Icon(
+                            Icons.cancel_outlined,
+                            color: AppColors.rose,
+                            size: 4.5.w,
+                          ),
                           SizedBox(width: 2.w),
                           Text(
                             'refuse'.tr(),
                             style: AppTextStyle.body.copyWith(
-                              color: AppColors.red,
+                              color: AppColors.rose,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -224,7 +240,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             AppSizedBox.h1,
             Text(
               bRequest.reason,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
           ],
         );
@@ -241,7 +260,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             AppSizedBox.h1,
             Text(
               eRequest.reason,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
           ],
         );
@@ -258,7 +280,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             AppSizedBox.h1,
             Text(
               hRequest.reason,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
           ],
         );
@@ -275,7 +300,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             AppSizedBox.h1,
             Text(
               lRequest.reason,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
           ],
         );
@@ -287,7 +315,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
           children: [
             Text(
               iRequest.ideaExplain,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
             if (iRequest.ideaLink.isNotEmpty) ...[
               AppSizedBox.h1,
@@ -384,7 +415,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             AppSizedBox.h2,
             Text(
               pRequest.reason,
-              style: AppTextStyle.title.copyWith(fontWeight: FontWeight.bold, color: AppColors.textMain),
+              style: AppTextStyle.title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textMain,
+              ),
             ),
           ],
         );
@@ -401,11 +435,11 @@ class EmployeesRequestsItemCard extends StatelessWidget {
         label = 'status_pending'.tr();
         break;
       case RequestStatus.accepted:
-        color = AppColors.green;
+        color = AppColors.mintGreen;
         label = 'status_accepted'.tr();
         break;
       case RequestStatus.refused:
-        color = AppColors.red;
+        color = AppColors.rose;
         label = 'status_refused'.tr();
         break;
     }

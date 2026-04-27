@@ -102,13 +102,13 @@ class AppColors {
   static const Color border = Color(0xFFE9D5FF);
 
   // static const Color green = Color(0xff68f7eb);
-  static Color get green =>
+  static Color get mintGreen =>
       MyApp.isDark ? const Color(0xff68f7eb) : const Color(0xFF14afa2);
 
   // 💜 بدل deepPurple الافتراضي
   static const Color deepPurple = Color(0xFFC362D8);
 
-  static const Color red = Color(0xffbf5a6b);
+  static const Color rose = Color(0xffbf5a6b);
 
   static const Color darkBlue = Color(0xff182775);
 
@@ -133,6 +133,6 @@ class AppColors {
   static const Color orange = Color(0xFFFF9800);
 
   static const Color blue = Color(0xff0087FF);
-
-  static const Color error = red;
+  static const Color green = Colors.green;
+  static const Color red = Colors.red;
 }
