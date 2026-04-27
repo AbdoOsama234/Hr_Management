@@ -51,7 +51,7 @@ class UsersModel {
   int? isPurchaseStore;
   int? isFinance;
   int? isAccountant;
-  String? employeesId;
+  int? employeesId;
 
   UsersModel(
       {this.id,

@@ -49,7 +49,7 @@ UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => UsersModel(
   isPurchaseStore: (json['is_purchase_store'] as num?)?.toInt(),
   isFinance: (json['is_finance'] as num?)?.toInt(),
   isAccountant: (json['is_accountant'] as num?)?.toInt(),
-  employeesId: json['employees_id'] as String?,
+  employeesId: (json['employees_id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$UsersModelToJson(UsersModel instance) =>

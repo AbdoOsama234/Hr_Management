@@ -21,7 +21,7 @@ abstract class EmployeeServiceClient {
   @GET(ApiUrls.allBranches)
   Future<BaseResponse<AllBranches>> getAllBranches(@Query('page') int page);
 
-    @GET("${ApiUrls.allUsers}{id}")
+    @GET("${ApiUrls.allUsers}/{id}")
     Future<BaseResponse<AllUsers>> getAllUsers(@Query('page') int page,@Path("id")String id);
 
 
