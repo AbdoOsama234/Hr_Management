@@ -242,7 +242,16 @@
   "status_newTask": "New Task",
   "status_progressing": "In Progress",
   "status_reviewing": "Under Review",
-  "status_completed": "Completed"
+  "status_completed": "Completed",
+
+
+
+  "no_business_trips": "No Business Trip Requests",
+  "no_data": "No data available",
+
+  "add_business_trip": "Add Business Trip"
+
+
 
 
 }

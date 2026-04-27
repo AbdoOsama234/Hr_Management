@@ -9,7 +9,9 @@ class ApiUrls {
 
   //Home Apis
   static const String allBranches = '${baseApiUrl}all-branches';
-  static const String allUsers = '${baseApiUrl}all-users-branches/';
+  static const String allUsers = '${baseApiUrl}all-users-branches';
+  static const String businessTripRequest = '${baseApiUrl}business-trip-request';
+
 
 //AUTH APIS
 }

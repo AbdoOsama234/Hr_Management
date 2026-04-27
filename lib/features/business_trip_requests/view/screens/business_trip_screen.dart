@@ -1,10 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_manegement/core/app_assets.dart';
-import 'package:hr_manegement/core/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../ sheard/componnents/show_app_toast.dart';
+import '../../../../ sheard/componnents/show_flutter_snackbar.dart';
+import '../../../../core/app_assets.dart';
+import '../../../../core/app_colors.dart';
+import '../../../../core/app_sized_box.dart';
+import '../../../../core/app_validation.dart';
 
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
@@ -12,45 +16,86 @@ import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../ sheard/componnents/empty_screen.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
-import '../../../../core/app_sized_box.dart';
-import '../../../../core/app_validation.dart';
 
 import '../../controller/business_trip_cubit.dart';
 import '../../controller/business_trip_state.dart';
+import '../../data/models/business_trip_request.dart';
 import '../widgets/business_trip_request_card.dart';
 import '../widgets/business_trip_request_form.dart';
 
-class BusinessTripScreen extends StatefulWidget {
+import '../../../../core/di/di.dart';
+
+class BusinessTripScreen extends StatelessWidget {
   const BusinessTripScreen({super.key});
 
   @override
-  State<BusinessTripScreen> createState() => _BusinessTripScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<BusinessTripCubit>()..getAllTrips(),
+      child: const _BusinessTripView(),
+    );
+  }
 }
 
-class _BusinessTripScreenState extends State<BusinessTripScreen> {
-  void _showRequestForm(BuildContext context) {
+class _BusinessTripView extends StatefulWidget {
+  const _BusinessTripView();
+
+  @override
+  State<_BusinessTripView> createState() => _BusinessTripViewState();
+}
+
+class _BusinessTripViewState extends State<_BusinessTripView> {
+  final searchController = TextEditingController();
+  Timer? _debounce;
+
+  void _showRequestForm() {
+    final cubit = context.read<BusinessTripCubit>();
+
     showAppBottomSheet(
       context: context,
       title: 'Request Business Trip'.tr(),
-      body: BusinessTripRequestForm(
-        onSubmit: (startDate, endDate, days, reason) {
-          context.read<BusinessTripCubit>().addBusinessTripRequest(
-            startDate,
-            endDate,
-            days,
-            reason,
-          );
-        },
+      body: BlocProvider.value(
+        value: cubit,
+        child: BusinessTripRequestForm(
+          onSubmit: (startDate, endDate, days, reason) {
+            cubit.createTrip(
+              model: BusinessTripRequest(
+                tripType: "business",
+                fromDate: startDate.toString().split(" ").first,
+                toDate: startDate.toString().split(" ").first,
+                daysCount: days,
+                requestNotes: reason,
+                statusNotes: "",
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
-  var searchController = TextEditingController();
-  Timer? _debounce;
+  @override
+  void dispose() {
+    searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BusinessTripCubit()..loadRequests(),
+    return BlocListener<BusinessTripCubit, BusinessTripState>(
+      listenWhen: (prev, current) =>
+      current is DeleteTripSuccess || current is DeleteTripError,
+      listener: (context, state) {
+        if (state is DeleteTripSuccess) {
+          showFlutterSnackBar(
+            message: state.error ?? "تم الحذف بنجاح",
+            toastColor: AppColors.red,
+          );
+        }
+
+
+        },
       child: Scaffold(
         appBar: CustomAppBar(title: 'Business Trip Requests'.tr()),
         body: Padding(
@@ -64,93 +109,69 @@ class _BusinessTripScreenState extends State<BusinessTripScreen> {
                 prefix: const AppAssetImage(
                   uri: AppAssets.search,
                   color: AppColors.primary,
-                  fit: BoxFit.scaleDown,
-                  width: 23,
-                  height: 23,
                 ),
                 onChange: (value) {
-                  if (_debounce?.isActive ?? false) {
-                    _debounce!.cancel();
-                  }
-                  _debounce = Timer(const Duration(milliseconds: 500), () {
-                    print("Search value is $value");
-                  });
+                  if (_debounce?.isActive ?? false) _debounce!.cancel();
+                  _debounce =
+                      Timer(const Duration(milliseconds: 500), () {});
                 },
                 validator: Validations.noValidation,
               ),
+
               AppSizedBox.h2,
+
               Expanded(
                 child: BlocBuilder<BusinessTripCubit, BusinessTripState>(
                   builder: (context, state) {
-                    if (state is BusinessTripLoading) {
+                    final cubit = context.read<BusinessTripCubit>();
+
+                    if (state is GetAllTripsLoading) {
                       return const Center(child: LoaderWidget());
                     }
 
-                    if (state is BusinessTripEmpty) {
+                    if (cubit.trips.isEmpty) {
                       return EmptyScreen(
-                        title: 'No Business Trip Requests'.tr(),
-                        description:
-                            "You haven't submitted any business trip requests yet."
-                                .tr(),
-                        buttonText: 'Request Business Trip'.tr(),
+                        title: 'no_business_trips'.tr(),
+                        description: 'no_data'.tr(),
+                        buttonText: 'add_business_trip'.tr(),
                         image: AppAssets.appLogo,
-
-                        onTap: () => _showRequestForm(context),
+                        onTap: _showRequestForm,
                       );
                     }
 
-                    if (state is BusinessTripLoaded) {
-                      return RefreshIndicator(
-                        onRefresh: () =>
-                            context.read<BusinessTripCubit>().loadRequests(),
-                        child: ListView.builder(
-                          itemCount: state.requests.length,
-                          itemBuilder: (context, index) {
-                            return TweenAnimationBuilder<double>(
-                              duration: Duration(
-                                milliseconds: 300 + (index * 100),
-                              ),
-                              tween: Tween(begin: 0.0, end: 1.0),
-                              curve: Curves.easeIn,
-                              builder: (context, value, child) {
-                                return Opacity(
-                                  opacity: value,
-                                  child: Transform.translate(
-                                    offset: Offset(0, 20 * (1 - value)),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: BusinessTripRequestCard(
-                                request: state.requests[index],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    }
-
-                    return const SizedBox();
+                    return RefreshIndicator(
+                      onRefresh: () => cubit.getAllTrips(),
+                      child: ListView.builder(
+                        itemCount: cubit.trips.length,
+                        itemBuilder: (context, index) {
+                          return BusinessTripRequestCard(
+                            trip: cubit.trips[index],
+                          );
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
             ],
           ),
         ),
+
         floatingActionButton: BlocBuilder<BusinessTripCubit, BusinessTripState>(
           builder: (context, state) {
-            if (state is BusinessTripLoaded) {
-              return FloatingActionButton(
-                onPressed: () => _showRequestForm(context),
-                backgroundColor: AppColors.primary,
-                child: const Icon(Icons.add, color: Colors.white),
-              );
+            final cubit = context.read<BusinessTripCubit>();
+
+            if (cubit.trips.isEmpty) {
+              return const SizedBox(); // 👈 يخفيه
             }
 
-            return const SizedBox();
+            return FloatingActionButton(
+              onPressed: _showRequestForm,
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.add),
+            );
           },
-        ),
-      ),
+        ),      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../features/business_trip_requests/data/repository/business_trip_repository.dart';
 import '../../../features/employee/data/repository/employee_repository.dart';
 
 @module
@@ -13,8 +14,14 @@ abstract class DIModule {
 
   InternetConnectionChecker get connectionChecker =>
       InternetConnectionChecker.instance;
-  EmployeeServiceClient getEmployeeService(Dio client) => EmployeeServiceClient(client);
 
+  /// ✅ Employee
+  EmployeeServiceClient getEmployeeService(Dio client) =>
+      EmployeeServiceClient(client);
+
+  /// ✅ Business Trip (ده اللي ناقص)
+  BusinessTripServiceClient getBusinessTripService(Dio client) =>
+      BusinessTripServiceClient(client);
 
   Key getKey() => UniqueKey();
 }

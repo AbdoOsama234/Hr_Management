@@ -10,14 +10,14 @@ import '../../../../ sheard/componnents/icon_button.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 import '../../../../core/text_style.dart';
 import '../../controller/business_trip_cubit.dart';
-import '../../data/models/business_trip_request_model.dart';
+import '../../data/models/business_trip_model.dart';
 import '../../../../my_app.dart';
 import 'business_trip_request_form.dart';
 
 class BusinessTripRequestCard extends StatelessWidget {
-  final BusinessTripRequestModel request;
+  final BusinessTripModel trip;
 
-  const BusinessTripRequestCard({super.key, required this.request});
+  const BusinessTripRequestCard({super.key, required this.trip});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,7 @@ class BusinessTripRequestCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// 📅 Date
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -51,7 +52,7 @@ class BusinessTripRequestCard extends StatelessWidget {
                   ),
                   SizedBox(width: 2.w),
                   Text(
-                    '${dateFoemated(request.startDate.toString())} \u2192 ${dateFoemated(request.endDate.toString())}',
+                    '${_formatDate(trip.fromDate)} → ${_formatDate(trip.toDate)}',
                     style: AppTextStyle.hint.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.bold,
@@ -59,10 +60,13 @@ class BusinessTripRequestCard extends StatelessWidget {
                   ),
                 ],
               ),
-              _buildStatusChip(request.status),
+              _buildStatusChip(trip.status),
             ],
           ),
+
           AppSizedBox.h1,
+
+          /// ⏱ Days
           Row(
             children: [
               Icon(
@@ -72,7 +76,7 @@ class BusinessTripRequestCard extends StatelessWidget {
               ),
               SizedBox(width: 2.w),
               Text(
-                '${request.days} ${'Days'.tr()}',
+                '${trip.daysCount ?? 0} ${'Days'.tr()}',
                 style: AppTextStyle.body.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
@@ -80,20 +84,26 @@ class BusinessTripRequestCard extends StatelessWidget {
               ),
             ],
           ),
+
           AppSizedBox.h2,
+
+          /// 📝 Reason + Actions
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: Text(
-                  request.reason,
+                  trip.requestNotes ?? "",
                   style: AppTextStyle.title.copyWith(
                     color: AppColors.textMain,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
+
               AppSizedBox.w2,
+
+              /// ✏️ Edit
               AppIcon(
                 icon: Icon(Icons.edit, color: AppColors.primary),
                 onTap: () {
@@ -101,15 +111,16 @@ class BusinessTripRequestCard extends StatelessWidget {
                     context: context,
                     title: 'Update Business Trip Request'.tr(),
                     body: BusinessTripRequestForm(
-                      request: request,
+                      trip: trip,
                       buttonText: 'Update Request'.tr(),
                       onSubmit: (startDate, endDate, days, reason) {
-                        context.read<BusinessTripCubit>().editRequest(
-                          request.id,
-                          startDate,
-                          endDate,
-                          days,
-                          reason,
+                        context.read<BusinessTripCubit>().updateTrip(
+                          id: trip.id!,
+                          tripType: trip.tripType ?? "business",
+                          fromDate: startDate,
+                          toDate: endDate,
+                          days: days,
+                          reason: reason,
                         );
                       },
                     ),
@@ -118,21 +129,28 @@ class BusinessTripRequestCard extends StatelessWidget {
               ),
 
               AppSizedBox.w2,
+
+              /// 🗑 Delete
               AppIcon(
                 icon: Icon(Icons.delete, color: AppColors.primary),
                 onTap: () {
                   showAppOptionBottomSheet(
                     context: context,
-                    title: "Are you sure you want to delete this request?".tr(),
+                    title:
+                    "Are you sure you want to delete this request?".tr(),
+
                     option1: BottomSheetOption(
                       title: "Yes".tr(),
                       backGroundColor: Colors.transparent,
-
                       onTap: () {
-                        context.read<BusinessTripCubit>().deleteRequest(request.id);
                         Navigator.pop(context);
+
+                        context
+                            .read<BusinessTripCubit>()
+                            .deleteTrip(trip.id!);
                       },
                     ),
+
                     option2: BottomSheetOption(
                       title: "No".tr(),
                       backGroundColor: AppColors.primary,
@@ -151,23 +169,31 @@ class BusinessTripRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(BusinessTripStatus status) {
+  String _formatDate(String? date) {
+    if (date == null || date.isEmpty) return "--";
+    try {
+      return dateFoemated(date);
+    } catch (e) {
+      return "--";
+    }
+  }
+
+  Widget _buildStatusChip(String? status) {
     Color color;
     String label;
 
     switch (status) {
-      case BusinessTripStatus.pending:
-        color = AppColors.orange;
-        label = 'status_pending'.tr();
-        break;
-      case BusinessTripStatus.approved:
+      case "approved":
         color = AppColors.green;
         label = 'status_approved'.tr();
         break;
-      case BusinessTripStatus.rejected:
+      case "rejected":
         color = AppColors.red;
         label = 'status_rejected'.tr();
         break;
+      default:
+        color = AppColors.orange;
+        label = 'status_pending'.tr();
     }
 
     return Container(

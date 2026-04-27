@@ -1,50 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
-
 import 'package:hr_manegement/core/app_validation.dart';
-
 
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../../../ sheard/componnents/date_time_widgets/start_end_date.dart';
-import '../../data/models/business_trip_request_model.dart';
+import '../../data/models/business_trip_model.dart';
 
 class BusinessTripRequestForm extends StatefulWidget {
-  final Function(DateTime startDate, DateTime endDate, int days, String reason) onSubmit;
-  final BusinessTripRequestModel? request;
+  final Function(DateTime startDate, DateTime endDate, int days, String reason)
+  onSubmit;
+
+  /// 👇 بدل request
+  final BusinessTripModel? trip;
+
   final String? buttonText;
+
   const BusinessTripRequestForm({
     super.key,
     required this.onSubmit,
-    this.request,
+    this.trip,
     this.buttonText,
   });
 
   @override
-  State<BusinessTripRequestForm> createState() => _BusinessTripRequestFormState();
+  State<BusinessTripRequestForm> createState() =>
+      _BusinessTripRequestFormState();
 }
 
-class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
+class _BusinessTripRequestFormState
+    extends State<BusinessTripRequestForm> {
   final _formKey = GlobalKey<FormState>();
+
   final _reasonController = TextEditingController();
   final _daysController = TextEditingController();
   final _startDateController = TextEditingController();
   final _endDateController = TextEditingController();
+
   DateTime? _startDate;
   DateTime? _endDate;
 
   @override
   void initState() {
-    if (widget.request != null) {
-      _reasonController.text = widget.request!.reason;
-      _daysController.text = widget.request!.days.toString();
-      _startDate = widget.request!.startDate;
-      _endDate = widget.request!.endDate;
-      _startDateController.text = dateFoemated(_startDate.toString());
-      _endDateController.text = dateFoemated(_endDate.toString());
+    /// ✅ edit case
+    if (widget.trip != null) {
+      _reasonController.text = widget.trip!.requestNotes ?? '';
+      _daysController.text = (widget.trip!.daysCount ?? 0).toString();
+
+      _startDate = DateTime.tryParse(widget.trip!.fromDate ?? '');
+      _endDate = DateTime.tryParse(widget.trip!.toDate ?? '');
+
+      if (_startDate != null) {
+        _startDateController.text =
+            dateFoemated(_startDate.toString());
+      }
+
+      if (_endDate != null) {
+        _endDateController.text =
+            dateFoemated(_endDate.toString());
+      }
     }
+
     super.initState();
   }
 
@@ -66,6 +84,7 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// 📅 Dates
             DatesRow(
               startDateController: _startDateController,
               endDateController: _endDateController,
@@ -78,12 +97,16 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
                 _endDate = value;
               },
             ),
+
             AppSizedBox.h2,
+
+            /// ⏱ Days
             Text(
               'Business Trip Days'.tr(),
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              style: const TextStyle(fontSize: 16),
             ),
             AppSizedBox.h1,
+
             CustomTextField(
               controller: _daysController,
               hint: 'Business Trip Days'.tr(),
@@ -92,12 +115,16 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
                 return Validations.numberValidation(value);
               },
             ),
+
             AppSizedBox.h2,
+
+            /// 📝 Reason
             Text(
               'Reason'.tr(),
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              style: const TextStyle(fontSize: 16),
             ),
             AppSizedBox.h1,
+
             CustomTextField(
               controller: _reasonController,
               hint: 'Reason'.tr(),
@@ -107,14 +134,19 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
                 return Validations.normalValidation(value);
               },
             ),
+
             AppSizedBox.h4,
+
+            /// 🚀 Submit
             CustomButton(
               text: widget.buttonText ?? 'submit_request'.tr(),
               width: double.infinity,
               radius: 12,
               txtcolor: Colors.white,
               onTap: () {
-                if (_formKey.currentState!.validate() && _startDate != null && _endDate != null) {
+                if (_formKey.currentState!.validate() &&
+                    _startDate != null &&
+                    _endDate != null) {
                   widget.onSubmit(
                     _startDate!,
                     _endDate!,
@@ -126,6 +158,7 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
                 }
               },
             ),
+
             AppSizedBox.h4,
           ],
         ),

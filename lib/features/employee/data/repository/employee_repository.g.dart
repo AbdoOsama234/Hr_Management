@@ -61,7 +61,7 @@ class _EmployeeServiceClient implements EmployeeServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/all-users-branches/${id}',
+            'https://hala-cars.com/api/all-users-branches${id}',
             queryParameters: queryParameters,
             data: _data,
           )

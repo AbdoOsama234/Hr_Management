@@ -1,15 +1,43 @@
-import '../data/models/business_trip_request_model.dart';
-
 abstract class BusinessTripState {}
 
 class BusinessTripInitial extends BusinessTripState {}
 
-class BusinessTripLoading extends BusinessTripState {}
+/// 📥 GET
+class GetAllTripsLoading extends BusinessTripState {}
 
-class BusinessTripEmpty extends BusinessTripState {}
+class GetAllTripsLoaded extends BusinessTripState {}
 
-class BusinessTripLoaded extends BusinessTripState {
-  final List<BusinessTripRequestModel> requests;
+class GetAllTripsEmpty extends BusinessTripState {}
 
-  BusinessTripLoaded(this.requests);
+class GetAllTripsError extends BusinessTripState {
+  final String? error;
+
+  GetAllTripsError({this.error});
+}
+
+/// 🔄 Pagination
+class PaginationLoading extends BusinessTripState {}
+
+/// ➕ CREATE
+class CreateTripLoading extends BusinessTripState {}
+
+class CreateTripSuccess extends BusinessTripState {}
+
+class CreateTripError extends BusinessTripState {
+  final String? error;
+
+  CreateTripError({this.error});
+}
+
+/// 🗑 DELETE
+class DeleteTripLoading extends BusinessTripState {}
+
+class DeleteTripSuccess extends BusinessTripState {
+  get error => null;
+}
+
+class DeleteTripError extends BusinessTripState {
+  final String? error;
+
+  DeleteTripError({this.error});
 }

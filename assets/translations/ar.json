@@ -235,7 +235,13 @@
 
   "status_progressing": "جاري التنفيذ",
   "status_reviewing": "قيد المراجعة",
-  "status_completed": "مكتملة"
+  "status_completed": "مكتملة",
+
+  "no_business_trips": "لا يوجد طلبات رحلات عمل",
+  "no_data": "لا توجد بيانات",
+
+  "add_business_trip": "إضافة رحلة عمل"
+
 
 
 

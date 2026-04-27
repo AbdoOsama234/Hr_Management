@@ -14,7 +14,6 @@ lib/
 │       ├── pdf/
 │       │   └── show_pdf_screen.dart
 │       ├── screen_builder/
-│       │   ├── custom_loading_indicator.dart
 │       │   └── screen_builder.dart
 │       ├── SalarieContainer.dart
 │       ├── app_asset_image.dart
@@ -73,19 +72,12 @@ lib/
 │   │   └── rate_app_helper.dart
 │   ├── network/
 │   │   ├── error_handler.dart
-│   │   ├── exceptions.dart
 │   │   ├── network_info.dart
 │   │   └── save_api.dart
 │   ├── state_renderer/
 │   │   ├── request_builder.dart
 │   │   ├── state_renderer.dart
 │   │   └── state_renderer_impl.dart
-│   ├── storage/
-│   │   ├── local/
-│   │   │   └── app_prefs.dart
-│   │   ├── remote/
-│   │       ├── dio_helper/
-│   │           └── dio_helper.dart
 │   ├── utils/
 │   │   ├── functions/
 │   │   │   ├── function_utils.dart
@@ -110,7 +102,28 @@ lib/
 │   ├── strings_manager.dart
 │   ├── text_style.dart
 │   └── theme_manager.dart
+├── data/
+│   ├── models/
+│   │   ├── base_response.dart
+│   │   ├── base_response.g.dart
+│   │   ├── name_model.dart
+│   │   ├── name_model.g.dart
+│   │   ├── pagination_model.dart
+│   │   └── pagination_model.g.dart
+│   ├── request/
+│   │   ├── base_request.dart
+│   │   └── base_request.g.dart
+│   ├── storage/
+│       ├── local/
+│       │   └── app_prefs.dart
+│       ├── remote/
+│           ├── dio_helper/
+│               └── dio_helper.dart
 ├── features/
+│   ├── attendance_request/
+│   │   ├── controller/
+│   │   ├── data/
+│   │       ├── models/
 │   ├── auth/
 │   │   ├── controller/
 │   │   │   ├── login_cubit.dart
@@ -130,7 +143,14 @@ lib/
 │   │   │   └── business_trip_state.dart
 │   │   ├── data/
 │   │   │   ├── models/
-│   │   │       └── business_trip_request_model.dart
+│   │   │   │   ├── business_trip_model.dart
+│   │   │   │   ├── business_trip_model.g.dart
+│   │   │   │   ├── business_trip_request.dart
+│   │   │   │   ├── business_trip_request.g.dart
+│   │   │   │   └── business_trip_request_model.dart
+│   │   │   ├── repository/
+│   │   │       ├── business_trip_repository.dart
+│   │   │       └── business_trip_repository.g.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── business_trip_screen.dart
@@ -145,13 +165,18 @@ lib/
 │   │   │   ├── datasource/
 │   │   │   │   └── employee_local_data_source.dart
 │   │   │   ├── models/
-│   │   │   │   └── employee_model.dart
+│   │   │   │   ├── branches_model.dart
+│   │   │   │   ├── branches_model.g.dart
+│   │   │   │   ├── employee_model.dart
+│   │   │   │   ├── employees_model.dart
+│   │   │   │   └── employees_model.g.dart
 │   │   │   ├── repository/
-│   │   │       └── employee_repository.dart
+│   │   │       ├── employee_repository.dart
+│   │   │       └── employee_repository.g.dart
 │   │   ├── view/
 │   │       ├── screens/
-│   │       │   ├── branch_employees_screen.dart
-│   │       │   ├── employee_screen.dart
+│   │       │   ├── branches_screen.dart
+│   │       │   ├── employees_screen.dart
 │   │       │   └── tracking_screen.dart
 │   │       ├── widgets/
 │   │           ├── branch_card.dart
@@ -238,6 +263,7 @@ lib/
 │   │       ├── screens/
 │   │       │   └── main_screen.dart
 │   │       ├── widgets/
+│   │           ├── DrawerSection.dart
 │   │           ├── admin_instructions_widget.dart
 │   │           ├── attendance_summary_card.dart
 │   │           ├── daily_tasks_widget.dart
