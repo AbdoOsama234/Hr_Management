@@ -1,14 +1,16 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hr_manegement/core/extensions.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
 import 'package:hr_manegement/core/app_colors.dart';
 
 import '../../../../ sheard/componnents/icon_button.dart';
+import '../../../../core/app_assets.dart';
 import '../widgets/map_icon.dart';
 
 class TrackingScreen extends StatefulWidget {
@@ -23,7 +25,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
   LatLng? _currentLatLng;
   BitmapDescriptor? _customMarker;
-
+  String? _mapStyle;
   String? employeeName;
 
   @override
@@ -31,13 +33,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
     super.didChangeDependencies();
 
     if (employeeName == null) {
-      employeeName =
-      ModalRoute.of(context)!.settings.arguments as String?;
+      employeeName = ModalRoute.of(context)!.settings.arguments as String?;
       _init();
     }
   }
 
   Future<void> _init() async {
+    _mapStyle = await rootBundle.loadString(AppAssets.mapStyle);
     await _handleLocationPermission();
 
     final position = await Geolocator.getCurrentPosition(
@@ -82,14 +84,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
     final latLng = LatLng(position.latitude, position.longitude);
 
     _mapController?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: latLng, zoom: 16),
-      ),
+      CameraUpdate.newCameraPosition(CameraPosition(target: latLng, zoom: 16)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    print("AppAssets.mapStyle ${AppAssets.mapStyle}");
     if (_currentLatLng == null || _customMarker == null) {
       return Scaffold(
         backgroundColor: AppColors.backGround,
@@ -112,23 +113,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 markerId: const MarkerId("employee"),
                 position: _currentLatLng!,
                 icon: _customMarker!,
-                infoWindow: InfoWindow(
-                  title: employeeName ?? "Employee",
-                ),
+                infoWindow: InfoWindow(title: employeeName ?? "Employee"),
               ),
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
+            style: _mapStyle,
             onMapCreated: (controller) {
               _mapController = controller;
             },
           ),
 
           /// 🔹 GPS BUTTON
-          Positioned(
-            bottom: 200,
-            left: 16,
+          PositionedDirectional(
+            bottom: 20.h,
+            end: 16,
             child: GestureDetector(
               onTap: _goToMyLocation,
               child: Container(
@@ -159,21 +159,17 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.backGround,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
-                  BoxShadow(
-                    color: AppColors.shadowColor,
-                    blurRadius: 12,
-                  ),
+                  BoxShadow(color: AppColors.shadowColor, blurRadius: 12),
                 ],
               ),
               child: Row(
                 children: [
                   const CircleAvatar(
                     radius: 22,
-                    backgroundImage:
-                    AssetImage("assets/images/avatar1.png"),
+                    backgroundImage: AssetImage("assets/images/avatar1.png"),
                   ),
                   const SizedBox(width: 10),
 
@@ -214,11 +210,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.circle,
-                          color: AppColors.green,
-                          size: 8,
-                        ),
+                        Icon(Icons.circle, color: AppColors.green, size: 8),
                         const SizedBox(width: 4),
                         Text(
                           "Active",
@@ -229,7 +221,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -237,7 +229,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
           /// 🔹 BACK BUTTON
           PositionedDirectional(
-            top: 50,
+            top: 4.h,
             start: 10,
             child: AppIcon(
               onTap: () {

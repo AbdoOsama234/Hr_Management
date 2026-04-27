@@ -1,6 +1,9 @@
+import '../my_app.dart';
+
 class AppAssets {
   static const String iconsPath = "assets/images/icons/";
   static const String imagesPath = "assets/images/";
+  static const String mapStylePath = "assets/map_style/";
 
   static const noAddeesses = '${imagesPath}no_addeesses.png';
   static const noNotifys = '${imagesPath}no_notifys.png';
@@ -9,8 +12,6 @@ class AppAssets {
   static const noOrders = '${imagesPath}no_orders.png';
   static const noWishList = '${imagesPath}no_wish_list.png';
   static const noCrt = '${imagesPath}no_cart.png';
-
-
 
   ///////////////////////////////////////////////////////////
   static const String car1 = '${imagesPath}car1.png';
@@ -123,6 +124,10 @@ class AppAssets {
   static const String profile1 = '${iconsPath}profile1.png';
   static const String profile2 = '${iconsPath}profile2.png';
   static const String sad = '${iconsPath}sad.png';
+  // Maps
+  static const String lightMap = '${mapStylePath}light_map.json';
+  static const String darkMap = '${mapStylePath}dark_map.json';
+  static String get mapStyle => MyApp.isDark ? darkMap : lightMap;
 
   /// example to how make assets aware of app brightness
   // static const String get homeHeaderBg =>
