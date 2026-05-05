@@ -28,7 +28,11 @@ class CreateTripError extends BusinessTripState {
 }
 
 /// 🗑 DELETE
-class DeleteTripLoading extends BusinessTripState {}
+class DeleteTripLoading extends BusinessTripState {
+  final int id;
+
+  DeleteTripLoading({required this.id});
+}
 
 class DeleteTripSuccess extends BusinessTripState {
   Null get error => null;

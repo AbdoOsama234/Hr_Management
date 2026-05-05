@@ -7,9 +7,13 @@ import 'package:hr_manegement/core/extensions.dart';
 
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../../../ sheard/componnents/icon_button.dart';
+import '../../../../ sheard/componnents/loading_widget.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
+import '../../../../ sheard/componnents/show_app_toast.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 import '../../../../core/text_style.dart';
 import '../../controller/business_trip_cubit.dart';
+import '../../controller/business_trip_state.dart';
 import '../../data/models/business_trip_model.dart';
 import '../../../../my_app.dart';
 import 'business_trip_request_form.dart';
@@ -129,40 +133,72 @@ class BusinessTripRequestCard extends StatelessWidget {
               ),
 
               AppSizedBox.w2,
-
-              /// 🗑 Delete
-              AppIcon(
-                icon: Icon(Icons.delete, color: AppColors.primary),
-                onTap: () {
-                  showAppOptionBottomSheet(
-                    context: context,
-                    title: "Are you sure you want to delete this request?".tr(),
-
-                    option1: BottomSheetOption(
-                      title: "Yes".tr(),
-                      backGroundColor: Colors.transparent,
-                      onTap: () {
-                        Navigator.pop(context);
-
-                        context.read<BusinessTripCubit>().deleteTrip(trip.id!);
-                      },
-                    ),
-
-                    option2: BottomSheetOption(
-                      title: "No".tr(),
-                      backGroundColor: AppColors.primary,
-                      textColor: AppColors.white,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+              BlocConsumer<BusinessTripCubit, BusinessTripState>(
+                buildWhen: (previous, current) =>
+                    current is DeleteTripLoading ||
+                    current is DeleteTripSuccess ||
+                    current is DeleteTripError,
+                builder: (context, state) {
+                  var cubit = BusinessTripCubit.get(context);
+                  return CustomApiBuilderView(
+                    isLoading:
+                        state is DeleteTripLoading && state.id == trip.id,
+                    isError: state is DeleteTripError,
+                    showErrorView: false,
+                    showEmptyView: false,
+                    loadingWidget: LoaderWidget(size: 40),
+                    contentBuilder: () => deleteIcon(),
+                    onRetry: () => cubit.deleteTrip(trip.id!),
+                    errorMessage: state is DeleteTripError ? state.error : null,
                   );
+                },
+                listener: (BuildContext context, BusinessTripState state) {
+                  if (state is DeleteTripError) {
+                    CustomToast.show(
+                      message: state.error.orEmpty(),
+                      type: ToastType.error,
+                    );
+                  }
                 },
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget deleteIcon() {
+    return Builder(
+      builder: (context) {
+        return AppIcon(
+          icon: Icon(Icons.delete, color: AppColors.primary),
+          onTap: () {
+            showAppOptionBottomSheet(
+              context: context,
+              title: "Are you sure you want to delete this request?".tr(),
+
+              option1: BottomSheetOption(
+                title: "Yes".tr(),
+                backGroundColor: Colors.transparent,
+                onTap: () {
+                  Navigator.pop(context);
+                  context.read<BusinessTripCubit>().deleteTrip(trip.id!);
+                },
+              ),
+
+              option2: BottomSheetOption(
+                title: "No".tr(),
+                backGroundColor: AppColors.primary,
+                textColor: AppColors.white,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

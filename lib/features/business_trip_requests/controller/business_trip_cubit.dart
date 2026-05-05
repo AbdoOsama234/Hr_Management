@@ -77,7 +77,7 @@ class BusinessTripCubit extends Cubit<BusinessTripState> {
   /// =========================
   /// =========================
   Future<void> deleteTrip(int id) async {
-    emit(DeleteTripLoading());
+    emit(DeleteTripLoading(id: id));
 
     final result = await _repository.deleteTrip(id);
 
