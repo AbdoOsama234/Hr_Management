@@ -59,7 +59,6 @@ class BusinessTripModel {
 class AllBusinessTrips {
   Pagination? pagination;
 
-  @JsonKey(name: "missions")
   List<BusinessTripModel>? trips;
 
   AllBusinessTrips({this.pagination, this.trips});

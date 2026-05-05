@@ -41,7 +41,7 @@ AllBusinessTrips _$AllBusinessTripsFromJson(Map<String, dynamic> json) =>
       pagination: json['pagination'] == null
           ? null
           : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
-      trips: (json['missions'] as List<dynamic>?)
+      trips: (json['trips'] as List<dynamic>?)
           ?.map((e) => BusinessTripModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -49,5 +49,5 @@ AllBusinessTrips _$AllBusinessTripsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AllBusinessTripsToJson(AllBusinessTrips instance) =>
     <String, dynamic>{
       'pagination': ?instance.pagination?.toJson(),
-      'missions': ?instance.trips?.map((e) => e.toJson()).toList(),
+      'trips': ?instance.trips?.map((e) => e.toJson()).toList(),
     };

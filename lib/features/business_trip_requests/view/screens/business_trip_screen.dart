@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../ sheard/componnents/app_shimmers.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
 import '../../../../ sheard/componnents/show_app_toast.dart';
 import '../../../../core/app_assets.dart';
 import '../../../../core/app_colors.dart';
@@ -12,7 +14,6 @@ import '../../../../core/app_validation.dart';
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
-import '../../../../ sheard/componnents/empty_screen.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 
@@ -110,37 +111,48 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
                 },
                 validator: Validations.noValidation,
               ),
-
               AppSizedBox.h2,
-
               Expanded(
                 child: BlocBuilder<BusinessTripCubit, BusinessTripState>(
+                  buildWhen: (previous, current) =>
+                      current is GetAllTripsLoading ||
+                      current is GetAllTripsLoaded ||
+                      current is GetAllTripsError ||
+                      current is PaginationLoading,
                   builder: (context, state) {
-                    final cubit = context.read<BusinessTripCubit>();
-
-                    if (state is GetAllTripsLoading) {
-                      return const Center(child: LoaderWidget());
-                    }
-
-                    if (cubit.trips.isEmpty) {
-                      return EmptyScreen(
-                        title: 'no_business_trips'.tr(),
-                        description: 'no_data'.tr(),
-                        buttonText: 'add_business_trip'.tr(),
-                        image: AppAssets.appLogo,
-                        onTap: _showRequestForm,
-                      );
-                    }
-
+                    var cubit = BusinessTripCubit.get(context);
                     return RefreshIndicator(
                       onRefresh: () => cubit.getAllTrips(),
-                      child: ListView.builder(
-                        itemCount: cubit.trips.length,
-                        itemBuilder: (context, index) {
-                          return BusinessTripRequestCard(
-                            trip: cubit.trips[index],
-                          );
-                        },
+                      child: CustomApiBuilderView(
+                        isLoading: state is GetAllTripsLoading,
+                        isError: state is GetAllTripsError,
+                        isEmpty: cubit.trips.isEmpty,
+                        contentBuilder: () => Column(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: cubit.trips.length,
+                                itemBuilder: (context, index) {
+                                  return BusinessTripRequestCard(
+                                    trip: cubit.trips[index],
+                                  );
+                                },
+                              ),
+                            ),
+                            AppSizedBox.h1,
+                            if (state is PaginationLoading)
+                              const Center(child: LoaderWidget()),
+                          ],
+                        ),
+                        loadingWidget: AppShimmer.verticalList(),
+                        onRetry: () => cubit.getAllTrips(),
+                        errorMessage: state is GetAllTripsError
+                            ? state.error
+                            : null,
+                        emptyTitle: "no_business_trips".tr(),
+                        emptyDescription: "no_data".tr(),
+                        onEmpty: _showRequestForm,
+                        onEmptyButtonText: "add_business_trip".tr(),
                       ),
                     );
                   },

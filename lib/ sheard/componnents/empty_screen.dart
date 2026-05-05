@@ -6,7 +6,6 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-
 import 'app_asset_image.dart';
 import 'custom_button.dart';
 
@@ -20,6 +19,7 @@ class EmptyScreen extends StatefulWidget {
     this.onTap,
     this.titleColor,
     this.descriptionColor,
+    this.imageColor,
   });
   final String title;
   final String? image;
@@ -28,6 +28,7 @@ class EmptyScreen extends StatefulWidget {
   final Color? titleColor;
   final Color? descriptionColor;
   final Function? onTap;
+  final Color? imageColor;
   @override
   State<EmptyScreen> createState() => _EmptyScreenState();
 }
@@ -42,11 +43,10 @@ class _EmptyScreenState extends State<EmptyScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
           AppAssetImage(
-            uri: widget.image ?? AppAssets.bill,
+            uri: widget.image ?? AppAssets.appLogo,
             width: 50.w,
-
+            color: widget.imageColor,
             fit: BoxFit.contain,
           ),
           AppSizedBox.h2,

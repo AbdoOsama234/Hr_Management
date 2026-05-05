@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-
-
-import '../../../core/app_assets.dart';
+import '../../../core/app_colors.dart';
 import '../empty_screen.dart';
 import '../loading_widget.dart';
 
@@ -92,6 +90,14 @@ class CustomApiBuilderView extends StatelessWidget {
   /// If `null`, the default error view will not show a retry button.
   final VoidCallback? onRetry;
 
+  /// Callback triggered when the user taps the button on the default empty view.
+  /// If `null`, the default empty view will not show a button.
+  final VoidCallback? onEmpty;
+
+  /// Text for the button shown in the default empty view.
+  /// Only used when [onEmpty] is provided. Defaults to `'Retry'`.
+  final String? onEmptyButtonText;
+
   /// Title shown in the default empty view. Defaults to `'No data available'`.
   final String? emptyTitle;
 
@@ -114,6 +120,8 @@ class CustomApiBuilderView extends StatelessWidget {
     this.showEmptyView = true,
     this.errorMessage,
     this.onRetry,
+    this.onEmpty,
+    this.onEmptyButtonText,
     this.emptyTitle,
     this.emptyDescription,
     this.emptyImage,
@@ -152,9 +160,10 @@ class CustomApiBuilderView extends StatelessWidget {
     return EmptyScreen(
       title: errorMessage ?? 'Something went wrong, please try again'.tr(),
       description: erorrDescription,
-      image: erorrImage ?? AppAssets.error,
+      image: erorrImage,
       onTap: onRetry,
       buttonText: 'Retry'.tr(),
+      imageColor: AppColors.primary,
     );
   }
 
@@ -165,6 +174,9 @@ class CustomApiBuilderView extends StatelessWidget {
       title: emptyTitle ?? 'No data available for now'.tr(),
       description: emptyDescription,
       image: emptyImage,
+      imageColor: AppColors.primary,
+      onTap: onEmpty,
+      buttonText: onEmpty != null ? (onEmptyButtonText ?? 'Retry'.tr()) : null,
     );
   }
 }

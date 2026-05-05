@@ -7,8 +7,6 @@ class GetAllTripsLoading extends BusinessTripState {}
 
 class GetAllTripsLoaded extends BusinessTripState {}
 
-class GetAllTripsEmpty extends BusinessTripState {}
-
 class GetAllTripsError extends BusinessTripState {
   final String? error;
 
@@ -33,7 +31,7 @@ class CreateTripError extends BusinessTripState {
 class DeleteTripLoading extends BusinessTripState {}
 
 class DeleteTripSuccess extends BusinessTripState {
-  get error => null;
+  Null get error => null;
 }
 
 class DeleteTripError extends BusinessTripState {
