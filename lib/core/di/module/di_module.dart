@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../features/auth/data/repository/auth_repository.dart';
 import '../../../features/business_trip_requests/data/repository/business_trip_repository.dart';
 import '../../../features/employee/data/repository/employee_repository.dart';
 
@@ -22,6 +23,8 @@ abstract class DIModule {
   /// ✅ Business Trip (ده اللي ناقص)
   BusinessTripServiceClient getBusinessTripService(Dio client) =>
       BusinessTripServiceClient(client);
+
+  AuthServiceClient getAuthService(Dio client) => AuthServiceClient(client);
 
   Key getKey() => UniqueKey();
 }

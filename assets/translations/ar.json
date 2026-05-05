@@ -75,7 +75,6 @@
   "Invalid phone number": "رقم الهاتف غير صحيح",
   "Send OTP": "إرسال الرمز",
   "holiday_requests": "طلبات الإجازة",
-
   "request_holiday": "طلب إجازة",
   "status_pending": "قيد الانتظار",
   "status_approved": "مقبول",
@@ -178,7 +177,6 @@
   "daily_task_desc": "قم بملء وإرسال تقريرك اليومي قبل المغادرة.",
   "complete_button": "اتممت المهمه",
   "completed": "اكتمل",
-
   "employees": "الموظفين",
   "branch_jeddah": "فرع جده",
   "branch_riyadh": "فرع الرياض",
@@ -219,7 +217,6 @@
   "Car maintenance": "صيانة السيارة",
   "Doctor appointment": "موعد الطبيب",
   "Days": "أيام",
-
   "attendance": "التحضير",
   "attendance_submitted": "تم تسجيل الحضور",
   "enter_notes": "اكتب ملاحظات",
@@ -228,21 +225,15 @@
   "general": "عام",
   "requests": "الطلبات",
   "settings": "الإعدادات",
-
   "daily_task": "المهمه اليوميه",
-
   "status_newTask": "مهمه جديده",
-
   "status_progressing": "جاري التنفيذ",
   "status_reviewing": "قيد المراجعة",
   "status_completed": "مكتملة",
-
   "no_business_trips": "لا يوجد طلبات رحلات عمل",
   "no_data": "لا توجد بيانات",
-
-  "add_business_trip": "إضافة رحلة عمل"
-
-
-
-
+  "add_business_trip": "إضافة رحلة عمل",
+  "Email...": "بريد الاكتروني...",
+  "Email": "بريد الكتروني",
+  "Please enter a valid email address": "يرجى إدخال بريد إلكتروني صحيح"
 }

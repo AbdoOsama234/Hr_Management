@@ -178,7 +178,6 @@
   "daily_task_title": "Submit Daily Report",
   "daily_task_desc": "Fill and submit your daily report before leaving.",
   "complete_button": "Mark as Complete",
-
   "employees": "Employees",
   "branch_jeddah": "Branch Jeddah",
   "branch_riyadh": "Branch Riyadh",
@@ -207,7 +206,6 @@
   "refuse_request": "Refuse Request",
   "accept": "Accept",
   "refuse": "Refuse",
-
   "Annual family vacation": "Annual family vacation",
   "Looks good.": "Looks good.",
   "Client meeting in Dubai": "Client meeting in Dubai",
@@ -223,35 +221,24 @@
   "attendance_submitted_success": "Attendance submitted successfully",
   "required": "Required",
   "loading": "Loading...",
-
   "attendance": "Attendance",
   "attendance_submitted": "Attendance submitted",
   "enter_notes": "Enter notes",
   "confirm": "Confirm",
-
-
   "no_holiday_requests": "No holiday requests",
   "no_holiday_requests_subtitle": "No Holiday Requests Subtitle",
-
   "general": "General",
   "requests": "Requests",
   "settings": "Settings",
-
   "daily_task": "Daily Task",
-
   "status_newTask": "New Task",
   "status_progressing": "In Progress",
   "status_reviewing": "Under Review",
   "status_completed": "Completed",
-
-
-
   "no_business_trips": "No Business Trip Requests",
   "no_data": "No data available",
-
-  "add_business_trip": "Add Business Trip"
-
-
-
-
+  "add_business_trip": "Add Business Trip",
+  "Email...": "Email...",
+  "Email": "Email",
+  "Please enter a valid email address": "Please enter a valid email address"
 }

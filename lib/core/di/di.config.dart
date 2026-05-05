@@ -19,6 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../data/storage/local/app_prefs.dart' as _i74;
 import '../../data/storage/remote/dio_helper/dio_helper.dart' as _i832;
+import '../../features/auth/controller/login_cubit.dart' as _i925;
+import '../../features/auth/data/repository/auth_repository.dart' as _i104;
 import '../../features/business_trip_requests/controller/business_trip_cubit.dart'
     as _i765;
 import '../../features/business_trip_requests/data/repository/business_trip_repository.dart'
@@ -79,9 +81,18 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i508.BusinessTripServiceClient>(
     () => dIModule.getBusinessTripService(gh<_i361.Dio>()),
   );
+  gh.factory<_i104.AuthServiceClient>(
+    () => dIModule.getAuthService(gh<_i361.Dio>()),
+  );
   gh.factory<_i611.EmployeeRepository>(
     () => _i611.EmployeeRepository(
       gh<_i611.EmployeeServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i104.AuthRepository>(
+    () => _i104.AuthRepository(
+      gh<_i104.AuthServiceClient>(),
       gh<_i871.SafeApi>(),
     ),
   );
@@ -99,6 +110,9 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i765.BusinessTripCubit>(
     () => _i765.BusinessTripCubit(gh<_i508.BusinessTripRepository>()),
+  );
+  gh.factory<_i925.LoginCubit>(
+    () => _i925.LoginCubit(gh<_i104.AuthRepository>()),
   );
   return getIt;
 }
