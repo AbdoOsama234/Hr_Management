@@ -10,7 +10,7 @@ LoginModel _$LoginModelFromJson(Map<String, dynamic> json) => LoginModel(
   token: json['token'] as String?,
   user: json['user'] == null
       ? null
-      : User.fromJson(json['user'] as Map<String, dynamic>),
+      : UserModel.fromJson(json['user'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
@@ -19,7 +19,7 @@ Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
       'user': ?instance.user?.toJson(),
     };
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   id: (json['id'] as num?)?.toInt(),
   name: json['name'] as String?,
   email: json['email'] as String?,
@@ -45,7 +45,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
   merchantId: (json['merchant_id'] as num?)?.toInt(),
 );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'id': ?instance.id,
   'name': ?instance.name,
   'email': ?instance.email,

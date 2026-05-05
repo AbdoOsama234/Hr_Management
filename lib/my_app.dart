@@ -61,7 +61,17 @@ class _MyAppState extends State<MyApp> {
             ],
             supportedLocales: context.supportedLocales,
             onGenerateRoute: AppRouter.generatedRoute,
-            initialRoute: Routes.login,
+            initialRoute: Routes.splash,
+            onGenerateInitialRoutes: (String initialRoute) {
+              // Always start with only the splash route.
+              // This prevents Flutter from splitting a deep link URI
+              // (e.g. /Car/123) into sub-routes that trigger "no route".
+              return [
+                AppRouter.generatedRoute(
+                  const RouteSettings(name: Routes.splash),
+                ),
+              ];
+            },
           );
         },
       ),

@@ -4,7 +4,7 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class LoginModel {
   String? token;
-  User? user;
+  UserModel? user;
 
   LoginModel({this.token, this.user});
   factory LoginModel.fromJson(Map<String, dynamic> json) =>
@@ -13,7 +13,7 @@ class LoginModel {
 }
 
 @JsonSerializable()
-class User {
+class UserModel {
   int? id;
   String? name;
   String? email;
@@ -38,7 +38,7 @@ class User {
   int? employeesId;
   int? merchantId;
 
-  User({
+  UserModel({
     this.id,
     this.name,
     this.email,
@@ -63,6 +63,7 @@ class User {
     this.employeesId,
     this.merchantId,
   });
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

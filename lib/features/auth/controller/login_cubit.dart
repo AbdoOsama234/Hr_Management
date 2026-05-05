@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/di/di.dart';
+import '../../../data/storage/local/app_prefs.dart';
 import '../data/repository/auth_repository.dart';
 import '../data/model/user_model.dart';
 
@@ -25,8 +27,9 @@ class LoginCubit extends Cubit<LoginState> {
           emit(LoginError(error: l.message));
           debugPrint("Login error: ${l.message}");
         },
-        (r) {
+        (r) async {
           if (r.result != null) {
+            await getIt<AppPreferences>().login(r.result!);
             emit(LoginSuccess(data: r.result!));
           } else {
             emit(LoginError(error: r.message ?? "Login failed"));

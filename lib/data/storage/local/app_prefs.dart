@@ -1,9 +1,12 @@
 // ignore_for_file: unused_field
 
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants.dart';
+import '../../../features/auth/data/model/user_model.dart';
 
 @singleton
 class AppPreferences {
@@ -18,7 +21,7 @@ class AppPreferences {
   final String _appName = '_AppName';
   final String _font = 'font';
   static const String _ownerInfo = 'ownerInfo';
-  final String _employeeInfo = "_employeeInfo";
+  final String _userInfo = "_userInfo";
   final String _dateMethod = 'dateMethod';
 
   final SharedPreferences _sharedPreferences;
@@ -117,63 +120,31 @@ class AppPreferences {
     _putData(_isLanguageSelected, true);
   }
 
-  //user data
-  // QwnerModel? get userData {
-  //   String data = _getData(_userData, "");
-  //   if (data.isEmpty) return null;
-  //   return QwnerModel.fromJson(jsonDecode(_getData(_userData, null)));
-  // }
-
-  // QwnerModel? get loadUserData {
-  //   var jsonEncode = _getData("userData", null);
-  //   QwnerModel? userModel;
-  //   if (jsonEncode != null) {
-  //     Map<String, dynamic> map = json.decode(jsonEncode);
-  //     userModel = QwnerModel.fromJson(map);
-  //   }
-  //   return userModel;
-  // }
-
-  // set userData(QwnerModel? user) {
-  //   _putData(_userData, jsonEncode(user));
-  // } // user data
-
-  void removeUserData() {
-    _sharedPreferences.remove(_userData);
+  UserModel? get loadEmployeeData {
+    var jsonEncode = _getData(_userInfo, null);
+    UserModel? userModel;
+    if (jsonEncode != null) {
+      Map<String, dynamic> map = json.decode(jsonEncode);
+      userModel = UserModel.fromJson(map);
+    }
+    return userModel;
   }
 
-  // user data
-  // List<CartModel> get guestCart {
-  //   String data = _getData(_guestCart, "");
-  //   if (data.isEmpty) return [];
-  //   var decodedList = jsonDecode(_getData(_guestCart, null));
-  //   List<CartModel> carts = [];
-  //   decodedList.forEach((element) {
-  //     carts.add(CartModel.fromJson(element));
-  //   });
+  Future<void> userData(UserModel? user) async {
+    await _putData(_userInfo, jsonEncode(user));
+  } // user data
 
-  //   return carts;
-  // }
+  Future<void> removeUserData() async {
+    await _sharedPreferences.remove(_userInfo);
+  }
 
-  // set guestCart(List<CartModel>? cart) {
-  //   _putData(_guestCart, jsonEncode(cart));
-  // } // user data
+  Future<void> login(LoginModel user) async {
+    userToken = user.token!;
+    await userData(user.user);
+  }
 
-  // EmployeeInfoModel? get loadEmployeeData {
-  //   var jsonEncode = _getData(_employeeInfo, null);
-  //   EmployeeInfoModel? userModel;
-  //   if (jsonEncode != null) {
-  //     Map<String, dynamic> map = json.decode(jsonEncode);
-  //     userModel = EmployeeInfoModel.fromJson(map);
-  //   }
-  //   return userModel;
-  // }
-
-  // void employeeData(EmployeeInfoModel? user) {
-  //   _putData(_employeeInfo, jsonEncode(user));
-  // } // user data
-
-  void removeEmployeeData() {
-    _sharedPreferences.remove(_employeeInfo);
+  Future<void> logOut() async {
+    userToken = "";
+    await removeUserData();
   }
 }

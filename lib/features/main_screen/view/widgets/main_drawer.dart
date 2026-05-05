@@ -19,6 +19,8 @@ import 'package:hr_manegement/my_app.dart';
 
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_assets.dart';
+import '../../../../core/di/di.dart' show getIt;
+import '../../../../data/storage/local/app_prefs.dart' show AppPreferences;
 import '../../../employee/view/screens/branches_screen.dart';
 import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
@@ -36,12 +38,10 @@ class MainDrawer extends StatelessWidget {
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        String name = '';
         String jobTitle = '';
         ImageProvider? imageProvider;
 
         if (state is ProfileLoaded) {
-          name = state.name;
           jobTitle = state.jobTitle;
 
           if (state.imagePath != null && state.imagePath!.isNotEmpty) {
@@ -66,7 +66,7 @@ class MainDrawer extends StatelessWidget {
             children: [
               /// Profile
               DrawerProfileHeader(
-                name: name,
+                name: getIt<AppPreferences>().loadEmployeeData?.name ?? "",
                 jobTitle: jobTitle,
                 profileImageProvider: imageProvider,
                 onTap: () {
@@ -196,8 +196,9 @@ class MainDrawer extends StatelessWidget {
                   fontsize: 12,
                   height: 50,
                   radius: 12,
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
+                  onTap: () async {
+                    await getIt<AppPreferences>().logOut();
+                    await Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                       (route) => false,

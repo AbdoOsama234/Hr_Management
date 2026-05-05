@@ -19,6 +19,7 @@ import 'package:hr_manegement/features/employee/view/screens/branches_screen.dar
 import 'package:hr_manegement/features/employee/view/screens/employees_screen.dart';
 
 import '../features/employee/view/screens/tracking_screen.dart';
+import '../features/splash/splash_screen.dart';
 
 class Routes {
   static const String splash = "/";
@@ -41,13 +42,15 @@ class Routes {
   static const String employee = "/employee";
   static const String branchEmployees = "/branchEmployees";
   static const String tracking = "/tracking";
-
-
 }
 
 class AppRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
     switch (settings.name) {
+      //splash
+      case Routes.splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+
       /// Login
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -96,17 +99,16 @@ class AppRouter {
       case Routes.branchEmployees:
         final branch = settings.arguments as BrancheModel;
         return MaterialPageRoute(
-          builder: (_) => EmployeesScreen(brancheModel: branch,),
+          builder: (_) => EmployeesScreen(brancheModel: branch),
         );
-    /// Tracking Screen
+
+      /// Tracking Screen
       case Routes.tracking:
         final employeeName = settings.arguments as String;
 
         return MaterialPageRoute(
           builder: (_) => const TrackingScreen(),
-          settings: RouteSettings(
-            arguments: employeeName,
-          ),
+          settings: RouteSettings(arguments: employeeName),
         );
 
       default:

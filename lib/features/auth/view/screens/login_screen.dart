@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +5,6 @@ import 'package:hr_manegement/%20sheard/componnents/screen_builder/screen_builde
 import 'package:hr_manegement/%20sheard/componnents/show_app_toast.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/features/auth/controller/login_cubit.dart';
-import 'package:hr_manegement/features/auth/data/repository/auth_repository.dart';
 import 'package:hr_manegement/features/main_screen/view/screens/main_screen.dart';
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
@@ -37,6 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = "ahmednaser7897@gmail.com";
+    _passwordController.text = "123456";
   }
 
   @override

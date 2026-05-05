@@ -6,11 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
+import 'package:hr_manegement/core/di/di.dart' show getIt;
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
 import '../../../../ sheard/componnents/icon_button.dart';
 import '../../../../core/app_assets.dart';
+import '../../../../data/storage/local/app_prefs.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
 
@@ -24,12 +26,10 @@ class EmployeeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        String name = '';
         String jobTitle = '';
         ImageProvider? imageProvider;
 
         if (state is ProfileLoaded) {
-          name = state.name;
           jobTitle = state.jobTitle;
 
           /// 🔥 الصورة (File أو Network)
@@ -120,7 +120,7 @@ class EmployeeHeader extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    name,
+                    getIt<AppPreferences>().loadEmployeeData?.name ?? "",
                     style: AppTextStyle.title.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.w700,
