@@ -155,7 +155,7 @@ class CustomApiBuilderView extends StatelessWidget {
   // ---------------------------------------------------------------------------
 
   Widget _buildDefaultError() {
-    if (!showErrorView) return const SizedBox.shrink();
+    if (!showErrorView) return contentBuilder();
 
     return EmptyScreen(
       title: errorMessage ?? 'Something went wrong, please try again'.tr(),
@@ -168,7 +168,7 @@ class CustomApiBuilderView extends StatelessWidget {
   }
 
   Widget _buildDefaultEmpty() {
-    if (!showEmptyView) return const SizedBox.shrink();
+    if (!showEmptyView) return contentBuilder();
 
     return EmptyScreen(
       title: emptyTitle ?? 'No data available for now'.tr(),
