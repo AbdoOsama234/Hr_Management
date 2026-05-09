@@ -19,24 +19,29 @@ part 'business_trip_repository.g.dart';
 @RestApi(baseUrl: ApiUrls.baseApiUrl)
 abstract class BusinessTripServiceClient {
   factory BusinessTripServiceClient(Dio dio, {String baseUrl}) =
-  _BusinessTripServiceClient;
+      _BusinessTripServiceClient;
 
   /// ➕ Create
   @POST(ApiUrls.businessTripRequest)
   Future<BaseResponse<BusinessTripModel>> createTripRequest(
-      @Body() BusinessTripRequest body,
-      );
+    @Body() BusinessTripRequest body,
+  );
 
   /// 📥 Get all (pagination)
   @GET(ApiUrls.businessTripRequest)
   Future<BaseResponse<AllBusinessTrips>> getAllRequests(
-      @Query('page') int page,
-      );
+    @Query('page') int page,
+  );
+
+  /// update
+  @POST("${ApiUrls.businessTripRequest}/{id}")
+  Future<BaseResponse<int>> updateTrip(
+    @Path("id") int id,
+    @Body() BusinessTripRequest body,
+  );
 
   @DELETE("${ApiUrls.businessTripRequest}/{id}")
-  Future<BaseResponse<dynamic>> deleteTrip(
-      @Path("id") int id,
-      );
+  Future<BaseResponse<dynamic>> deleteTrip(@Path("id") int id);
 }
 
 /// =========================
@@ -51,23 +56,26 @@ class BusinessTripRepository {
 
   /// ➕ Create
   Future<Either<Failure, BaseResponse<BusinessTripModel>>> createTripRequest(
-      BusinessTripRequest body) async {
-    return await _safeApi.call(
-      apiCall: _service.createTripRequest(body),
-    );
+    BusinessTripRequest body,
+  ) async {
+    return await _safeApi.call(apiCall: _service.createTripRequest(body));
+  }
+  ///Update
+  Future<Either<Failure, BaseResponse<int>>> updateTrip(
+      int id,
+      BusinessTripRequest body,
+  ) async {
+    return await _safeApi.call(apiCall: _service.updateTrip(id, body));
   }
 
   /// 📥 Get all
   Future<Either<Failure, BaseResponse<AllBusinessTrips>>> getAllRequests(
-      int page) async {
-    return await _safeApi.call(
-      apiCall: _service.getAllRequests(page),
-    );
-
+    int page,
+  ) async {
+    return await _safeApi.call(apiCall: _service.getAllRequests(page));
   }
+  ///Delete
   Future<Either<Failure, BaseResponse<dynamic>>> deleteTrip(int id) async {
-    return await _safeApi.call(
-      apiCall: _service.deleteTrip(id),
-    );
+    return await _safeApi.call(apiCall: _service.deleteTrip(id));
   }
 }

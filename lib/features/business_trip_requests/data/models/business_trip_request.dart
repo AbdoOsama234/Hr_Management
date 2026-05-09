@@ -5,15 +5,10 @@ part 'business_trip_request.g.dart';
 @JsonSerializable()
 class BusinessTripRequest {
   String? tripType;
-
   String? fromDate;
-
   String? toDate;
-
   int? daysCount;
-
   String? requestNotes;
-
   String? statusNotes;
 
   BusinessTripRequest({

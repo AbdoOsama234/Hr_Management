@@ -8,6 +8,8 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/my_app.dart';
 
+import '../../../../core/di/di.dart';
+import '../../../../data/storage/local/app_prefs.dart';
 import '../../controller/profile_cubit.dart';
 
 class ProfileHeader extends StatefulWidget {
@@ -188,15 +190,13 @@ class _ProfileHeaderState extends State<ProfileHeader>
 
                 /// 🟢 الاسم
                 Text(
-                  widget.name,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyle.subHeadline.copyWith(
-                    fontWeight: FontWeight.w700,
+                  getIt<AppPreferences>().loadEmployeeData?.name ?? "",
+                  style: AppTextStyle.title.copyWith(
                     color: AppColors.textMain,
-                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15.sp,
                   ),
                 ),
-
                 SizedBox(height: 0.6.h),
 
                 /// 🔥 الوظيفة تحت الاسم مباشرة (تحسين الشكل)

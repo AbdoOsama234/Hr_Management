@@ -25,7 +25,7 @@ class UsersModel {
   String? desc;
   int? lastrecord;
   String? rootId;
-  String? companyId;
+  int? companyId;
   String? deletedAt;
   String? createdAt;
   String? updatedAt;

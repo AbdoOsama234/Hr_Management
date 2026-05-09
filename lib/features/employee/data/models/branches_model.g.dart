@@ -31,7 +31,7 @@ BrancheModel _$BrancheModelFromJson(Map<String, dynamic> json) => BrancheModel(
   desc: json['desc'] as String?,
   lastrecord: (json['lastrecord'] as num?)?.toInt(),
   rootId: json['root_id'] as String?,
-  companyId: json['company_id'] as String?,
+  companyId: (json['company_id'] as num?)?.toInt(),
   deletedAt: json['deleted_at'] as String?,
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,

@@ -94,39 +94,30 @@ class BusinessTripCubit extends Cubit<BusinessTripState> {
   }
 
   /// =========================
-  void updateTrip({
+  Future<void> updateTrip({
     required int id,
-    required String tripType,
-    required DateTime fromDate,
-    required DateTime toDate,
-    required int days,
-    required String reason,
-  }) {
-    final index = trips.indexWhere((trip) => trip.id == id);
+    required BusinessTripRequest model}) async{
 
-    if (index != -1) {
-      final oldTrip = trips[index];
+    emit(UpdateTripLoading(id: id));
 
-      trips[index] = BusinessTripModel(
-        id: id,
-        tripType: tripType,
-        fromDate: _formatDate(fromDate),
-        toDate: _formatDate(toDate),
-        daysCount: days,
-        requestNotes: reason,
-        status: oldTrip.status,
-        createdAt: oldTrip.createdAt,
-        updatedAt: oldTrip.updatedAt,
-      );
+    final result=await _repository.updateTrip(id,model);
+    
+    result.fold(
+        (failure){
+          emit(UpdateTripError(error: failure.message));
 
-      emit(GetAllTripsLoaded());
-    }
+        },
+        
+        
+        (response)async{
+          
+          emit(UpdateTripSuccess());
+
+          await getAllTrips();
+          
+        }
+        );
+
   }
 
-  /// =========================
-  /// 🔹 Helpers
-  /// =========================
-  String _formatDate(DateTime date) {
-    return date.toString().split(' ').first;
-  }
 }

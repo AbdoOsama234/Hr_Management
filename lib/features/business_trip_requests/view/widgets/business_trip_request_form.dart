@@ -13,9 +13,7 @@ class BusinessTripRequestForm extends StatefulWidget {
   final Function(DateTime startDate, DateTime endDate, int days, String reason)
   onSubmit;
 
-  /// 👇 بدل request
   final BusinessTripModel? trip;
-
   final String? buttonText;
 
   const BusinessTripRequestForm({
@@ -30,49 +28,76 @@ class BusinessTripRequestForm extends StatefulWidget {
       _BusinessTripRequestFormState();
 }
 
-class _BusinessTripRequestFormState
-    extends State<BusinessTripRequestForm> {
+class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
   final _formKey = GlobalKey<FormState>();
 
   final _reasonController = TextEditingController();
-  final _daysController = TextEditingController();
   final _startDateController = TextEditingController();
   final _endDateController = TextEditingController();
 
   DateTime? _startDate;
   DateTime? _endDate;
 
+  int get _calculatedDays {
+    if (_startDate == null || _endDate == null) return 0;
+
+    final days = _endDate!.difference(_startDate!).inDays + 1;
+    return days > 0 ? days : 0;
+  }
+
   @override
   void initState() {
-    /// ✅ edit case
+    super.initState();
+
     if (widget.trip != null) {
       _reasonController.text = widget.trip!.requestNotes ?? '';
-      _daysController.text = (widget.trip!.daysCount ?? 0).toString();
 
       _startDate = DateTime.tryParse(widget.trip!.fromDate ?? '');
       _endDate = DateTime.tryParse(widget.trip!.toDate ?? '');
 
       if (_startDate != null) {
-        _startDateController.text =
-            dateFoemated(_startDate.toString());
+        _startDateController.text = dateFoemated(_startDate.toString());
       }
 
       if (_endDate != null) {
-        _endDateController.text =
-            dateFoemated(_endDate.toString());
+        _endDateController.text = dateFoemated(_endDate.toString());
       }
     }
-
-    super.initState();
   }
 
   @override
   void dispose() {
     _reasonController.dispose();
-    _daysController.dispose();
     _startDateController.dispose();
     _endDateController.dispose();
     super.dispose();
+  }
+
+  void _submit() {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_startDate == null || _endDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select start and end date'.tr())),
+      );
+      return;
+    }
+
+    if (_calculatedDays <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('End date must be after start date'.tr())),
+      );
+      return;
+    }
+
+    widget.onSubmit(
+      _startDate!,
+      _endDate!,
+      _calculatedDays,
+      _reasonController.text.trim(),
+    );
+
+    Navigator.pop(context);
   }
 
   @override
@@ -84,41 +109,54 @@ class _BusinessTripRequestFormState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// 📅 Dates
             DatesRow(
               startDateController: _startDateController,
               endDateController: _endDateController,
               startTitel: 'start_date'.tr(),
               endTitel: 'end_date'.tr(),
               onStartDateChanged: (value) {
-                _startDate = value;
+                setState(() {
+                  _startDate = value;
+                });
               },
               onEndDateChanged: (value) {
-                _endDate = value;
+                setState(() {
+                  _endDate = value;
+                });
               },
             ),
 
             AppSizedBox.h2,
 
-            /// ⏱ Days
             Text(
               'Business Trip Days'.tr(),
               style: const TextStyle(fontSize: 16),
             ),
             AppSizedBox.h1,
 
-            CustomTextField(
-              controller: _daysController,
-              hint: 'Business Trip Days'.tr(),
-              type: const TextInputType.numberWithOptions(decimal: false),
-              validator: (value) {
-                return Validations.numberValidation(value);
-              },
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                _calculatedDays > 0
+                    ? '$_calculatedDays ${'days'.tr()}'
+                    : 'Select dates'.tr(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
 
             AppSizedBox.h2,
 
-            /// 📝 Reason
             Text(
               'Reason'.tr(),
               style: const TextStyle(fontSize: 16),
@@ -137,26 +175,12 @@ class _BusinessTripRequestFormState
 
             AppSizedBox.h4,
 
-            /// 🚀 Submit
             CustomButton(
               text: widget.buttonText ?? 'submit_request'.tr(),
               width: double.infinity,
               radius: 12,
               txtcolor: Colors.white,
-              onTap: () {
-                if (_formKey.currentState!.validate() &&
-                    _startDate != null &&
-                    _endDate != null) {
-                  widget.onSubmit(
-                    _startDate!,
-                    _endDate!,
-                    int.parse(_daysController.text.trim()),
-                    _reasonController.text.trim(),
-                  );
-
-                  Navigator.pop(context);
-                }
-              },
+              onTap: _submit,
             ),
 
             AppSizedBox.h4,

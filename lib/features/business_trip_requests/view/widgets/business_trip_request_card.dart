@@ -16,6 +16,7 @@ import '../../controller/business_trip_cubit.dart';
 import '../../controller/business_trip_state.dart';
 import '../../data/models/business_trip_model.dart';
 import '../../../../my_app.dart';
+import '../../data/models/business_trip_request.dart';
 import 'business_trip_request_form.dart';
 
 class BusinessTripRequestCard extends StatelessWidget {
@@ -107,31 +108,48 @@ class BusinessTripRequestCard extends StatelessWidget {
 
               AppSizedBox.w2,
 
-              /// ✏️ Edit
-              AppIcon(
-                icon: Icon(Icons.edit, color: AppColors.primary),
-                onTap: () {
-                  showAppBottomSheet(
-                    context: context,
-                    title: 'Update Business Trip Request'.tr(),
-                    body: BusinessTripRequestForm(
-                      trip: trip,
-                      buttonText: 'Update Request'.tr(),
-                      onSubmit: (startDate, endDate, days, reason) {
-                        context.read<BusinessTripCubit>().updateTrip(
-                          id: trip.id!,
-                          tripType: trip.tripType ?? "business",
-                          fromDate: startDate,
-                          toDate: endDate,
-                          days: days,
-                          reason: reason,
-                        );
-                      },
-                    ),
+              /// ✏️ Update
+              BlocConsumer<BusinessTripCubit, BusinessTripState>(
+                buildWhen: (previous, current) =>
+                current is UpdateTripLoading ||
+                    current is UpdateTripSuccess ||
+                    current is UpdateTripError,
+
+                listener: (context, state) {
+                  if (state is UpdateTripError) {
+                    CustomToast.show(
+                      message: state.error.orEmpty(),
+                      type: ToastType.error,
+                    );
+                  }
+                },
+
+                builder: (context, state) {
+                  return CustomApiBuilderView(
+                    isLoading:
+                    state is UpdateTripLoading &&
+                        state.id == trip.id,
+
+                    isError: state is UpdateTripError,
+
+                    showErrorView: false,
+                    showEmptyView: false,
+
+                    loadingWidget: LoaderWidget(size: 40),
+
+                    contentBuilder: () => updateIcon(),
+
+                    onRetry: () {
+                      updateIcon();
+                    },
+
+                    errorMessage:
+                    state is UpdateTripError
+                        ? state.error
+                        : null,
                   );
                 },
               ),
-
               AppSizedBox.w2,
               BlocConsumer<BusinessTripCubit, BusinessTripState>(
                 buildWhen: (previous, current) =>
@@ -201,6 +219,38 @@ class BusinessTripRequestCard extends StatelessWidget {
       },
     );
   }
+  Widget updateIcon() {
+    return Builder(
+        builder: (context) {
+          return AppIcon(
+            icon: Icon(Icons.edit, color: AppColors.primary),
+            onTap: () {
+              showAppBottomSheet(
+                context: context,
+                title: 'Update Business Trip Request'.tr(),
+                body: BusinessTripRequestForm(
+                  trip: trip,
+                  buttonText: 'Update Request'.tr(),
+                  onSubmit: (startDate, endDate, days, reason) {
+                    context.read<BusinessTripCubit>().updateTrip(
+                      id: trip.id!,
+                      model: BusinessTripRequest(
+                        tripType: "business",
+                        fromDate: formatDateForApi(startDate),
+                        toDate: formatDateForApi(endDate),
+                        daysCount: days,
+                        requestNotes: reason,
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
 
   String _formatDate(String? date) {
     if (date == null || date.isEmpty) return "--";
@@ -243,5 +293,9 @@ class BusinessTripRequestCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatDateForApi(DateTime date) {
+    return date.toString().split(' ').first;
   }
 }

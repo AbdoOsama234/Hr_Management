@@ -43,3 +43,21 @@ class DeleteTripError extends BusinessTripState {
 
   DeleteTripError({this.error});
 }
+
+
+///UPDATE
+class UpdateTripLoading extends BusinessTripState {
+  final int id;
+
+  UpdateTripLoading({required this.id});
+}
+
+class UpdateTripSuccess extends BusinessTripState {
+  Null get error => null;
+}
+
+class UpdateTripError extends BusinessTripState {
+  final String? error;
+
+  UpdateTripError({this.error});
+}
