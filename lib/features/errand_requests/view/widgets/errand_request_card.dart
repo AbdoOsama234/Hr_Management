@@ -1,33 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
-import 'package:hr_manegement/core/text_style.dart';
 
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../../../ sheard/componnents/icon_button.dart';
+import '../../../../ sheard/componnents/loading_widget.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
+import '../../../../ sheard/componnents/show_app_toast.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
-import '../../controller/errand_cubit.dart';
-import '../../data/models/errand_request_model.dart';
+
+import '../../../../core/text_style.dart';
+
 import '../../../../my_app.dart';
+
+import '../../controller/errand_cubit.dart';
+import '../../controller/errand_state.dart';
+
+import '../../data/models/errand_model.dart';
+import '../../data/models/errand_request.dart';
+
 import 'errand_request_form.dart';
 
 class ErrandRequestCard extends StatelessWidget {
-  final ErrandRequestModel request;
+  final ErrandModel request;
 
-  const ErrandRequestCard({super.key, required this.request});
+  const ErrandRequestCard({
+    super.key,
+    required this.request,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 2.h),
       padding: EdgeInsets.all(4.w),
+
       decoration: BoxDecoration(
         color: AppColors.backGround2,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderColor),
+
+        border: Border.all(
+          color: AppColors.borderColor,
+        ),
+
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowColor,
@@ -36,22 +55,31 @@ class ErrandRequestCard extends StatelessWidget {
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          /// 📅 DATE
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+
             children: [
               Row(
                 children: [
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 4.w,
-                    color: AppColors.primary.withOpacity(0.6),
+                    color: AppColors.primary
+                        .withOpacity(0.6),
                   ),
+
                   SizedBox(width: 2.w),
+
                   Text(
-                    '${dateFoemated(request.startDate.toString())} \u2192 ${dateFoemated(request.endDate.toString())}',
+                    '${_formatDate(request.fromDate)} → ${_formatDate(request.toDate)}',
+
                     style: AppTextStyle.hint.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.bold,
@@ -59,20 +87,28 @@ class ErrandRequestCard extends StatelessWidget {
                   ),
                 ],
               ),
+
               _buildStatusChip(request.status),
             ],
           ),
+
           AppSizedBox.h1,
+
+          /// ⏱ DAYS
           Row(
             children: [
               Icon(
                 Icons.access_time_rounded,
                 size: 4.w,
-                color: AppColors.primary.withOpacity(0.6),
+                color: AppColors.primary
+                    .withOpacity(0.6),
               ),
+
               SizedBox(width: 2.w),
+
               Text(
-                '${request.days} ${'Days'.tr()}',
+                '${request.daysCount ?? 0} ${'Days'.tr()}',
+
                 style: AppTextStyle.body.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
@@ -80,67 +116,120 @@ class ErrandRequestCard extends StatelessWidget {
               ),
             ],
           ),
+
           AppSizedBox.h2,
+
+          /// 📝 NOTES + ACTIONS
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment:
+            CrossAxisAlignment.end,
+
             children: [
               Expanded(
                 child: Text(
-                  request.reason,
+                  request.requestNotes ?? "",
+
                   style: AppTextStyle.title.copyWith(
                     color: AppColors.textMain,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
+
               AppSizedBox.w2,
-              AppIcon(
-                icon: Icon(Icons.edit, color: AppColors.primary),
-                onTap: () {
-                  showAppBottomSheet(
-                    context: context,
-                    title: 'Update Errand Request'.tr(),
-                    body: ErrandRequestForm(
-                      request: request,
-                      buttonText: 'Update Request'.tr(),
-                      onSubmit: (startDate, endDate, days, reason) {
-                        context.read<ErrandCubit>().editRequest(
-                          request.id,
-                          startDate,
-                          endDate,
-                          days,
-                          reason,
-                        );
-                      },
-                    ),
+
+              /// ✏ UPDATE
+              BlocConsumer<ErrandCubit, ErrandState>(
+                buildWhen: (previous, current) =>
+                current is UpdateErrandLoading ||
+                    current is UpdateErrandSuccess ||
+                    current is UpdateErrandError,
+
+                listener: (context, state) {
+                  if (state is UpdateErrandError) {
+                    CustomToast.show(
+                      message: state.error.orEmpty(),
+                      type: ToastType.error,
+                    );
+                  }
+                },
+
+                builder: (context, state) {
+                  return CustomApiBuilderView(
+                    isLoading:
+                    state is UpdateErrandLoading &&
+                        state.id == request.id,
+
+                    isError:
+                    state is UpdateErrandError,
+
+                    showErrorView: false,
+                    showEmptyView: false,
+
+                    loadingWidget:
+                    LoaderWidget(size: 40),
+
+                    contentBuilder: () => updateIcon(),
+
+                    onRetry: () {
+                      updateIcon();
+                    },
+
+                    errorMessage:
+                    state is UpdateErrandError
+                        ? state.error
+                        : null,
                   );
                 },
               ),
 
               AppSizedBox.w2,
-              AppIcon(
-                icon: Icon(Icons.delete, color: AppColors.primary),
-                onTap: () {
-                  showAppOptionBottomSheet(
-                    context: context,
-                    title: "Are you sure you want to delete this request?".tr(),
-                    option1: BottomSheetOption(
-                      title: "Yes".tr(),
-                      backGroundColor: Colors.transparent,
 
-                      onTap: () {
-                        context.read<ErrandCubit>().deleteRequest(request.id);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    option2: BottomSheetOption(
-                      title: "No".tr(),
-                      backGroundColor: AppColors.primary,
-                      textColor: AppColors.white,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+              /// 🗑 DELETE
+              BlocConsumer<ErrandCubit, ErrandState>(
+                buildWhen: (previous, current) =>
+                current is DeleteErrandLoading ||
+                    current is DeleteErrandSuccess ||
+                    current is DeleteErrandError,
+
+                listener: (context, state) {
+                  if (state is DeleteErrandError) {
+                    CustomToast.show(
+                      message: state.error.orEmpty(),
+                      type: ToastType.error,
+                    );
+                  }
+                },
+
+                builder: (context, state) {
+                  final cubit =
+                  ErrandCubit.get(context);
+
+                  return CustomApiBuilderView(
+                    isLoading:
+                    state is DeleteErrandLoading &&
+                        state.id == request.id,
+
+                    isError:
+                    state is DeleteErrandError,
+
+                    showErrorView: false,
+                    showEmptyView: false,
+
+                    loadingWidget:
+                    LoaderWidget(size: 40),
+
+                    contentBuilder: () => deleteIcon(),
+
+                    onRetry: () =>
+                        cubit.deleteErrands(
+                          request.id!,
+                        ),
+
+                    errorMessage:
+                    state is DeleteErrandError
+                        ? state.error
+                        : null,
                   );
                 },
               ),
@@ -151,38 +240,180 @@ class ErrandRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(ErrandStatus status) {
+  Widget deleteIcon() {
+    return Builder(
+      builder: (context) {
+        return AppIcon(
+          icon: Icon(
+            Icons.delete,
+            color: AppColors.primary,
+          ),
+
+          onTap: () {
+            showAppOptionBottomSheet(
+              context: context,
+
+              title:
+              "Are you sure you want to delete this request?"
+                  .tr(),
+
+              option1: BottomSheetOption(
+                title: "Yes".tr(),
+
+                backGroundColor:
+                Colors.transparent,
+
+                onTap: () {
+                  Navigator.pop(context);
+
+                  context
+                      .read<ErrandCubit>()
+                      .deleteErrands(
+                    request.id!,
+                  );
+                },
+              ),
+
+              option2: BottomSheetOption(
+                title: "No".tr(),
+
+                backGroundColor:
+                AppColors.primary,
+
+                textColor: AppColors.white,
+
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget updateIcon() {
+    return Builder(
+      builder: (context) {
+        return AppIcon(
+          icon: Icon(
+            Icons.edit,
+            color: AppColors.primary,
+          ),
+
+          onTap: () {
+            showAppBottomSheet(
+              context: context,
+
+              title:
+              'Update Errand Request'.tr(),
+
+              body: ErrandRequestForm(
+                buttonText:
+                'Update Request'.tr(),
+
+                onSubmit: (
+                    startDate,
+                    endDate,
+                    days,
+                    reason,
+                    ) {
+                  context
+                      .read<ErrandCubit>()
+                      .updateErrands(
+                    id: request.id!,
+
+                    model: ErrandRequest(
+                      fromDate:
+                      formatDateForApi(
+                        startDate,
+                      ),
+
+                      toDate:
+                      formatDateForApi(
+                        endDate,
+                      ),
+
+                      daysCount: days,
+
+                      requestNotes:
+                      reason,
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  String _formatDate(String? date) {
+    if (date == null || date.isEmpty) {
+      return "--";
+    }
+
+    try {
+      return dateFoemated(date);
+    } catch (e) {
+      return "--";
+    }
+  }
+
+  Widget _buildStatusChip(String? status) {
     Color color;
+
     String label;
 
     switch (status) {
-      case ErrandStatus.pending:
-        color = AppColors.orange;
-        label = 'status_pending'.tr();
-        break;
-      case ErrandStatus.approved:
+      case "approved":
         color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
-      case ErrandStatus.rejected:
+
+      case "rejected":
         color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
+
+      default:
+        color = AppColors.orange;
+        label = 'status_pending'.tr();
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
-      decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
-        borderRadius: BorderRadius.circular(10),
+      padding: EdgeInsets.symmetric(
+        horizontal: 3.w,
+        vertical: 0.6.h,
       ),
+
+      decoration: BoxDecoration(
+        color: color.withOpacity(
+          MyApp.isDark ? 0.15 : 0.1,
+        ),
+
+        borderRadius:
+        BorderRadius.circular(10),
+      ),
+
       child: Text(
         label,
-        style: AppTextStyle.smallBody.copyWith(
+
+        style: AppTextStyle.smallBody
+            .copyWith(
           color: color,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
+  }
+
+  String formatDateForApi(DateTime date) {
+    return date
+        .toString()
+        .split(' ')
+        .first;
   }
 }

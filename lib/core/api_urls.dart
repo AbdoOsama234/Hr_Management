@@ -12,6 +12,7 @@ class ApiUrls {
   static const String allUsers = '${baseApiUrl}all-users-branches';
   static const String businessTripRequest =
       '${baseApiUrl}business-trip-request';
+  static const String errandRequests = '${baseApiUrl}missions-request';
 
   //AUTH APIS
   static const String login = 'login';

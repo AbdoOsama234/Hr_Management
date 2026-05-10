@@ -30,6 +30,9 @@ import '../../features/employee/data/datasource/employee_local_data_source.dart'
     as _i73;
 import '../../features/employee/data/repository/employee_repository.dart'
     as _i611;
+import '../../features/errand_requests/controller/errand_cubit.dart' as _i487;
+import '../../features/errand_requests/data/repository/errand_repository.dart'
+    as _i1005;
 import '../../features/main_screen/controller/main_screen_cubit.dart' as _i97;
 import '../../features/main_screen/data/repository/main_screen_repository.dart'
     as _i984;
@@ -81,6 +84,9 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i508.BusinessTripServiceClient>(
     () => dIModule.getBusinessTripService(gh<_i361.Dio>()),
   );
+  gh.factory<_i1005.ErrandServiceClient>(
+    () => dIModule.getErrandService(gh<_i361.Dio>()),
+  );
   gh.factory<_i104.AuthServiceClient>(
     () => dIModule.getAuthService(gh<_i361.Dio>()),
   );
@@ -99,6 +105,12 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i97.MainScreenCubit>(
     () => _i97.MainScreenCubit(gh<_i984.MainScreenRepository>()),
   );
+  gh.factory<_i1005.ErrandRepository>(
+    () => _i1005.ErrandRepository(
+      gh<_i1005.ErrandServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
   gh.factory<_i222.EmployeeCubit>(
     () => _i222.EmployeeCubit(gh<_i611.EmployeeRepository>()),
   );
@@ -107,6 +119,9 @@ Future<_i174.GetIt> $initGetIt(
       gh<_i508.BusinessTripServiceClient>(),
       gh<_i871.SafeApi>(),
     ),
+  );
+  gh.factory<_i487.ErrandCubit>(
+    () => _i487.ErrandCubit(gh<_i1005.ErrandRepository>()),
   );
   gh.factory<_i765.BusinessTripCubit>(
     () => _i765.BusinessTripCubit(gh<_i508.BusinessTripRepository>()),

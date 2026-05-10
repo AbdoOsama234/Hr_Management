@@ -85,12 +85,21 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
   Widget build(BuildContext context) {
     return BlocListener<BusinessTripCubit, BusinessTripState>(
       listenWhen: (prev, current) =>
-          current is DeleteTripSuccess || current is DeleteTripError,
+          current is DeleteTripSuccess ||
+          current is DeleteTripError||
+          current is UpdateTripSuccess ||
+          current is UpdateTripError,
+
       listener: (context, state) {
         if (state is DeleteTripSuccess) {
-          CustomToast.show(message: state.error ?? "تم الحذف بنجاح");
+          CustomToast.show(message: state.error ?? "delete_success".tr());
         }
+        if (state is UpdateTripSuccess){
+          CustomToast.show(message: state.error??"update_success".tr());
+        }
+
       },
+
       child: Scaffold(
         appBar: CustomAppBar(title: 'Business Trip Requests'.tr()),
         body: Padding(

@@ -111,7 +111,7 @@ class BusinessTripRequestCard extends StatelessWidget {
               /// ✏️ Update
               BlocConsumer<BusinessTripCubit, BusinessTripState>(
                 buildWhen: (previous, current) =>
-                current is UpdateTripLoading ||
+                    current is UpdateTripLoading ||
                     current is UpdateTripSuccess ||
                     current is UpdateTripError,
 
@@ -127,8 +127,7 @@ class BusinessTripRequestCard extends StatelessWidget {
                 builder: (context, state) {
                   return CustomApiBuilderView(
                     isLoading:
-                    state is UpdateTripLoading &&
-                        state.id == trip.id,
+                        state is UpdateTripLoading && state.id == trip.id,
 
                     isError: state is UpdateTripError,
 
@@ -143,10 +142,7 @@ class BusinessTripRequestCard extends StatelessWidget {
                       updateIcon();
                     },
 
-                    errorMessage:
-                    state is UpdateTripError
-                        ? state.error
-                        : null,
+                    errorMessage: state is UpdateTripError ? state.error : null,
                   );
                 },
               ),
@@ -219,38 +215,38 @@ class BusinessTripRequestCard extends StatelessWidget {
       },
     );
   }
+
   Widget updateIcon() {
     return Builder(
-        builder: (context) {
-          return AppIcon(
-            icon: Icon(Icons.edit, color: AppColors.primary),
-            onTap: () {
-              showAppBottomSheet(
-                context: context,
-                title: 'Update Business Trip Request'.tr(),
-                body: BusinessTripRequestForm(
-                  trip: trip,
-                  buttonText: 'Update Request'.tr(),
-                  onSubmit: (startDate, endDate, days, reason) {
-                    context.read<BusinessTripCubit>().updateTrip(
-                      id: trip.id!,
-                      model: BusinessTripRequest(
-                        tripType: "business",
-                        fromDate: formatDateForApi(startDate),
-                        toDate: formatDateForApi(endDate),
-                        daysCount: days,
-                        requestNotes: reason,
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        }
+      builder: (context) {
+        return AppIcon(
+          icon: Icon(Icons.edit, color: AppColors.primary),
+          onTap: () {
+            showAppBottomSheet(
+              context: context,
+              title: 'Update Business Trip Request'.tr(),
+              body: BusinessTripRequestForm(
+                trip: trip,
+                buttonText: 'Update Request'.tr(),
+                onSubmit: (startDate, endDate, days, reason) {
+                  context.read<BusinessTripCubit>().updateTrip(
+                    id: trip.id!,
+                    model: BusinessTripRequest(
+                      tripType: "business",
+                      fromDate: formatDateForApi(startDate),
+                      toDate: formatDateForApi(endDate),
+                      daysCount: days,
+                      requestNotes: reason,
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
-
 
   String _formatDate(String? date) {
     if (date == null || date.isEmpty) return "--";

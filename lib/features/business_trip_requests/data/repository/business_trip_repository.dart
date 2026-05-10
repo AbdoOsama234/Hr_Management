@@ -54,26 +54,30 @@ class BusinessTripRepository {
 
   BusinessTripRepository(this._service, this._safeApi);
 
+  /// 📥 Get all
+  Future<Either<Failure, BaseResponse<AllBusinessTrips>>> getAllRequests(
+      int page,
+      ) async {
+    return await _safeApi.call(apiCall: _service.getAllRequests(page));
+  }
+
   /// ➕ Create
   Future<Either<Failure, BaseResponse<BusinessTripModel>>> createTripRequest(
     BusinessTripRequest body,
   ) async {
     return await _safeApi.call(apiCall: _service.createTripRequest(body));
   }
+
   ///Update
   Future<Either<Failure, BaseResponse<int>>> updateTrip(
-      int id,
-      BusinessTripRequest body,
+    int id,
+    BusinessTripRequest body,
   ) async {
     return await _safeApi.call(apiCall: _service.updateTrip(id, body));
   }
 
-  /// 📥 Get all
-  Future<Either<Failure, BaseResponse<AllBusinessTrips>>> getAllRequests(
-    int page,
-  ) async {
-    return await _safeApi.call(apiCall: _service.getAllRequests(page));
-  }
+
+
   ///Delete
   Future<Either<Failure, BaseResponse<dynamic>>> deleteTrip(int id) async {
     return await _safeApi.call(apiCall: _service.deleteTrip(id));
