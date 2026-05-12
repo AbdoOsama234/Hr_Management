@@ -1,61 +1,122 @@
 import 'package:bloc/bloc.dart';
-import '../data/models/holiday_request_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+
+import '../data/models/holiday_model.dart';
+import '../data/models/holiday_request.dart';
+import '../data/repository/holiday_repository.dart';
 import 'holiday_state.dart';
 
+@injectable
 class HolidayCubit extends Cubit<HolidayState> {
-  HolidayCubit() : super(HolidayInitial());
+  final HolidayRepository _repository;
 
-  final List<HolidayRequestModel> _requests = [];
+  static HolidayCubit get(BuildContext context) =>
+      context.read<HolidayCubit>();
 
-  Future<void> loadRequests() async {
-    emit(HolidayLoading());
+  HolidayCubit(this._repository) : super(HolidayInitial());
 
-    await Future.delayed(const Duration(milliseconds: 300));
+  /// 📥 DATA
+  List<HolidayModel> holidays = [];
+  int _currentPage = 1;
+  bool _hasNext = true;
 
-    if (_requests.isEmpty) {
-      emit(HolidayEmpty());
-    } else {
-      emit(HolidayLoaded(List.from(_requests)));
+  Future<void> getAllHolidays({bool loadMore = false}) async {
+    if (state is GetAllHolidaysLoading ||
+        state is PaginationLoading ||
+        (loadMore && !_hasNext)) {
+      return;
     }
-  }
-
-  Future<void> addHolidayRequest(
-    DateTime startDate,
-    DateTime endDate,
-    String reason,
-  ) async {
-    final newRequest = HolidayRequestModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      startDate: startDate,
-      endDate: endDate,
-      reason: reason,
-      status: HolidayStatus.pending,
+    if (loadMore) {
+      emit(PaginationLoading());
+    } else {
+      holidays.clear();
+      _currentPage = 1;
+      _hasNext = true;
+      emit(GetAllHolidaysLoading());
+    }
+    final result = await _repository.getAllRequests(_currentPage);
+    result.fold(
+      (l) {
+        emit(GetAllHolidaysError(error: l.message));
+      },
+      (r) {
+        holidays.addAll(r.result?.vacations ?? []);
+        _hasNext = r.result?.pagination?.hasNext ?? false;
+        if (_hasNext) {
+          _currentPage++;
+        }
+        emit(GetAllHolidaysLoaded());
+        print("holidays.length ${holidays.length}");
+      },
     );
-
-    _requests.insert(0, newRequest);
-
-    emit(HolidayLoaded(List.from(_requests)));
   }
 
-  Future<void> deleteRequest(String id) async {
-    _requests.removeWhere((request) => request.id == id);
-    if (_requests.isEmpty) {
-      emit(HolidayEmpty());
-    } else {
-      emit(HolidayLoaded(List.from(_requests)));
-    }
+  /// =========================
+  /// 🔹 CREATE (API)
+  /// =========================
+  Future<void> createHoliday({required HolidayRequest model}) async {
+    emit(CreateHolidayLoading());
+
+    final result = await _repository.createHolidayRequest(model);
+
+    result.fold(
+      (failure) {
+        emit(CreateHolidayError(error: failure.message));
+      },
+      (response) async {
+        emit(CreateHolidaySuccess());
+
+        /// 🔄 Refresh list
+        await getAllHolidays();
+      },
+    );
   }
 
-  Future<void> editRequest(
-    String id,
-    DateTime startDate,
-    DateTime endDate,
-    String reason,
-  ) async {
-    final request = _requests.firstWhere((request) => request.id == id);
-    request.startDate = startDate;
-    request.endDate = endDate;
-    request.reason = reason;
-    emit(HolidayLoaded(List.from(_requests)));
+  /// =========================
+  /// =========================
+  Future<void> deleteHoliday(int id) async {
+    emit(DeleteHolidayLoading(id: id));
+
+    final result = await _repository.deleteHoliday(id);
+
+    result.fold(
+      (failure) {
+        emit(DeleteHolidayError(error: failure.message));
+      },
+      (response) async {
+        emit(DeleteHolidaySuccess());
+
+        await getAllHolidays(); // refresh
+      },
+    );
   }
+
+  /// =========================
+  Future<void> updateHoliday({
+    required int id,
+    required HolidayRequest model}) async{
+
+    emit(UpdateHolidayLoading(id: id));
+
+    final result=await _repository.updateHoliday(id,model);
+
+    result.fold(
+        (failure){
+          emit(UpdateHolidayError(error: failure.message));
+
+        },
+
+        (response)async{
+
+          emit(UpdateHolidaySuccess());
+
+          await getAllHolidays();
+
+        }
+        );
+
+  }
+
 }

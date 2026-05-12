@@ -33,6 +33,10 @@ import '../../features/employee/data/repository/employee_repository.dart'
 import '../../features/errand_requests/controller/errand_cubit.dart' as _i487;
 import '../../features/errand_requests/data/repository/errand_repository.dart'
     as _i1005;
+import '../../features/holiday__requests/controller/holiday_cubit.dart'
+    as _i679;
+import '../../features/holiday__requests/data/repository/holiday_repository.dart'
+    as _i902;
 import '../../features/loan__requests/controller/loan_cubit.dart' as _i505;
 import '../../features/loan__requests/data/repository/loan_repository.dart'
     as _i63;
@@ -93,12 +97,21 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i63.LoanServiceClient>(
     () => dIModule.getloanService(gh<_i361.Dio>()),
   );
+  gh.factory<_i902.HolidayServiceClient>(
+    () => dIModule.getHolidayService(gh<_i361.Dio>()),
+  );
   gh.factory<_i104.AuthServiceClient>(
     () => dIModule.getAuthService(gh<_i361.Dio>()),
   );
   gh.factory<_i611.EmployeeRepository>(
     () => _i611.EmployeeRepository(
       gh<_i611.EmployeeServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i902.HolidayRepository>(
+    () => _i902.HolidayRepository(
+      gh<_i902.HolidayServiceClient>(),
       gh<_i871.SafeApi>(),
     ),
   );
@@ -131,6 +144,9 @@ Future<_i174.GetIt> $initGetIt(
     ),
   );
   gh.factory<_i505.LoanCubit>(() => _i505.LoanCubit(gh<_i63.LoanRepository>()));
+  gh.factory<_i679.HolidayCubit>(
+    () => _i679.HolidayCubit(gh<_i902.HolidayRepository>()),
+  );
   gh.factory<_i487.ErrandCubit>(
     () => _i487.ErrandCubit(gh<_i1005.ErrandRepository>()),
   );

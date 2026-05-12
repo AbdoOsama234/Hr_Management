@@ -15,6 +15,7 @@ class ApiUrls {
   static const String holidayRequests='${baseApiUrl}vacation-request';
   static const String loanRequests='${baseApiUrl}loans-request';
 
+
   //AUTH APIS
   static const String login = 'login';
 }

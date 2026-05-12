@@ -42,6 +42,7 @@ lib/
 │       ├── internet_check_screen.dart
 │       ├── loading_widget.dart
 │       ├── search_bar.dart
+│       ├── show_app_toast.dart
 │       ├── show_bottom_sheet.dart
 │       ├── show_flutter_snackbar.dart
 │       ├── to_cart_icon.dart
@@ -128,6 +129,13 @@ lib/
 │   │   ├── controller/
 │   │   │   ├── login_cubit.dart
 │   │   │   └── login_state.dart
+│   │   ├── data/
+│   │   │   ├── model/
+│   │   │   │   ├── user_model.dart
+│   │   │   │   └── user_model.g.dart
+│   │   │   ├── repository/
+│   │   │       ├── auth_repository.dart
+│   │   │       └── auth_repository.g.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   ├── change_password_screen.dart
@@ -200,7 +208,14 @@ lib/
 │   │   │   └── errand_state.dart
 │   │   ├── data/
 │   │   │   ├── models/
-│   │   │       └── errand_request_model.dart
+│   │   │   │   ├── errand_model.dart
+│   │   │   │   ├── errand_model.g.dart
+│   │   │   │   ├── errand_request.dart
+│   │   │   │   ├── errand_request.g.dart
+│   │   │   │   └── errand_request_model.dart
+│   │   │   ├── repository/
+│   │   │       ├── errand_repository.dart
+│   │   │       └── errand_repository.g.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── errand_screen.dart
@@ -213,6 +228,10 @@ lib/
 │   │   │   └── holiday_state.dart
 │   │   ├── data/
 │   │   │   ├── models/
+│   │   │       ├── holiday_model.dart
+│   │   │       ├── holiday_model.g.dart
+│   │   │       ├── holiday_request.dart
+│   │   │       ├── holiday_request.g.dart
 │   │   │       └── holiday_request_model.dart
 │   │   ├── view/
 │   │       ├── screens/
@@ -241,7 +260,14 @@ lib/
 │   │   │   └── loan_state.dart
 │   │   ├── data/
 │   │   │   ├── models/
-│   │   │       └── loan_request_model.dart
+│   │   │   │   ├── loan_model.dart
+│   │   │   │   ├── loan_model.g.dart
+│   │   │   │   ├── loan_request.dart
+│   │   │   │   ├── loan_request.g.dart
+│   │   │   │   └── loan_request_model.dart
+│   │   │   ├── repository/
+│   │   │       ├── loan_repository.dart
+│   │   │       └── loan_repository.g.dart
 │   │   ├── view/
 │   │       ├── screens/
 │   │       │   └── loan_screen.dart

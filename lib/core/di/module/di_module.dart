@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_manegement/features/holiday__requests/data/repository/holiday_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,11 +32,13 @@ abstract class DIModule {
       ErrandServiceClient(client);
 
   /// ✅ loan Request
-  LoanServiceClient getloanService(Dio client) =>
-      LoanServiceClient(client);
+  LoanServiceClient getloanService(Dio client) => LoanServiceClient(client);
 
+  /// ✅ holiday Request
+  HolidayServiceClient getHolidayService(Dio client) =>
+      HolidayServiceClient(client);
 
-   ///Auth
+  ///Auth
   AuthServiceClient getAuthService(Dio client) => AuthServiceClient(client);
 
   Key getKey() => UniqueKey();

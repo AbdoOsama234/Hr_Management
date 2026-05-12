@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,110 +29,69 @@ import '../../../../my_app.dart';
 import 'loan_request_form.dart';
 
 class LoanRequestCard extends StatelessWidget {
-
   final LoanModel request;
 
-  const LoanRequestCard({
-    super.key,
-    required this.request,
-  });
+  const LoanRequestCard({super.key, required this.request});
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      margin:
-      EdgeInsets.only(bottom: 2.h),
+      margin: EdgeInsets.only(bottom: 2.h),
 
-      padding:
-      EdgeInsets.all(4.w),
+      padding: EdgeInsets.all(4.w),
 
       decoration: BoxDecoration(
-        color:
-        AppColors.backGround2,
+        color: AppColors.backGround2,
 
-        borderRadius:
-        BorderRadius.circular(
-          20,
-        ),
+        borderRadius: BorderRadius.circular(20),
 
-        border: Border.all(
-          color:
-          AppColors.borderColor,
-        ),
+        border: Border.all(color: AppColors.borderColor),
 
         boxShadow: [
-
           BoxShadow(
-            color:
-            AppColors.shadowColor,
+            color: AppColors.shadowColor,
 
             blurRadius: 10,
 
-            offset:
-            const Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
 
       child: Column(
-        crossAxisAlignment:
-        CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-
           /// DATE + STATUS
           Row(
-            mainAxisAlignment:
-            MainAxisAlignment
-                .spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
             children: [
-
               Row(
                 children: [
-
                   Icon(
-                    Icons
-                        .calendar_today_rounded,
+                    Icons.calendar_today_rounded,
 
                     size: 4.w,
 
-                    color: AppColors
-                        .primary
-                        .withOpacity(
-                      0.6,
-                    ),
+                    color: AppColors.primary.withOpacity(0.6),
                   ),
 
-                  SizedBox(
-                    width: 2.w,
-                  ),
+                  SizedBox(width: 2.w),
 
                   Text(
-                    _formatDate(
-                      request
-                          .requestDate,
-                    ),
+                    _formatDate(request.requestDate),
 
-                    style: AppTextStyle
-                        .hint
-                        .copyWith(
-                      color:
-                      AppColors
-                          .textMain,
+                    style: AppTextStyle.hint.copyWith(
+                      color: AppColors.textMain,
 
-                      fontWeight:
-                      FontWeight
-                          .bold,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
 
-              _buildStatusChip(
-                request.status,
-              ),
+              _buildStatusChip(request.status),
             ],
           ),
 
@@ -141,19 +99,12 @@ class LoanRequestCard extends StatelessWidget {
 
           /// AMOUNT
           Text(
-            FormatPriceHelper
-                .formatPrice(
-              request.amount ?? "0",
-            ),
+            FormatPriceHelper.formatPrice(request.amount ?? "0"),
 
-            style:
-            AppTextStyle.body
-                .copyWith(
-              color:
-              AppColors.primary,
+            style: AppTextStyle.body.copyWith(
+              color: AppColors.primary,
 
-              fontWeight:
-              FontWeight.bold,
+              fontWeight: FontWeight.bold,
             ),
           ),
 
@@ -163,208 +114,102 @@ class LoanRequestCard extends StatelessWidget {
           Text(
             request.loanType ?? "--",
 
-            style:
-            AppTextStyle.title
-                .copyWith(
-              color:
-              AppColors.textMain,
+            style: AppTextStyle.title.copyWith(
+              color: AppColors.textMain,
 
-              fontWeight:
-              FontWeight.w600,
+              fontWeight: FontWeight.w600,
             ),
           ),
 
           AppSizedBox.h2,
 
           /// NOTES
-          if (request.notes != null &&
-              request.notes!
-                  .isNotEmpty)
-
-            Text(
-              request.notes!,
-
-              style:
-              AppTextStyle.body,
-            ),
+          if (request.notes != null && request.notes!.isNotEmpty)
+            Text(request.notes!, style: AppTextStyle.body),
 
           AppSizedBox.h2,
 
           /// ACTIONS
           Row(
-            mainAxisAlignment:
-            MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
 
             children: [
+              BlocConsumer<LoanCubit, LoanState>(
+                buildWhen: (previous, current) =>
+                    current is UpdateLoanLoading ||
+                    current is UpdateLoanSuccess ||
+                    current is UpdateLoanError,
 
-              BlocConsumer<
-                  LoanCubit,
-                  LoanState>(
-
-                buildWhen:
-                    (
-                    previous,
-                    current,
-                    ) =>
-
-                current
-                is UpdateLoanLoading ||
-
-                    current
-                    is UpdateLoanSuccess ||
-
-                    current
-                    is UpdateLoanError,
-
-                listener: (
-                    context,
-                    state,
-                    ) {
-
-                  if (state
-                  is UpdateLoanError) {
-
+                listener: (context, state) {
+                  if (state is UpdateLoanError) {
                     CustomToast.show(
-                      message:
-                      state.error
-                          .orEmpty(),
+                      message: state.error.orEmpty(),
 
-                      type:
-                      ToastType.error,
+                      type: ToastType.error,
                     );
                   }
                 },
 
-                builder: (
-                    context,
-                    state,
-                    ) {
-
+                builder: (context, state) {
                   return CustomApiBuilderView(
-
                     isLoading:
-                    state
-                    is UpdateLoanLoading &&
-                        state.id ==
-                            request.id,
+                        state is UpdateLoanLoading && state.id == request.id,
 
-                    isError:
-                    state
-                    is UpdateLoanError,
+                    isError: state is UpdateLoanError,
 
-                    showErrorView:
-                    false,
+                    showErrorView: false,
 
-                    showEmptyView:
-                    false,
+                    showEmptyView: false,
 
-                    loadingWidget:
-                    const LoaderWidget(
-                      size: 40,
-                    ),
+                    loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder:
-                        () => updateIcon(),
+                    contentBuilder: () => updateIcon(),
 
-                    onRetry:
-                        () => updateIcon(),
+                    onRetry: () => updateIcon(),
 
-                    errorMessage:
-                    state
-                    is UpdateLoanError
-                        ? state.error
-                        : null,
+                    errorMessage: state is UpdateLoanError ? state.error : null,
                   );
                 },
               ),
 
               AppSizedBox.w2,
 
-              BlocConsumer<
-                  LoanCubit,
-                  LoanState>(
+              BlocConsumer<LoanCubit, LoanState>(
+                buildWhen: (previous, current) =>
+                    current is DeleteLoanLoading ||
+                    current is DeleteLoanSuccess ||
+                    current is DeleteLoanError,
 
-                buildWhen:
-                    (
-                    previous,
-                    current,
-                    ) =>
-
-                current
-                is DeleteLoanLoading ||
-
-                    current
-                    is DeleteLoanSuccess ||
-
-                    current
-                    is DeleteLoanError,
-
-                listener: (
-                    context,
-                    state,
-                    ) {
-
-                  if (state
-                  is DeleteLoanError) {
-
+                listener: (context, state) {
+                  if (state is DeleteLoanError) {
                     CustomToast.show(
-                      message:
-                      state.error
-                          .orEmpty(),
+                      message: state.error.orEmpty(),
 
-                      type:
-                      ToastType.error,
+                      type: ToastType.error,
                     );
                   }
                 },
 
-                builder: (
-                    context,
-                    state,
-                    ) {
-
-                  final cubit =
-                  LoanCubit.get(
-                    context,
-                  );
+                builder: (context, state) {
+                  final cubit = LoanCubit.get(context);
 
                   return CustomApiBuilderView(
-
                     isLoading:
-                    state
-                    is DeleteLoanLoading &&
-                        state.id ==
-                            request.id,
+                        state is DeleteLoanLoading && state.id == request.id,
 
-                    isError:
-                    state
-                    is DeleteLoanError,
+                    isError: state is DeleteLoanError,
 
-                    showErrorView:
-                    false,
+                    showErrorView: false,
 
-                    showEmptyView:
-                    false,
+                    showEmptyView: false,
 
-                    loadingWidget:
-                    const LoaderWidget(
-                      size: 40,
-                    ),
+                    loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder:
-                        () => deleteIcon(),
+                    contentBuilder: () => deleteIcon(),
 
-                    onRetry:
-                        () => cubit
-                        .deleteLoans(
-                      request.id!,
-                    ),
+                    onRetry: () => cubit.deleteLoans(request.id!),
 
-                    errorMessage:
-                    state
-                    is DeleteLoanError
-                        ? state.error
-                        : null,
+                    errorMessage: state is DeleteLoanError ? state.error : null,
                   );
                 },
               ),
@@ -377,67 +222,38 @@ class LoanRequestCard extends StatelessWidget {
 
   /// DELETE
   Widget deleteIcon() {
-
     return Builder(
       builder: (context) {
-
         return AppIcon(
-          icon: Icon(
-            Icons.delete,
-            color:
-            AppColors.primary,
-          ),
+          icon: Icon(Icons.delete, color: AppColors.primary),
 
           onTap: () {
-
             showAppOptionBottomSheet(
-
               context: context,
 
-              title:
-              "Are you sure you want to delete this request?"
-                  .tr(),
+              title: "Are you sure you want to delete this request?".tr(),
 
-              option1:
-              BottomSheetOption(
+              option1: BottomSheetOption(
+                title: "Yes".tr(),
 
-                title:
-                "Yes".tr(),
-
-                backGroundColor:
-                Colors.transparent,
+                backGroundColor: Colors.transparent,
 
                 onTap: () {
+                  context.read<LoanCubit>().deleteLoans(request.id!);
 
-                  context
-                      .read<LoanCubit>()
-                      .deleteLoans(
-                    request.id!,
-                  );
-
-                  Navigator.pop(
-                    context,
-                  );
+                  Navigator.pop(context);
                 },
               ),
 
-              option2:
-              BottomSheetOption(
+              option2: BottomSheetOption(
+                title: "No".tr(),
 
-                title:
-                "No".tr(),
+                backGroundColor: AppColors.primary,
 
-                backGroundColor:
-                AppColors.primary,
-
-                textColor:
-                AppColors.white,
+                textColor: AppColors.white,
 
                 onTap: () {
-
-                  Navigator.pop(
-                    context,
-                  );
+                  Navigator.pop(context);
                 },
               ),
             );
@@ -449,69 +265,36 @@ class LoanRequestCard extends StatelessWidget {
 
   /// UPDATE
   Widget updateIcon() {
-
     return Builder(
       builder: (context) {
-
         return AppIcon(
-
-          icon: Icon(
-            Icons.edit,
-            color:
-            AppColors.primary,
-          ),
+          icon: Icon(Icons.edit, color: AppColors.primary),
 
           onTap: () {
-
             showAppBottomSheet(
-
               context: context,
 
-              title:
-              'Update Loan Request'
-                  .tr(),
+              title: 'Update Loan Request'.tr(),
 
               body: LoanRequestForm(
-
                 request: request,
 
-                buttonText:
-                'Update Request'
-                    .tr(),
+                buttonText: 'Update Request'.tr(),
 
-                onSubmit: (
-                    date,
-                    amount,
-                    loanType,
-                    installments,
-                    notes,
-                    ) {
-
-                  context
-                      .read<LoanCubit>()
-                      .updateLoans(
-
+                onSubmit: (date, amount, loanType, installments, notes) {
+                  context.read<LoanCubit>().updateLoans(
                     id: request.id!,
 
                     model: LoanRequest(
+                      requestDate: formatDateForApi(date),
 
-                      requestDate:
-                      formatDateForApi(
-                        date,
-                      ),
+                      amount: amount,
 
-                      amount:
-                      amount,
+                      loanType: loanType,
 
-                      loanType:
-                      loanType,
+                      installments: int.tryParse(installments),
 
-                      installments:int.tryParse(
-                      installments,
-                      ),
-
-                      notes:
-                      notes,
+                      notes: notes,
                     ),
                   );
                 },
@@ -523,129 +306,73 @@ class LoanRequestCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(
-      String? date,
-      ) {
-
-    if (date == null ||
-        date.isEmpty) {
-
+  String _formatDate(String? date) {
+    if (date == null || date.isEmpty) {
       return "--";
     }
 
     try {
-
-      return dateFoemated(
-        date,
-      );
-
+      return dateFoemated(date);
     } catch (e) {
-
       return "--";
     }
   }
 
-  Widget _buildStatusChip(
-      String? status,
-      ) {
-
+  Widget _buildStatusChip(String? status) {
     Color color;
 
     String label;
 
     switch (status) {
-
       case "pending":
+        color = AppColors.orange;
 
-        color =
-            AppColors.orange;
-
-        label =
-            'status_pending'
-                .tr();
+        label = 'status_pending'.tr();
 
         break;
 
       case "approved":
+        color = AppColors.mintGreen;
 
-        color =
-            AppColors.mintGreen;
-
-        label =
-            'status_approved'
-                .tr();
+        label = 'status_approved'.tr();
 
         break;
 
       case "rejected":
+        color = AppColors.rose;
 
-        color =
-            AppColors.rose;
-
-        label =
-            'status_rejected'
-                .tr();
+        label = 'status_rejected'.tr();
 
         break;
 
       default:
+        color = AppColors.orange;
 
-        color =
-            AppColors.orange;
-
-        label =
-            'status_pending'
-                .tr();
+        label = 'status_pending'.tr();
     }
 
     return Container(
-
-      padding:
-      EdgeInsets.symmetric(
-        horizontal: 3.w,
-        vertical: 0.6.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
 
       decoration: BoxDecoration(
+        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
 
-        color:
-        color.withOpacity(
-          MyApp.isDark
-              ? 0.15
-              : 0.1,
-        ),
-
-        borderRadius:
-        BorderRadius.circular(
-          10,
-        ),
+        borderRadius: BorderRadius.circular(10),
       ),
 
       child: Text(
-
         label,
 
-        style:
-        AppTextStyle
-            .smallBody
-            .copyWith(
-
+        style: AppTextStyle.smallBody.copyWith(
           color: color,
 
-          fontWeight:
-          FontWeight.bold,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  String formatDateForApi(
-      DateTime date,
-      ) {
-
-    return date
-        .toString()
-        .split(' ')
-        .first;
+  String formatDateForApi(DateTime date) {
+    return date.toString().split(' ').first;
   }
 }
