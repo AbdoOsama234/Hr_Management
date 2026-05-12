@@ -153,18 +153,10 @@ class ErrandCubit extends Cubit<ErrandState> {
     required ErrandRequest model,
   }) async {
 
-    emit(
-      UpdateErrandLoading(
-        id: id,
-      ),
+    emit(UpdateErrandLoading(id: id,),
     );
 
-    final result =
-    await _errandRepository
-        .updateErrands(
-      id,
-      model,
-    );
+    final result = await _errandRepository.updateErrands(id, model,);
 
     result.fold(
 

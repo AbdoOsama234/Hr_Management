@@ -25,8 +25,8 @@ class ErrandModel {
   String? createdAt;
   String? updatedAt;
   int? createdBy;
-  String? updatedBy;
-  String? deletedBy;
+  int? updatedBy;
+  int? deletedBy;
   String? merchantId;
 
   ErrandModel(

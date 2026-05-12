@@ -7,12 +7,13 @@ class ApiUrls {
     return "$baseUrl/$image";
   }
 
-  //Home Apis
+  //requests Apis
   static const String allBranches = '${baseApiUrl}all-branches';
   static const String allUsers = '${baseApiUrl}all-users-branches';
-  static const String businessTripRequest =
-      '${baseApiUrl}business-trip-request';
+  static const String businessTripRequest ='${baseApiUrl}business-trip-request';
   static const String errandRequests = '${baseApiUrl}missions-request';
+  static const String holidayRequests='${baseApiUrl}vacation-request';
+  static const String loanRequests='${baseApiUrl}loans-request';
 
   //AUTH APIS
   static const String login = 'login';

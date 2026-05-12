@@ -26,8 +26,8 @@ ErrandModel _$ErrandModelFromJson(Map<String, dynamic> json) => ErrandModel(
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
   createdBy: (json['created_by'] as num?)?.toInt(),
-  updatedBy: json['updated_by'] as String?,
-  deletedBy: json['deleted_by'] as String?,
+  updatedBy: (json['updated_by'] as num?)?.toInt(),
+  deletedBy: (json['deleted_by'] as num?)?.toInt(),
   merchantId: json['merchant_id'] as String?,
 );
 

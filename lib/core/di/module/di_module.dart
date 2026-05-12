@@ -8,6 +8,7 @@ import '../../../features/auth/data/repository/auth_repository.dart';
 import '../../../features/business_trip_requests/data/repository/business_trip_repository.dart';
 import '../../../features/employee/data/repository/employee_repository.dart';
 import '../../../features/errand_requests/data/repository/errand_repository.dart';
+import '../../../features/loan__requests/data/repository/loan_repository.dart';
 
 @module
 abstract class DIModule {
@@ -25,10 +26,16 @@ abstract class DIModule {
   BusinessTripServiceClient getBusinessTripService(Dio client) =>
       BusinessTripServiceClient(client);
 
-  /// ✅ Business Trip
+  /// ✅ Errand Request
   ErrandServiceClient getErrandService(Dio client) =>
       ErrandServiceClient(client);
 
+  /// ✅ loan Request
+  LoanServiceClient getloanService(Dio client) =>
+      LoanServiceClient(client);
+
+
+   ///Auth
   AuthServiceClient getAuthService(Dio client) => AuthServiceClient(client);
 
   Key getKey() => UniqueKey();

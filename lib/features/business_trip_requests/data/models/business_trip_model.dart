@@ -16,7 +16,6 @@ class BusinessTripModel {
 
   String? toDate;
 
-  @JsonKey(fromJson: _toInt)
   int? daysCount;
 
   String? status;
@@ -48,10 +47,7 @@ class BusinessTripModel {
 
   Map<String, dynamic> toJson() => _$BusinessTripModelToJson(this);
 
-  static int? _toInt(dynamic value) {
-    if (value == null) return null;
-    return int.tryParse(value.toString());
-  }
+
 }
 
 /// 🔹 Wrapper (GET)

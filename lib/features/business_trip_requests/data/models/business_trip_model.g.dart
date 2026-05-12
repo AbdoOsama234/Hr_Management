@@ -13,7 +13,7 @@ BusinessTripModel _$BusinessTripModelFromJson(Map<String, dynamic> json) =>
       tripType: json['trip_type'] as String?,
       fromDate: json['from_date'] as String?,
       toDate: json['to_date'] as String?,
-      daysCount: BusinessTripModel._toInt(json['days_count']),
+      daysCount: (json['days_count'] as num?)?.toInt(),
       status: json['status'] as String?,
       requestNotes: json['request_notes'] as String?,
       statusNotes: json['status_notes'] as String?,

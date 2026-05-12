@@ -310,6 +310,7 @@ class ErrandRequestCard extends StatelessWidget {
               'Update Errand Request'.tr(),
 
               body: ErrandRequestForm(
+                request: request,
                 buttonText:
                 'Update Request'.tr(),
 

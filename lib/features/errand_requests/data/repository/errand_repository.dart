@@ -18,53 +18,28 @@ part 'errand_repository.g.dart';
 /// =========================
 /// 🔹 API SERVICE
 /// =========================
-@RestApi(
-  baseUrl: ApiUrls.baseApiUrl,
-)
+@RestApi(baseUrl: ApiUrls.baseApiUrl,)
+
 abstract class ErrandServiceClient {
+  factory ErrandServiceClient(Dio dio, {String baseUrl,}) =
+  _ErrandServiceClient;
 
-  factory ErrandServiceClient(
-      Dio dio, {
-        String baseUrl,
-      }) = _ErrandServiceClient;
-
-  /// =========================
   /// 📥 GET ALL
-  /// =========================
   @GET(ApiUrls.errandRequests)
-  Future<BaseResponse<AllErrand>> getAll(
-      @Query('page') int page,
-      );
+  Future<BaseResponse<AllErrand>> getAll(@Query('page') int page,);
 
-  /// =========================
+
   /// ➕ CREATE
-  /// =========================
   @POST(ApiUrls.errandRequests)
-  Future<BaseResponse<ErrandModel>> createErrands(
-      @Body() ErrandRequest body,
-      );
-
-  /// =========================
+  Future<BaseResponse<ErrandModel>> createErrands(@Body() ErrandRequest body,);
   /// ✏ UPDATE
-  /// =========================
-  @POST(
-    "${ApiUrls.errandRequests}/{id}",
-  )
-  Future<BaseResponse<int>> updateErrands(
-      @Path("id") int id,
+  @POST("${ApiUrls.errandRequests}/{id}",)
+  Future<BaseResponse<int>> updateErrands(@Path("id") int id, @Body() ErrandRequest body,);
 
-      @Body() ErrandRequest body,
-      );
-
-  /// =========================
   /// 🗑 DELETE
-  /// =========================
-  @DELETE(
-    "${ApiUrls.errandRequests}/{id}",
-  )
-  Future<BaseResponse<dynamic>> deleteErrands(
-      @Path("id") int id,
-      );
+
+  @DELETE("${ApiUrls.errandRequests}/{id}",)
+  Future<BaseResponse<dynamic>> deleteErrands(@Path("id") int id,);
 }
 
 /// =========================
@@ -85,72 +60,30 @@ class ErrandRepository {
   /// =========================
   /// 📥 GET ALL
   /// =========================
-  Future<
-      Either<
-          Failure,
-          BaseResponse<AllErrand>
-      >
-  > getAllErrands(
-      int page,
-      ) async {
-
-    return await _safeApi.call(
-      apiCall: _service.getAll(page),
-    );
+  Future<Either<Failure,BaseResponse<AllErrand>>>getAllErrands(int page,) async {
+    return await _safeApi.call(apiCall: _service.getAll(page),);
   }
 
   /// =========================
   /// ➕ CREATE
   /// =========================
-  Future<
-      Either<
-          Failure,
-          BaseResponse<ErrandModel>
-      >
-  > createErrands(
-      ErrandRequest body,
-      ) async {
-
-    return await _safeApi.call(
-      apiCall: _service.createErrands(body),
-    );
+  Future<Either<Failure,BaseResponse<ErrandModel>>>createErrands(ErrandRequest body,) async {
+    return await _safeApi.call(apiCall: _service.createErrands(body),);
   }
 
   /// =========================
   /// ✏ UPDATE
   /// =========================
-  Future<
-      Either<
-          Failure,
-          BaseResponse<int>
-      >
-  > updateErrands(
-      int id,
-      ErrandRequest body,
-      ) async {
-
-    return await _safeApi.call(
-      apiCall: _service.updateErrands(
-        id,
-        body,
-      ),
+  Future<Either<Failure,BaseResponse<int>>>updateErrands(int id,ErrandRequest body,)async {
+    return await _safeApi.call(apiCall: _service.updateErrands(id,body,),
     );
   }
 
   /// =========================
   /// 🗑 DELETE
   /// =========================
-  Future<
-      Either<
-          Failure,
-          BaseResponse<dynamic>
-      >
-  > deleteErrands(
-      int id,
-      ) async {
-
-    return await _safeApi.call(
-      apiCall: _service.deleteErrands(id),
+  Future<Either<Failure,BaseResponse<dynamic>>>deleteErrands(int id,) async {
+    return await _safeApi.call(apiCall: _service.deleteErrands(id),
     );
   }
 }

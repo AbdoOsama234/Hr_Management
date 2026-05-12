@@ -242,7 +242,7 @@ class _ErrandRequestFormState
               child: Text(
                 _calculatedDays > 0
                     ? '$_calculatedDays ${'days'.tr()}'
-                    : 'Select dates'.tr(),
+                    : " ",
 
                 style:
                 const TextStyle(
