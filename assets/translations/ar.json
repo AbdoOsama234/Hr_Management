@@ -256,4 +256,5 @@
   "Something went wrong, please try again": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
   "delete_success": "تم الحذف بنجاح",
   "update_success": "تم التعديل بنجاح"
+  ,"create_success": "تم الإرسال بنجاح"
 }

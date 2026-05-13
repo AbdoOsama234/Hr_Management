@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:hr_manegement/core/di/di.dart';
 
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
@@ -17,6 +18,7 @@ import '../../../../core/app_validation.dart';
 
 import '../../controller/permission_cubit.dart';
 import '../../controller/permission_state.dart';
+import '../../data/models/permission_request.dart';
 import '../widgets/permission_request_card.dart';
 import '../widgets/permission_request_form.dart';
 
@@ -33,13 +35,8 @@ class _PermissionScreenState extends State<PermissionScreen> {
       context: context,
       title: 'Request Permission'.tr(),
       body: PermissionRequestForm(
-        onSubmit: (startDate, endDate, hours, reason) {
-          context.read<PermissionCubit>().addPermissionRequest(
-            startDate,
-            endDate,
-            hours,
-            reason,
-          );
+        onSubmit: (model) {
+          context.read<PermissionCubit>().createPermission(model: model);
         },
       ),
     );
@@ -50,7 +47,7 @@ class _PermissionScreenState extends State<PermissionScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PermissionCubit()..loadRequests(),
+      create: (context) => getIt<PermissionCubit>()..getAllPermissions(),
       child: Scaffold(
         appBar: CustomAppBar(title: 'Permission Requests'.tr()),
         body: Padding(
@@ -83,11 +80,14 @@ class _PermissionScreenState extends State<PermissionScreen> {
               Expanded(
                 child: BlocBuilder<PermissionCubit, PermissionState>(
                   builder: (context, state) {
-                    if (state is PermissionLoading) {
+                    final cubit = context.read<PermissionCubit>();
+
+                    if (state is GetAllPermissionsLoading) {
                       return const Center(child: LoaderWidget());
                     }
 
-                    if (state is PermissionEmpty) {
+                    if (cubit.permissions.isEmpty &&
+                        state is GetAllPermissionsLoaded) {
                       return EmptyScreen(
                         title: 'No Permission Requests'.tr(),
                         description:
@@ -100,13 +100,15 @@ class _PermissionScreenState extends State<PermissionScreen> {
                       );
                     }
 
-                    if (state is PermissionLoaded) {
-                      return RefreshIndicator(
-                        onRefresh: () =>
-                            context.read<PermissionCubit>().loadRequests(),
-                        child: ListView.builder(
-                          itemCount: state.requests.length,
-                          itemBuilder: (context, index) {
+                    return RefreshIndicator(
+                      onRefresh: () => cubit.getAllPermissions(),
+                      child: ListView.builder(
+                        itemCount:
+                            cubit.permissions.length +
+                            (state is PaginationLoading ? 1 : 0),
+                        itemBuilder: (context, index) {
+                          if (index < cubit.permissions.length) {
+                            final request = cubit.permissions[index];
                             return TweenAnimationBuilder<double>(
                               duration: Duration(
                                 milliseconds: 300 + (index * 100),
@@ -122,16 +124,14 @@ class _PermissionScreenState extends State<PermissionScreen> {
                                   ),
                                 );
                               },
-                              child: PermissionRequestCard(
-                                request: state.requests[index],
-                              ),
+                              child: PermissionRequestCard(request: request),
                             );
-                          },
-                        ),
-                      );
-                    }
-
-                    return const SizedBox();
+                          } else {
+                            return const Center(child: LoaderWidget());
+                          }
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
@@ -140,15 +140,11 @@ class _PermissionScreenState extends State<PermissionScreen> {
         ),
         floatingActionButton: BlocBuilder<PermissionCubit, PermissionState>(
           builder: (context, state) {
-            if (state is PermissionLoaded) {
-              return FloatingActionButton(
-                onPressed: () => _showRequestForm(context),
-                backgroundColor: AppColors.primary,
-                child: const Icon(Icons.add, color: Colors.white),
-              );
-            }
-
-            return const SizedBox();
+            return FloatingActionButton(
+              onPressed: () => _showRequestForm(context),
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.add, color: Colors.white),
+            );
           },
         ),
       ),

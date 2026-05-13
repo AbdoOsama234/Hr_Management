@@ -9,8 +9,9 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/features/my_mission/controller/my_mission_cubit.dart';
+import 'package:hr_manegement/features/my_mission/data/models/my_mission_model.dart';
 
-import '../../../my_mission/data/models/mission_model.dart';
 import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 
@@ -112,19 +113,23 @@ class _MainScreenBody extends StatelessWidget {
                               AppSizedBox.h3,
 
                               /// Daily Tasks
-                              MyMissionItemCard(
-                                taxt: "daily_task".tr(),
-                                icon: Icon(
-                                  Icons.task_alt, // 👈 غيرناها لأيقونة تاسك
-                                  size: 4.w,
-                                  color: AppColors.primary.withOpacity(0.6),
-                                ),
-                                mission: MyMissionModel(
-                                  id: '1',
-                                  date: DateTime.now(),
-                                  notes: 'daily_task_desc'.tr(),
-                                  importance: MissionImportance.medium,
-                                  status: MissionStatus.newTask,
+                              BlocProvider(
+                                create: (context) => getIt<MyMissionCubit>(),
+                                child: MyMissionItemCard(
+                                  taxt: "daily_task".tr(),
+                                  icon: Icon(
+                                    Icons.task_alt,
+                                    size: 4.w,
+                                    color: AppColors.primary.withOpacity(0.6),
+                                  ),
+                                  mission: MyMissionModel(
+                                    id: 1,
+                                    startDate: DateTime.now().toIso8601String(),
+                                    endDate: DateTime.now().toIso8601String(),
+                                    subject: 'daily_task_desc'.tr(),
+                                    taskStatusId: 1,
+                                    priorityId: 1,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: .5.h),

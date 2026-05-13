@@ -91,14 +91,14 @@ class MainDrawer extends StatelessWidget {
                             onTap: () =>
                                 _navigateTo(context, const BranchesScreen()),
                           ),
-                          DrawerMenuItem(
-                            icon: Icons.task_alt_rounded,
-                            title: 'employees_requests'.tr(),
-                            onTap: () => _navigateTo(
-                              context,
-                              const EmployeesRequestsScreen(),
-                            ),
-                          ),
+                          // DrawerMenuItem(
+                          //   icon: Icons.task_alt_rounded,
+                          //   title: 'employees_requests'.tr(),
+                          //   onTap: () => _navigateTo(
+                          //     context,
+                          //     const EmployeesRequestsScreen(),
+                          //   ),
+                          // ),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
                             title: 'my_missions'.tr(),
@@ -145,12 +145,12 @@ class MainDrawer extends StatelessWidget {
                             onTap: () =>
                                 _navigateTo(context, const ErrandScreen()),
                           ),
-                          DrawerMenuItem(
-                            icon: Icons.lightbulb_outline_rounded,
-                            title: 'ideas'.tr(),
-                            onTap: () =>
-                                _navigateTo(context, const IdeasScreen()),
-                          ),
+                          // DrawerMenuItem(
+                          //   icon: Icons.lightbulb_outline_rounded,
+                          //   title: 'ideas'.tr(),
+                          //   onTap: () =>
+                          //       _navigateTo(context, const IdeasScreen()),
+                          // ),
                         ],
                       ),
 

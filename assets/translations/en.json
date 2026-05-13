@@ -261,4 +261,5 @@
   "no_internet_error": "No internet connection.",
   "delete_success": "Deleted successfully",
   "update_success": "Updated successfully"
+  ,"create_success": "Created successfully"
 }

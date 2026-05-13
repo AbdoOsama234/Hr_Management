@@ -8,17 +8,12 @@ import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../../../ sheard/componnents/date_time_widgets/start_end_date.dart';
-import '../../data/models/permission_request_model.dart';
+import '../../data/models/permission_model.dart';
+import '../../data/models/permission_request.dart';
 
 class PermissionRequestForm extends StatefulWidget {
-  final Function(
-    DateTime startDate,
-    DateTime endDate,
-    double hours,
-    String reason,
-  )
-  onSubmit;
-  final PermissionRequestModel? request;
+  final Function(PermissionRequest model) onSubmit;
+  final PermissionModel? request;
   final String? buttonText;
   const PermissionRequestForm({
     super.key,
@@ -43,12 +38,12 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
   @override
   void initState() {
     if (widget.request != null) {
-      _reasonController.text = widget.request!.reason;
-      _hoursController.text = widget.request!.hours.toString();
-      _startDate = widget.request!.startDate;
-      _endDate = widget.request!.endDate;
-      _startDateController.text = dateFoemated(_startDate.toString());
-      _endDateController.text = dateFoemated(_endDate.toString());
+      _reasonController.text = widget.request!.requestNotes ?? '';
+      _hoursController.text = widget.request!.hours?.toString() ?? '';
+      _startDate = DateTime.tryParse(widget.request!.fromDatetime ?? '');
+      _endDate = DateTime.tryParse(widget.request!.toDatetime ?? '');
+      if (_startDate != null) _startDateController.text = dateFoemated(_startDate.toString());
+      if (_endDate != null) _endDateController.text = dateFoemated(_endDate.toString());
     }
     super.initState();
   }
@@ -122,12 +117,18 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
                 if (_formKey.currentState!.validate() &&
                     _startDate != null &&
                     _endDate != null) {
-                  widget.onSubmit(
-                    _startDate!,
-                    _endDate!,
-                    double.parse(_hoursController.text.trim()),
-                    _reasonController.text.trim(),
+                  final model = PermissionRequest(
+                    fromDatetime: _startDate!.toIso8601String(),
+                    toDatetime: _endDate!.toIso8601String(),
+                    hours: _hoursController.text.trim(),
+                    requestNotes: _reasonController.text.trim(),
+                    type: "permission", // Assuming a default type or handle as needed
+                    status: "new",
+                    branchesId: widget.request?.branchesId ?? 4, // Default or from existing
+                    createdBy: 78, // This should probably come from a user provider/cubit
                   );
+
+                  widget.onSubmit(model);
 
                   Navigator.pop(context);
                 }

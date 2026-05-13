@@ -11,11 +11,11 @@ import '../../../../ sheard/componnents/icon_button.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
 import '../../../../my_app.dart';
 import '../../controller/permission_cubit.dart';
-import '../../data/models/permission_request_model.dart';
+import '../../data/models/permission_model.dart';
 import 'permission_request_form.dart';
 
 class PermissionRequestCard extends StatelessWidget {
-  final PermissionRequestModel request;
+  final PermissionModel request;
 
   const PermissionRequestCard({super.key, required this.request});
 
@@ -51,7 +51,7 @@ class PermissionRequestCard extends StatelessWidget {
                   ),
                   SizedBox(width: 2.w),
                   Text(
-                    '${dateFoemated(request.startDate.toString())} \u2192 ${dateFoemated(request.endDate.toString())}',
+                    '${dateFoemated(request.fromDatetime ?? '')} \u2192 ${dateFoemated(request.toDatetime ?? '')}',
                     style: AppTextStyle.hint.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class PermissionRequestCard extends StatelessWidget {
                   ),
                 ],
               ),
-              _buildStatusChip(request.status),
+              _buildStatusChip(request.status ?? ''),
             ],
           ),
           AppSizedBox.h1,
@@ -86,7 +86,7 @@ class PermissionRequestCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  request.reason,
+                  request.requestNotes ?? '',
                   style: AppTextStyle.title.copyWith(
                     color: AppColors.textMain,
                     fontWeight: FontWeight.w600,
@@ -103,13 +103,10 @@ class PermissionRequestCard extends StatelessWidget {
                     body: PermissionRequestForm(
                       request: request,
                       buttonText: 'Update Request'.tr(),
-                      onSubmit: (startDate, endDate, hours, reason) {
-                        context.read<PermissionCubit>().editRequest(
-                          request.id,
-                          startDate,
-                          endDate,
-                          hours,
-                          reason,
+                      onSubmit: (model) {
+                        context.read<PermissionCubit>().updatePermission(
+                          id: request.id!,
+                          model: model,
                         );
                       },
                     ),
@@ -129,8 +126,8 @@ class PermissionRequestCard extends StatelessWidget {
                       backGroundColor: Colors.transparent,
 
                       onTap: () {
-                        context.read<PermissionCubit>().deleteRequest(
-                          request.id,
+                        context.read<PermissionCubit>().deletePermission(
+                          request.id!,
                         );
                         Navigator.pop(context);
                       },
@@ -153,23 +150,28 @@ class PermissionRequestCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip(PermissionStatus status) {
+  Widget _buildStatusChip(String status) {
     Color color;
     String label;
 
-    switch (status) {
-      case PermissionStatus.pending:
+    switch (status.toLowerCase()) {
+      case 'pending':
+      case '':
         color = AppColors.orange;
         label = 'status_pending'.tr();
         break;
-      case PermissionStatus.approved:
+      case 'approved':
+      case 'accepted':
         color = AppColors.mintGreen;
         label = 'status_approved'.tr();
         break;
-      case PermissionStatus.rejected:
+      case 'rejected':
         color = AppColors.rose;
         label = 'status_rejected'.tr();
         break;
+      default:
+        color = AppColors.orange;
+        label = status;
     }
 
     return Container(

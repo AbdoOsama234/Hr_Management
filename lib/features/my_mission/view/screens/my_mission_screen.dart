@@ -1,43 +1,60 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_manegement/core/app_assets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hr_manegement/core/app_sized_box.dart';
 
-import 'package:hr_manegement/core/app_colors.dart';
+import '../../../../ sheard/componnents/app_shimmers.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
+import '../../../../ sheard/componnents/show_app_toast.dart';
+import '../../../../core/app_colors.dart';
+import '../../../../core/app_sized_box.dart';
+
 import '../../../../ sheard/componnents/custom_app_bar.dart';
-import '../../../../ sheard/componnents/empty_screen.dart';
 import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../ sheard/componnents/search_bar.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
-import '../../data/models/mission_model.dart';
-import '../../controller/mission_cubit.dart';
-import '../../controller/mission_state.dart';
+import '../../../../core/di/di.dart';
+
+import '../../controller/my_mission_cubit.dart';
+import '../../controller/my_mission_state.dart';
 import '../widgets/mission_item_card.dart';
 
-class MyMissionScreen extends StatefulWidget {
+class MyMissionScreen extends StatelessWidget {
   const MyMissionScreen({super.key});
 
   @override
-  State<MyMissionScreen> createState() => _MyMissionScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<MyMissionCubit>()..getAllMissions(),
+      child: const _MyMissionView(),
+    );
+  }
 }
 
-class _MyMissionScreenState extends State<MyMissionScreen> {
+class _MyMissionView extends StatefulWidget {
+  const _MyMissionView();
+
+  @override
+  State<_MyMissionView> createState() => _MyMissionViewState();
+}
+
+class _MyMissionViewState extends State<_MyMissionView> {
   final searchController = TextEditingController();
   Timer? _debounce;
-  MissionStatus? _selectedFilter;
+  int? _selectedStatusFilter;
 
-  String _getStatusLabel(MissionStatus status) {
-    switch (status) {
-      case MissionStatus.newTask:
+  String _getStatusLabel(int statusId) {
+    switch (statusId) {
+      case 1:
         return 'status_newTask'.tr();
-      case MissionStatus.progressing:
+      case 2:
         return 'status_progressing'.tr();
-      case MissionStatus.reviewing:
+      case 3:
         return 'status_reviewing'.tr();
-      case MissionStatus.completed:
+      case 4:
         return 'status_completed'.tr();
+      default:
+        return 'status_newTask'.tr();
     }
   }
 
@@ -50,8 +67,15 @@ class _MyMissionScreenState extends State<MyMissionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MyMissionCubit()..loadMissions(),
+    return BlocListener<MyMissionCubit, MyMissionState>(
+      listenWhen: (prev, current) =>
+          current is UpdateMissionSuccess ||
+          current is UpdateMissionError,
+      listener: (context, state) {
+        if (state is UpdateMissionSuccess) {
+          CustomToast.show(message: "update_success".tr());
+        }
+      },
       child: Scaffold(
         appBar: CustomAppBar(title: 'my_missions'.tr()),
         body: Padding(
@@ -62,27 +86,24 @@ class _MyMissionScreenState extends State<MyMissionScreen> {
                 controller: searchController,
                 onChange: (value) {
                   if (_debounce?.isActive ?? false) _debounce!.cancel();
-                  _debounce = Timer(const Duration(milliseconds: 500), () {
-                    // لاحقًا يمكن ربط البحث بالـ Cubit
-                    print("Search value: $value");
-                  });
+                  _debounce = Timer(const Duration(milliseconds: 500), () {});
                 },
                 onTapIconButton: () {
                   showAppBottomSheet(
                     context: context,
                     title: 'filter_by_status'.tr(),
                     body: Column(
-                      children: MissionStatus.values.map((status) {
-                        final isSelected = _selectedFilter == status;
+                      children: [1, 2, 3, 4].map((statusId) {
+                        final isSelected = _selectedStatusFilter == statusId;
                         return ListTile(
-                          title: Text(_getStatusLabel(status)),
+                          title: Text(_getStatusLabel(statusId)),
                           trailing: isSelected
                               ? const Icon(Icons.check, color: AppColors.primary)
                               : null,
                           onTap: () {
                             setState(() {
-                              _selectedFilter =
-                              isSelected ? null : status;
+                              _selectedStatusFilter =
+                                  isSelected ? null : statusId;
                             });
                             Navigator.pop(context);
                           },
@@ -95,65 +116,53 @@ class _MyMissionScreenState extends State<MyMissionScreen> {
               AppSizedBox.h2,
               Expanded(
                 child: BlocBuilder<MyMissionCubit, MyMissionState>(
+                  buildWhen: (previous, current) =>
+                      current is GetAllMissionsLoading ||
+                      current is GetAllMissionsLoaded ||
+                      current is GetAllMissionsError ||
+                      current is PaginationLoading,
                   builder: (context, state) {
-                    if (state is MyMissionLoading) {
-                      return const Center(child: LoaderWidget());
-                    }
+                    final cubit = MyMissionCubit.get(context);
 
-                    if (state is MyMissionEmpty) {
-                      return EmptyScreen(
-                        title: 'no_missions'.tr(),
-                        description: 'no_missions_subtitle'.tr(),
-                        image: AppAssets.appLogo,
-                      );
-                    }
+                    // Apply filter
+                    final filteredMissions = _selectedStatusFilter == null
+                        ? cubit.missions
+                        : cubit.missions
+                            .where((m) => m.taskStatusId == _selectedStatusFilter)
+                            .toList();
 
-                    if (state is MyMissionLoaded) {
-                      final filteredMissions = _selectedFilter == null
-                          ? state.missions
-                          : state.missions
-                          .where((m) => m.status == _selectedFilter)
-                          .toList();
-
-                      if (filteredMissions.isEmpty) {
-                        return EmptyScreen(
-                          title: 'no_missions'.tr(),
-                          description: 'no_missions_subtitle'.tr(),
-                          image: AppAssets.appLogo,
-                        );
-                      }
-
-                      return RefreshIndicator(
-                        onRefresh: () =>
-                            context.read<MyMissionCubit>().loadMissions(),
-                        child: ListView.builder(
-                          itemCount: filteredMissions.length,
-                          itemBuilder: (context, index) {
-                            return TweenAnimationBuilder<double>(
-                              duration: Duration(
-                                milliseconds: 300 + (index * 100),
+                    return RefreshIndicator(
+                      onRefresh: () => cubit.getAllMissions(),
+                      child: CustomApiBuilderView(
+                        isLoading: state is GetAllMissionsLoading,
+                        isError: state is GetAllMissionsError,
+                        isEmpty: filteredMissions.isEmpty,
+                        contentBuilder: () => Column(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: filteredMissions.length,
+                                itemBuilder: (context, index) {
+                                  return MyMissionItemCard(
+                                    mission: filteredMissions[index],
+                                  );
+                                },
                               ),
-                              tween: Tween(begin: 0.0, end: 1.0),
-                              curve: Curves.easeIn,
-                              builder: (context, value, child) {
-                                return Opacity(
-                                  opacity: value,
-                                  child: Transform.translate(
-                                    offset: Offset(0, 20 * (1 - value)),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: MyMissionItemCard(
-                                mission: filteredMissions[index],
-                              ),
-                            );
-                          },
+                            ),
+                            AppSizedBox.h1,
+                            if (state is PaginationLoading)
+                              const Center(child: LoaderWidget()),
+                          ],
                         ),
-                      );
-                    }
-
-                    return const SizedBox();
+                        loadingWidget: AppShimmer.verticalList(),
+                        onRetry: () => cubit.getAllMissions(),
+                        errorMessage: state is GetAllMissionsError
+                            ? state.error
+                            : null,
+                        emptyTitle: "no_missions".tr(),
+                        emptyDescription: "no_data".tr(),
+                      ),
+                    );
                   },
                 ),
               ),

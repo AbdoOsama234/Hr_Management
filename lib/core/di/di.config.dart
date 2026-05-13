@@ -43,6 +43,17 @@ import '../../features/loan__requests/data/repository/loan_repository.dart'
 import '../../features/main_screen/controller/main_screen_cubit.dart' as _i97;
 import '../../features/main_screen/data/repository/main_screen_repository.dart'
     as _i984;
+import '../../features/my_mission/controller/my_mission_cubit.dart' as _i454;
+import '../../features/my_mission/data/repository/my_mission_repository.dart'
+    as _i1072;
+import '../../features/my_mission/data/service/my_mission_service.dart'
+    as _i447;
+import '../../features/permission_request/controller/permission_cubit.dart'
+    as _i448;
+import '../../features/permission_request/data/repository/permission_repository.dart'
+    as _i806;
+import '../../features/permission_request/data/service/permission_service.dart'
+    as _i654;
 import '../app_cubit/app_cubit.dart' as _i962;
 import '../network/network_info.dart' as _i932;
 import '../network/save_api.dart' as _i871;
@@ -100,6 +111,12 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i902.HolidayServiceClient>(
     () => dIModule.getHolidayService(gh<_i361.Dio>()),
   );
+  gh.factory<_i654.PermissionServiceClient>(
+    () => dIModule.getPermissionService(gh<_i361.Dio>()),
+  );
+  gh.factory<_i447.MyMissionServiceClient>(
+    () => dIModule.getMyMissionService(gh<_i361.Dio>()),
+  );
   gh.factory<_i104.AuthServiceClient>(
     () => dIModule.getAuthService(gh<_i361.Dio>()),
   );
@@ -128,6 +145,12 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i97.MainScreenCubit>(
     () => _i97.MainScreenCubit(gh<_i984.MainScreenRepository>()),
   );
+  gh.factory<_i806.PermissionRepository>(
+    () => _i806.PermissionRepository(
+      gh<_i654.PermissionServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
   gh.factory<_i1005.ErrandRepository>(
     () => _i1005.ErrandRepository(
       gh<_i1005.ErrandServiceClient>(),
@@ -136,6 +159,12 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i222.EmployeeCubit>(
     () => _i222.EmployeeCubit(gh<_i611.EmployeeRepository>()),
+  );
+  gh.factory<_i1072.MyMissionRepository>(
+    () => _i1072.MyMissionRepository(
+      gh<_i447.MyMissionServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
   );
   gh.factory<_i508.BusinessTripRepository>(
     () => _i508.BusinessTripRepository(
@@ -150,8 +179,14 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i487.ErrandCubit>(
     () => _i487.ErrandCubit(gh<_i1005.ErrandRepository>()),
   );
+  gh.factory<_i454.MyMissionCubit>(
+    () => _i454.MyMissionCubit(gh<_i1072.MyMissionRepository>()),
+  );
   gh.factory<_i765.BusinessTripCubit>(
     () => _i765.BusinessTripCubit(gh<_i508.BusinessTripRepository>()),
+  );
+  gh.factory<_i448.PermissionCubit>(
+    () => _i448.PermissionCubit(gh<_i806.PermissionRepository>()),
   );
   gh.factory<_i925.LoginCubit>(
     () => _i925.LoginCubit(gh<_i104.AuthRepository>()),
