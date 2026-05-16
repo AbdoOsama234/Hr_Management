@@ -85,31 +85,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 AppSizedBox.h2,
 
-                Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ForgetPasswordScreen(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Forget Password?'.tr(),
-                      style: AppTextStyle.subTitle.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: AlignmentDirectional.centerEnd,
+                //   child: TextButton(
+                //     style: TextButton.styleFrom(
+                //       padding: EdgeInsets.zero,
+                //       minimumSize: Size.zero,
+                //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                //     ),
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => const ForgetPasswordScreen(),
+                //         ),
+                //       );
+                //     },
+                //     child: Text(
+                //       'Forget Password?'.tr(),
+                //       style: AppTextStyle.subTitle.copyWith(
+                //         color: AppColors.primary,
+                //         fontWeight: FontWeight.w600,
+                //       ),
+                //     ),
+                //   ),
+                // ),
 
                 AppSizedBox.h3,
                 BlocConsumer<LoginCubit, LoginState>(

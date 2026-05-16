@@ -259,7 +259,10 @@
   "default_error": "Oops! Something went wrong.",
   "cache_error": "Couldn’t load saved data.",
   "no_internet_error": "No internet connection.",
-  "delete_success": "Deleted successfully",
-  "update_success": "Updated successfully"
-  ,"create_success": "Created successfully"
+  "Request Holiday": "Request Holiday",
+  "create_success": "Create Success",
+  "delete_success": "Delete Success",
+  "update_success": "Update Success",
+  "Holiday Requests": "Holiday Requests",
+  "add_holiday_request": "Add holiday request"
 }

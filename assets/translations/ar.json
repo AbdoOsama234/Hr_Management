@@ -254,7 +254,10 @@
   "Something went wrong": "حدث خطأ ما",
   "No data available for now": "لا يوجد بيانات متاحة",
   "Something went wrong, please try again": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
+  "Request Holiday": "طلب إجازة",
+  "create_success": "تم الإنشاء بنجاح",
   "delete_success": "تم الحذف بنجاح",
-  "update_success": "تم التعديل بنجاح"
-  ,"create_success": "تم الإرسال بنجاح"
+  "update_success": "تم التحديث بنجاح",
+  "Holiday Requests": "طلبات الإجازات",
+  "add_holiday_request": "إضافة طلب إجازة"
 }
