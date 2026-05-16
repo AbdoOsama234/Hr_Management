@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:hr_manegement/core/extensions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +24,7 @@ class AppPreferences {
   static const String _ownerInfo = 'ownerInfo';
   final String _userInfo = "_userInfo";
   final String _dateMethod = 'dateMethod';
+  final String _userId = "user_id";
 
   final SharedPreferences _sharedPreferences;
 
@@ -120,7 +122,7 @@ class AppPreferences {
     _putData(_isLanguageSelected, true);
   }
 
-  UserModel? get loadEmployeeData {
+  UserModel? get loadUserData {
     var jsonEncode = _getData(_userInfo, null);
     UserModel? userModel;
     if (jsonEncode != null) {
@@ -138,13 +140,21 @@ class AppPreferences {
     await _sharedPreferences.remove(_userInfo);
   }
 
+  String get userId => _getData(_userId, "");
+
+  set userId(String value) {
+    _putData(_userId, value);
+  }
+
   Future<void> login(LoginModel user) async {
     userToken = user.token!;
+    userId = user.user?.id.orZero().toString() ?? "";
     await userData(user.user);
   }
 
   Future<void> logOut() async {
     userToken = "";
+    userId = "";
     await removeUserData();
   }
 }

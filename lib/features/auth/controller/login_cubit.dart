@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/di/di.dart';
+import '../../../core/helpers/background_tracking_services.dart';
 import '../../../data/storage/local/app_prefs.dart';
 import '../data/repository/auth_repository.dart';
 import '../data/model/user_model.dart';
@@ -30,6 +31,8 @@ class LoginCubit extends Cubit<LoginState> {
         (r) async {
           if (r.result != null) {
             await getIt<AppPreferences>().login(r.result!);
+            //start for background tracking
+            BackgroundTrackingManager.start();
             emit(LoginSuccess(data: r.result!));
           } else {
             emit(LoginError(error: r.message ?? "Login failed"));

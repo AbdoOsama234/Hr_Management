@@ -11,6 +11,7 @@ import 'package:hr_manegement/core/constants.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/firebase_options.dart';
 import 'core/bloc_observer.dart';
+import 'core/helpers/background_tracking_services.dart';
 import 'core/helpers/fire_base/firebase_notification.dart';
 import 'data/storage/local/app_prefs.dart';
 import 'my_app.dart';
@@ -39,6 +40,8 @@ void main() async {
   //BlocObserver must be set before any Bloc is created
   //it must be before this: await configureDependencies();
   Bloc.observer = MyBlocObserver();
+  //start for background tracking
+  await BackgroundTrackingManager.init();
   await configureDependencies();
   runApp(
     EasyLocalization(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -27,8 +28,28 @@ class NotificationService {
     await _setupMessageHandlers();
 
     // Get FCM token
-    final token = await _messaging.getToken();
-    print('FCM Token: $token');
+    await getFcmTokenWithRetry();
+  }
+
+  Future<String?> getFcmTokenWithRetry() async {
+    try {
+      final token = await _messaging.getToken();
+      log('FCM Token: $token');
+      return token;
+    } catch (e) {
+      log('FCM token error: $e');
+
+      await Future.delayed(const Duration(seconds: 3));
+
+      try {
+        final retryToken = await _messaging.getToken();
+        log('FCM Token retry: $retryToken');
+        return retryToken;
+      } catch (e) {
+        log('FCM token retry failed: $e');
+        return null;
+      }
+    }
   }
 
   Future<void> _requestPermission() async {

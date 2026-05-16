@@ -120,7 +120,7 @@ class EmployeeHeader extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    getIt<AppPreferences>().loadEmployeeData?.name ?? "",
+                    getIt<AppPreferences>().loadUserData?.name ?? "",
                     style: AppTextStyle.title.copyWith(
                       color: AppColors.textMain,
                       fontWeight: FontWeight.w700,

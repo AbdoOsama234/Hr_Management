@@ -4,9 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/text_style.dart';
-import 'package:hr_manegement/core/extensions.dart';
 import '../../../../ sheard/componnents/custom_app_bar.dart';
-import '../../../../ sheard/componnents/loading_widget.dart';
 import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
 import '../../controller/my_mission_cubit.dart';
@@ -110,8 +108,12 @@ class MissionDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRowInfo(IconData icon, String label, String value,
-      {Color? valueColor}) {
+  Widget _buildRowInfo(
+    IconData icon,
+    String label,
+    String value, {
+    Color? valueColor,
+  }) {
     return Row(
       children: [
         Icon(icon, size: 20, color: AppColors.primary),
@@ -160,7 +162,10 @@ class MissionDetailsScreen extends StatelessWidget {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? _getStatusColor(statusId)

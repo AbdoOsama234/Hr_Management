@@ -12,6 +12,7 @@ import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/features/my_mission/controller/my_mission_cubit.dart';
 import 'package:hr_manegement/features/my_mission/data/models/my_mission_model.dart';
 
+import '../../../../core/helpers/background_tracking_services.dart';
 import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 
@@ -49,9 +50,21 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class _MainScreenBody extends StatelessWidget {
+class _MainScreenBody extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   const _MainScreenBody({required this.scaffoldKey});
+
+  @override
+  State<_MainScreenBody> createState() => _MainScreenBodyState();
+}
+
+class _MainScreenBodyState extends State<_MainScreenBody> {
+  @override
+  void initState() {
+    super.initState();
+    //start for background tracking
+    BackgroundTrackingManager.start();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +88,7 @@ class _MainScreenBody extends StatelessWidget {
                       /// 🔥 الهيدر بقى reactive
                       EmployeeHeader(
                         onMenuTap: () {
-                          scaffoldKey.currentState?.openDrawer();
+                          widget.scaffoldKey.currentState?.openDrawer();
                         },
                         onNotificationTap: () {
                           Navigator.push(

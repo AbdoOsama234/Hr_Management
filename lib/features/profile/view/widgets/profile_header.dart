@@ -139,7 +139,9 @@ class _ProfileHeaderState extends State<ProfileHeader>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.15),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.15,
+                                ),
                                 blurRadius: 20,
                                 spreadRadius: 2,
                               ),
@@ -151,11 +153,12 @@ class _ProfileHeaderState extends State<ProfileHeader>
                             backgroundImage: avatarImage,
                             child: avatarImage == null
                                 ? Icon(
-                              Icons.person_rounded,
-                              size: 14.w,
-                              color:
-                              AppColors.textSub.withValues(alpha: 0.4),
-                            )
+                                    Icons.person_rounded,
+                                    size: 14.w,
+                                    color: AppColors.textSub.withValues(
+                                      alpha: 0.4,
+                                    ),
+                                  )
                                 : null,
                           ),
                         ),
@@ -190,7 +193,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
 
                 /// 🟢 الاسم
                 Text(
-                  getIt<AppPreferences>().loadEmployeeData?.name ?? "",
+                  getIt<AppPreferences>().loadUserData?.name ?? "",
                   style: AppTextStyle.title.copyWith(
                     color: AppColors.textMain,
                     fontWeight: FontWeight.w700,
@@ -201,12 +204,15 @@ class _ProfileHeaderState extends State<ProfileHeader>
 
                 /// 🔥 الوظيفة تحت الاسم مباشرة (تحسين الشكل)
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.4.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 3.w,
+                    vertical: 0.4.h,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child:  Text(
+                  child: Text(
                     widget.jobTitle,
                     style: AppTextStyle.body.copyWith(
                       color: AppColors.primary,
@@ -214,9 +220,9 @@ class _ProfileHeaderState extends State<ProfileHeader>
                       fontSize: 11.sp,
                     ),
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ),
         ],
       ),

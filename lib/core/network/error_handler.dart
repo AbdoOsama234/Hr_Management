@@ -46,6 +46,8 @@ Failure _handleError(DioException error) {
           log((error.response?.statusCode.orZero()).toString());
           //TODO: logOut if user is UNAUTORISED
           //logOut(navigatorKey.currentState!.context);
+          //end for background tracking
+          //await BackgroundTrackingManager.stop();
         }
 
         return Failure(error.response?.statusCode ?? 0, message);

@@ -20,11 +20,10 @@ import 'package:hr_manegement/my_app.dart';
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../core/app_assets.dart';
 import '../../../../core/di/di.dart' show getIt;
+import '../../../../core/helpers/background_tracking_services.dart';
 import '../../../../data/storage/local/app_prefs.dart' show AppPreferences;
 import '../../../employee/view/screens/branches_screen.dart';
-import '../../../ideas/view/screens/ideas_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
-import '../../../employees_requests/view/screens/employees_requests_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
 import 'DrawerSection.dart';
@@ -66,7 +65,7 @@ class MainDrawer extends StatelessWidget {
             children: [
               /// Profile
               DrawerProfileHeader(
-                name: getIt<AppPreferences>().loadEmployeeData?.name ?? "",
+                name: getIt<AppPreferences>().loadUserData?.name ?? "",
                 jobTitle: jobTitle,
                 profileImageProvider: imageProvider,
                 onTap: () {
@@ -198,6 +197,8 @@ class MainDrawer extends StatelessWidget {
                   radius: 12,
                   onTap: () async {
                     await getIt<AppPreferences>().logOut();
+                    //end for background tracking
+                    await BackgroundTrackingManager.stop();
                     await Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),
