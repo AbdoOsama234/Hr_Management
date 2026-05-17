@@ -180,8 +180,8 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
 
                               AppSizedBox.h3,
 
-                              /// Weekly Report
-                              WeeklyReportList(logs: dashboard.weeklyReport),
+                              // /// Weekly Report
+                              // WeeklyReportList(logs: dashboard.weeklyReport),
 
                               AppSizedBox.h3,
                             ],

@@ -1,16 +1,56 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:hr_manegement/core/network/error_handler.dart';
-import 'package:hr_manegement/features/main_screen/data/models/daily_work_log.dart';
-import 'package:hr_manegement/features/main_screen/data/models/employee_dashboard.dart';
-import 'package:hr_manegement/data/storage/remote/dio_helper/dio_helper.dart';
+import 'package:retrofit/http.dart';
 
+import '../../../../core/api_urls.dart';
+import '../../../../core/network/error_handler.dart';
+import '../../../../core/network/save_api.dart';
+import '../../../../data/models/base_response.dart';
+
+import 'package:retrofit/error_logger.dart';
+
+import '../../../../data/storage/remote/dio_helper/dio_helper.dart';
+import '../models/attendance_model.dart';
+import '../models/daily_work_log.dart';
+import '../models/employee_dashboard.dart';
+
+part 'main_screen_repository.g.dart';
+
+
+@RestApi(baseUrl: ApiUrls.baseApiUrl)
+abstract class MainScreenServiceClient {
+  factory MainScreenServiceClient(Dio dio, {String baseUrl}) =
+  _MainScreenServiceClient;
+
+
+  @GET(ApiUrls.employeeAttendance)
+  Future<BaseResponse<AttendanceModel>> getAttendance(@Path("id") int id,);
+
+}
+
+/// =========================
+/// 🔹 REPOSITORY
+/// =========================
 @injectable
 class MainScreenRepository {
+  final MainScreenServiceClient _service;
+  final SafeApi _safeApi;
   final DioHelper dioRequest;
 
-  MainScreenRepository({required this.dioRequest});
 
+  MainScreenRepository(this._service, this._safeApi,this.dioRequest);
+
+  /// 📥 Get all
+  Future<Either<Failure, BaseResponse<AttendanceModel>>> getAttendance(
+      int id,
+      ) async {
+    return await _safeApi.call(apiCall: _service.getAttendance(id));
+  }
+
+
+
+  ///FackData
   Future<Either<FailureException, EmployeeDashboard>> getDashboard() async {
     try {
       // Mock data for now
@@ -75,4 +115,5 @@ class MainScreenRepository {
       return Left(ServerFailure("Failed to load dashboard data"));
     }
   }
+
 }

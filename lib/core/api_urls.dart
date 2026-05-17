@@ -18,6 +18,12 @@ class ApiUrls {
   static const String permissionRequest = '${baseApiUrl}permissions-request';
   static const String tasks = '${baseApiUrl}tasks';
 
+  ///dashboard
+  static const String employeeAttendance = '${baseApiUrl}employee-attendance';
+
+
+
+
   //AUTH APIS
   static const String login = 'login';
 }

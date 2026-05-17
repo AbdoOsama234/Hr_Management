@@ -22,3 +22,14 @@
     double get lateHoursProgress =>
         dashboard.lateHoursUsed / dashboard.lateHoursAllowed;
   }
+
+  final class AttendanceLoading extends MainScreenState{}
+  final class AttendanceLoaded extends MainScreenState{}
+  final class AttendanceError extends MainScreenState {
+
+    final String? error;
+
+    AttendanceError({this.error});
+  }
+
+

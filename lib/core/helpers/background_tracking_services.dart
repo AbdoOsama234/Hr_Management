@@ -98,13 +98,13 @@ class BackgroundTrackingManager {
       // Android continuous loop
       while (await service.isForegroundService()) {
         await _updateLocation();
-        await Future.delayed(const Duration(seconds: 20));
+        await Future.delayed(const Duration(seconds: 5));
       }
     } else {
       // iOS foreground only — one-time update
       while (true) {
         await _updateLocation();
-        await Future.delayed(const Duration(seconds: 20));
+        await Future.delayed(const Duration(seconds: 5));
       }
     }
 

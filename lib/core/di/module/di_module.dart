@@ -10,6 +10,7 @@ import '../../../features/business_trip_requests/data/repository/business_trip_r
 import '../../../features/employee/data/repository/employee_repository.dart';
 import '../../../features/errand_requests/data/repository/errand_repository.dart';
 import '../../../features/loan__requests/data/repository/loan_repository.dart';
+import '../../../features/main_screen/data/repository/main_screen_repository.dart';
 import '../../../features/permission_request/data/service/permission_service.dart';
 import '../../../features/my_mission/data/service/my_mission_service.dart';
 
@@ -47,6 +48,13 @@ abstract class DIModule {
   /// ✅ My Mission (Tasks)
   MyMissionServiceClient getMyMissionService(Dio client) =>
       MyMissionServiceClient(client);
+
+
+  /// ✅ My attendance
+  MainScreenServiceClient getAttendancService(Dio client) =>
+      MainScreenServiceClient(client);
+
+
 
   ///Auth
   AuthServiceClient getAuthService(Dio client) => AuthServiceClient(client);

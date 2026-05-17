@@ -89,9 +89,6 @@ Future<_i174.GetIt> $initGetIt(
     () => _i832.DioHelper(gh<_i74.AppPreferences>()),
   );
   gh.factory<_i871.SafeApi>(() => _i871.SafeApi(gh<_i932.NetworkInfo>()));
-  gh.factory<_i984.MainScreenRepository>(
-    () => _i984.MainScreenRepository(dioRequest: gh<_i832.DioHelper>()),
-  );
   await gh.factoryAsync<_i361.Dio>(
     () => dioModule.getDio(gh<_i74.AppPreferences>()),
     preResolve: true,
@@ -117,6 +114,9 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i447.MyMissionServiceClient>(
     () => dIModule.getMyMissionService(gh<_i361.Dio>()),
   );
+  gh.factory<_i984.MainScreenServiceClient>(
+    () => dIModule.getAttendancService(gh<_i361.Dio>()),
+  );
   gh.factory<_i104.AuthServiceClient>(
     () => dIModule.getAuthService(gh<_i361.Dio>()),
   );
@@ -140,6 +140,13 @@ Future<_i174.GetIt> $initGetIt(
     () => _i104.AuthRepository(
       gh<_i104.AuthServiceClient>(),
       gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i984.MainScreenRepository>(
+    () => _i984.MainScreenRepository(
+      gh<_i984.MainScreenServiceClient>(),
+      gh<_i871.SafeApi>(),
+      gh<_i832.DioHelper>(),
     ),
   );
   gh.factory<_i97.MainScreenCubit>(
