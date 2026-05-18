@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _emailController.text = "ahmednaser7897@gmail.com";
+    _emailController.text = "bodyosama390@gmail.com";
     _passwordController.text = "123456";
   }
 
@@ -115,29 +115,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       current is LoginError,
                   builder: (context, state) {
                     var cubit = LoginCubit.get(context);
-                    return CustomApiBuilderView(
+                    return CustomButton(
                       isLoading: state is LoginLoading,
-                      isError: state is LoginError,
-                      showErrorView: false,
-                      showEmptyView: false,
-
-                      contentBuilder: () => CustomButton(
-                        text: 'Login'.tr(),
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            cubit.login(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                          }
-                        },
-                      ),
-
-                      onRetry: () => cubit.login(
-                        _emailController.text,
-                        _passwordController.text,
-                      ),
-                      errorMessage: state is LoginError ? state.error : null,
+                      text: 'Login'.tr(),
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          cubit.login(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                        }
+                      },
                     );
                   },
                   listener: (BuildContext context, LoginState state) {

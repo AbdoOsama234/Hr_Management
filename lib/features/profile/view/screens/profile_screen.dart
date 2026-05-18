@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     /// Feed dashboard data into the shared ProfileCubit (only once)
     final profileCubit = context.read<ProfileCubit>();
     if (profileCubit.state is! ProfileLoaded) {
-      final mainState = context.read<MainScreenCubit>().state;
+      final mainState = context.read<MainCubit>().state;
       if (mainState is MainScreenLoaded) {
         profileCubit.loadProfile(mainState);
       } else {

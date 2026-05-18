@@ -40,7 +40,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<MainScreenCubit>()..loadDashboard(),
+      create: (_) => getIt<MainCubit>()
+        ..loadDashboard()
+        ..getAttendance(),
       child: Scaffold(
         key: _scaffoldKey,
         drawer: const MainDrawer(),
@@ -69,137 +71,121 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<MainScreenCubit, MainScreenState>(
+      body: BlocListener<MainCubit, MainState>(
         listener: (context, state) {
           if (state is MainScreenLoaded) {
             /// 🔥 هنا بنبعت الداتا للـ ProfileCubit
             context.read<ProfileCubit>().loadProfile(state);
           }
         },
-        child: BlocBuilder<MainScreenCubit, MainScreenState>(
+        child: BlocBuilder<MainCubit, MainState>(
           builder: (context, state) {
-            if (state is MainScreenLoaded) {
-              final dashboard = state.dashboard;
+            // final dashboard = state.dashboard;
 
-              return BlocBuilder<AppCubit, AppState>(
-                builder: (context, appState) {
-                  return Column(
-                    children: [
-                      /// 🔥 الهيدر بقى reactive
-                      EmployeeHeader(
-                        onMenuTap: () {
-                          widget.scaffoldKey.currentState?.openDrawer();
-                        },
-                        onNotificationTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NotificationsScreen(),
+            return BlocBuilder<AppCubit, AppState>(
+              builder: (context, appState) {
+                return Column(
+                  children: [
+                    /// 🔥 الهيدر بقى reactive
+                    EmployeeHeader(
+                      onMenuTap: () {
+                        widget.scaffoldKey.currentState?.openDrawer();
+                      },
+                      onNotificationTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.w,
+                          vertical: 2.h,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// Welcome
+                            Text(
+                              "welcome_back".tr(),
+                              style: AppTextStyle.subHeadline.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          );
-                        },
-                      ),
 
-                      Expanded(
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.w,
-                            vertical: 2.h,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /// Welcome
-                              Text(
-                                "welcome_back".tr(),
-                                style: AppTextStyle.subHeadline.copyWith(
-                                  fontWeight: FontWeight.w700,
+                            AppSizedBox.h3,
+
+                            /// Admin Instructions
+                            AdminInstructionsWidget(),
+
+                            AppSizedBox.h3,
+
+                            /// Daily Tasks
+                            BlocProvider(
+                              create: (context) => getIt<MyMissionCubit>(),
+                              child: MyMissionItemCard(
+                                taxt: "daily_task".tr(),
+                                icon: Icon(
+                                  Icons.task_alt,
+                                  size: 4.w,
+                                  color: AppColors.primary.withOpacity(0.6),
+                                ),
+                                mission: MyMissionModel(
+                                  id: 1,
+                                  startDate: DateTime.now().toIso8601String(),
+                                  endDate: DateTime.now().toIso8601String(),
+                                  subject: 'daily_task_desc'.tr(),
+                                  taskStatusId: 1,
+                                  priorityId: 1,
                                 ),
                               ),
+                            ),
+                            SizedBox(height: .5.h),
 
-                              AppSizedBox.h3,
+                            /// Today Status
+                            const TodayStatusCard(),
 
-                              /// Admin Instructions
-                              AdminInstructionsWidget(),
+                            AppSizedBox.h3,
 
-                              AppSizedBox.h3,
+                            Text(
+                              "attendance_glance".tr(),
+                              style: AppTextStyle.body.copyWith(),
+                            ),
 
-                              /// Daily Tasks
-                              BlocProvider(
-                                create: (context) => getIt<MyMissionCubit>(),
-                                child: MyMissionItemCard(
-                                  taxt: "daily_task".tr(),
-                                  icon: Icon(
-                                    Icons.task_alt,
-                                    size: 4.w,
-                                    color: AppColors.primary.withOpacity(0.6),
-                                  ),
-                                  mission: MyMissionModel(
-                                    id: 1,
-                                    startDate: DateTime.now().toIso8601String(),
-                                    endDate: DateTime.now().toIso8601String(),
-                                    subject: 'daily_task_desc'.tr(),
-                                    taskStatusId: 1,
-                                    priorityId: 1,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: .5.h),
+                            AppSizedBox.h2,
 
-                              /// Today Status
-                              const TodayStatusCard(
-                                checkIn: "10:05",
-                                checkOut: "--",
-                                workedHours: "3h",
-                              ),
+                            /// Attendance Summary
+                            // AttendanceSummaryCard(
+                            //   presentDays: dashboard.presentDays,
+                            //   leaveDays: dashboard.leaveDays,
+                            //   allowedLateHours: dashboard.lateHoursAllowed,
+                            // ),
 
-                              AppSizedBox.h3,
+                            // AppSizedBox.h3,
 
-                              Text(
-                                "attendance_glance".tr(),
-                                style: AppTextStyle.body.copyWith(),
-                              ),
+                            // /// Late Hours
+                            // LateHoursCard(
+                            //   lateHoursUsed: dashboard.lateHoursUsed,
+                            //   lateHoursAllowed: dashboard.lateHoursAllowed,
+                            // ),
+                            AppSizedBox.h3,
 
-                              AppSizedBox.h2,
-
-                              /// Attendance Summary
-                              AttendanceSummaryCard(
-                                presentDays: dashboard.presentDays,
-                                leaveDays: dashboard.leaveDays,
-                                allowedLateHours: dashboard.lateHoursAllowed,
-                              ),
-
-                              AppSizedBox.h3,
-
-                              /// Late Hours
-                              LateHoursCard(
-                                lateHoursUsed: dashboard.lateHoursUsed,
-                                lateHoursAllowed: dashboard.lateHoursAllowed,
-                              ),
-
-                              AppSizedBox.h3,
-
-                              // /// Weekly Report
-                              // WeeklyReportList(logs: dashboard.weeklyReport),
-
-                              AppSizedBox.h3,
-                            ],
-                          ),
+                            // /// Weekly Report
+                            // WeeklyReportList(logs: dashboard.weeklyReport),
+                            AppSizedBox.h3,
+                          ],
                         ),
                       ),
-                    ],
-                  );
-                },
-              );
-            }
-
-            if (state is MainScreenError) {
-              return Center(child: Text(state.message));
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),

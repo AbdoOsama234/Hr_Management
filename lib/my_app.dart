@@ -9,7 +9,7 @@ import 'core/app_cubit/app_state.dart';
 import 'core/theme_manager.dart';
 import 'core/di/di.dart';
 import 'features/main_screen/controller/main_screen_cubit.dart'
-    show MainScreenCubit;
+    show MainCubit;
 import 'features/profile/controller/profile_cubit.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AppCubit>()),
-        BlocProvider(create: (context) => getIt<MainScreenCubit>()),
+        BlocProvider(create: (context) => getIt<MainCubit>()),
         BlocProvider(create: (context) => ProfileCubit()),
       ],
       child: BlocBuilder<AppCubit, AppState>(

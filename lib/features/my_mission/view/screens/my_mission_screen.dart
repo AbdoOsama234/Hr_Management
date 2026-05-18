@@ -39,9 +39,25 @@ class _MyMissionView extends StatefulWidget {
 }
 
 class _MyMissionViewState extends State<_MyMissionView> {
+  final scrollController=ScrollController();
   final searchController = TextEditingController();
   Timer? _debounce;
   int? _selectedStatusFilter;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        MyMissionCubit.get(
+          context,
+        ).getAllMissions(loadMore: true);
+      }
+    });
+
+  }
 
   String _getStatusLabel(int statusId) {
     switch (statusId) {
@@ -61,6 +77,7 @@ class _MyMissionViewState extends State<_MyMissionView> {
   @override
   void dispose() {
     searchController.dispose();
+    scrollController.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -141,6 +158,7 @@ class _MyMissionViewState extends State<_MyMissionView> {
                           children: [
                             Expanded(
                               child: ListView.builder(
+                                controller: scrollController,
                                 itemCount: filteredMissions.length,
                                 itemBuilder: (context, index) {
                                   return MyMissionItemCard(

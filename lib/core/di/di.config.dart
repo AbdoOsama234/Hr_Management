@@ -149,8 +149,8 @@ Future<_i174.GetIt> $initGetIt(
       gh<_i832.DioHelper>(),
     ),
   );
-  gh.factory<_i97.MainScreenCubit>(
-    () => _i97.MainScreenCubit(gh<_i984.MainScreenRepository>()),
+  gh.factory<_i97.MainCubit>(
+    () => _i97.MainCubit(gh<_i984.MainScreenRepository>()),
   );
   gh.factory<_i806.PermissionRepository>(
     () => _i806.PermissionRepository(

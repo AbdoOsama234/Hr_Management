@@ -7,114 +7,214 @@ import 'package:hr_manegement/core/app_cubit/app_state.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/my_app.dart';
+import 'package:hr_manegement/features/main_screen/controller/main_screen_cubit.dart';
+import 'package:hr_manegement/features/main_screen/controller/main_screen_state.dart';
+import 'package:hr_manegement/features/main_screen/data/models/attendance_model.dart';
 
 class TodayStatusCard extends StatelessWidget {
-  final String checkIn;
-  final String checkOut;
-  final String workedHours;
+  const TodayStatusCard({super.key});
 
-  const TodayStatusCard({
-    super.key,
-    required this.checkIn,
-    required this.checkOut,
-    required this.workedHours,
-  });
+  String _formatTime(String? dateTimeStr) {
+    if (dateTimeStr == null || dateTimeStr.isEmpty) return "--";
+    try {
+      final parts = dateTimeStr.split(' ');
+      if (parts.length > 1) {
+        final timeParts = parts[1].split(':');
+        if (timeParts.length > 1) {
+          return "${timeParts[0]}:${timeParts[1]}";
+        }
+      }
+      return dateTimeStr;
+    } catch (_) {
+      return "--";
+    }
+  }
+
+  String _formatWorkedHours(int? totalMinutes) {
+    if (totalMinutes == null) return "--";
+    final hours = totalMinutes ~/ 60;
+    final mins = totalMinutes % 60;
+    if (hours == 0 && mins == 0) return "--";
+    return "${hours}h ${mins}m";
+  }
+
+  Widget _buildStatusChip(String status) {
+    Color color;
+    String label;
+
+    switch (status.toLowerCase()) {
+      case "present":
+      case "complete":
+      case "done":
+        color = AppColors.mintGreen;
+        label = status.tr();
+        break;
+      case "incomplete":
+      case "pending":
+        color = AppColors.orange;
+        label = status.tr();
+        break;
+      case "absent":
+      case "rejected":
+        color = AppColors.rose;
+        label = status.tr();
+        break;
+      default:
+        color = AppColors.primary;
+        label = status.tr();
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
+      decoration: BoxDecoration(
+        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        label,
+        style: AppTextStyle.smallBody.copyWith(
+          color: color,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
+    return BlocBuilder<MainCubit, MainState>(
+      buildWhen: (previous, current) =>
+          current is GetAttendanceLoading ||
+          current is GetAttendanceSuccess ||
+          current is GetAttendanceError,
       builder: (context, state) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeInOut,
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
-          decoration: BoxDecoration(
-            color: AppColors.backGround2,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.borderColor),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.shadowColor,
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+        if (state is GetAttendanceLoading) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeInOut,
+            height: 18.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.backGround2,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.borderColor),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.shadowColor,
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: const CircularProgressIndicator(color: AppColors.primary),
+          );
+        }
+
+        final attendance = context.read<MainCubit>().attendance;
+        final checkIn = _formatTime(attendance?.firstIn);
+        final checkOut = _formatTime(attendance?.lastOut);
+        final workedHours = _formatWorkedHours(attendance?.totalWorkMinutes);
+
+        return BlocBuilder<AppCubit, AppState>(
+          builder: (context, appState) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 350),
+              curve: Curves.easeInOut,
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.5.h),
+              decoration: BoxDecoration(
+                color: AppColors.backGround2,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.borderColor),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadowColor,
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// Title
-              Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(2.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(
-                        MyApp.isDark ? .12 : .08,
+                  /// Title & Status Badge
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(2.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(
+                                MyApp.isDark ? .12 : .08,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              Icons.today_rounded,
+                              color: AppColors.primary,
+                              size: 5.w,
+                            ),
+                          ),
+                          SizedBox(width: 2.5.w),
+                          Text(
+                            "today_status".tr(),
+                            style: AppTextStyle.title.copyWith(
+                              color: AppColors.textMain,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      Icons.today_rounded,
-                      color: AppColors.primary,
-                      size: 5.w,
-                    ),
+                      if (attendance?.status != null)
+                        _buildStatusChip(attendance!.status!),
+                    ],
                   ),
 
-                  SizedBox(width: 2.5.w),
+                  SizedBox(height: 2.5.h),
 
-                  Text(
-                    "today_status".tr(),
-                    style: AppTextStyle.title.copyWith(
-                      color: AppColors.textMain,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
+                  /// Status Row
+                  Row(
+                    children: [
+                      _buildItem(
+                        icon: Icons.login_rounded,
+                        label: "check_in".tr(),
+                        value: checkIn,
+                        color: AppColors.primary,
+                        textColor: AppColors.textMain,
+                        subtextColor: AppColors.textSub,
+                        isDark: MyApp.isDark,
+                      ),
 
-              SizedBox(height: 2.5.h),
+                      SizedBox(width: 2.w),
 
-              /// Status Row
-              Row(
-                children: [
-                  _buildItem(
-                    icon: Icons.login_rounded,
-                    label: "check_in".tr(),
-                    value: checkIn,
-                    color: AppColors.primary,
-                    textColor: AppColors.textMain,
-                    subtextColor: AppColors.textSub,
-                    isDark: MyApp.isDark,
-                  ),
+                      _buildItem(
+                        icon: Icons.logout_rounded,
+                        label: "check_out".tr(),
+                        value: checkOut,
+                        color: AppColors.primary,
+                        textColor: AppColors.textMain,
+                        subtextColor: AppColors.textSub,
+                        isDark: MyApp.isDark,
+                      ),
 
-                  SizedBox(width: 2.w),
+                      SizedBox(width: 2.w),
 
-                  _buildItem(
-                    icon: Icons.logout_rounded,
-                    label: "check_out".tr(),
-                    value: checkOut,
-                    color: AppColors.primary,
-                    textColor: AppColors.textMain,
-                    subtextColor: AppColors.textSub,
-                    isDark: MyApp.isDark,
-                  ),
-
-                  SizedBox(width: 2.w),
-
-                  _buildItem(
-                    icon: Icons.access_time_filled,
-                    label: "working_hours".tr(),
-                    value: workedHours,
-                    color: AppColors.primary,
-                    textColor: AppColors.textMain,
-                    subtextColor: AppColors.textSub,
-                    isDark: MyApp.isDark,
+                      _buildItem(
+                        icon: Icons.access_time_filled,
+                        label: "working_hours".tr(),
+                        value: workedHours,
+                        color: AppColors.primary,
+                        textColor: AppColors.textMain,
+                        subtextColor: AppColors.textSub,
+                        isDark: MyApp.isDark,
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );

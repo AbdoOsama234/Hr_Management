@@ -1,35 +1,40 @@
-  part of 'main_screen_cubit.dart';
+import '../data/models/attendance_model.dart';
+import '../data/models/employee_dashboard.dart';
 
-  @immutable
-  sealed class MainScreenState {}
+abstract class MainState {}
 
-  final class MainScreenInitial extends MainScreenState {}
+class MainInitial extends MainState {}
 
-  final class MainScreenLoading extends MainScreenState {}
+/// 📥 GET ATTENDANCE
+class GetAttendanceLoading extends MainState {}
 
-  final class MainScreenError extends MainScreenState {
-    final String message;
-    MainScreenError(this.message);
-  }
+class GetAttendanceSuccess extends MainState {
+  final AttendanceModel? attendance;
 
-  final class MainScreenLoaded extends MainScreenState {
-    final EmployeeDashboard dashboard;
+  GetAttendanceSuccess({this.attendance});
+}
 
-    MainScreenLoaded({required this.dashboard});
+class GetAttendanceError extends MainState {
+  final String? error;
 
-    double get lateHoursRemaining =>
-        dashboard.lateHoursAllowed - dashboard.lateHoursUsed;
-    double get lateHoursProgress =>
-        dashboard.lateHoursUsed / dashboard.lateHoursAllowed;
-  }
+  GetAttendanceError({this.error});
+}
 
-  final class AttendanceLoading extends MainScreenState{}
-  final class AttendanceLoaded extends MainScreenState{}
-  final class AttendanceError extends MainScreenState {
+/// 📥 DASHBOARD (Keep existing)
+class MainScreenLoading extends MainState {}
 
-    final String? error;
+class MainScreenLoaded extends MainState {
+  final EmployeeDashboard dashboard;
 
-    AttendanceError({this.error});
-  }
+  MainScreenLoaded({required this.dashboard});
 
+  double get lateHoursRemaining =>
+      dashboard.lateHoursAllowed - dashboard.lateHoursUsed;
+  double get lateHoursProgress =>
+      dashboard.lateHoursUsed / dashboard.lateHoursAllowed;
+}
 
+class MainScreenError extends MainState {
+  final String message;
+  MainScreenError(this.message);
+}

@@ -6,6 +6,7 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
 import '../../data/storage/local/app_prefs.dart';
+import 'loading_widget.dart';
 
 class CustomButton extends StatelessWidget {
   final double? width;
@@ -19,8 +20,10 @@ class CustomButton extends StatelessWidget {
   final Widget? iconRight;
   final Widget? iconLeft;
   final Color? txtcolor;
+  final bool isLoading;
   const CustomButton({
     required this.text,
+    this.isLoading = false,
     this.height,
     this.width,
     this.butcolor = AppColors.primary,
@@ -28,7 +31,7 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     this.radius = Constants.defaultRadius,
     super.key,
-    this.txtcolor,
+    this.txtcolor ,
     this.fontweight = FontWeight.w600,
     this.iconRight,
     this.iconLeft,
@@ -36,10 +39,14 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLoading
+        ? const LoaderWidget()
+        : Container(
       height: height ?? 6.4.h,
       width: width,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius.sp)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius.sp),
+      ),
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all<Color>(butcolor),
@@ -57,25 +64,31 @@ class CustomButton extends StatelessWidget {
             children: [
               if (iconRight != null) ...[
                 Padding(
-                  padding: EdgeInsetsDirectional.only(start: 2.w, end: 2.w),
+                  padding: EdgeInsetsDirectional.only(
+                    start: 2.w,
+                    end: 2.w,
+                  ),
                   child: iconRight,
                 ),
               ],
               Text(
                 text,
                 style: AppTextStyle.title.copyWith(
-                  color: txtcolor ?? AppColors.white,
+                  color: txtcolor??AppColors.textMain,
                   fontSize: fontsize.sp,
                   fontWeight: fontweight,
                   fontFamily:
-                      getIt<AppPreferences>().lang == Constants.arLanguage
+                  getIt<AppPreferences>().lang == Constants.arLanguage
                       ? Constants.arFont
                       : Constants.enFont,
                 ),
               ),
               if (iconLeft != null) ...[
                 Padding(
-                  padding: EdgeInsetsDirectional.only(start: 2.w, end: 2.w),
+                  padding: EdgeInsetsDirectional.only(
+                    start: 2.w,
+                    end: 2.w,
+                  ),
                   child: iconLeft,
                 ),
               ],

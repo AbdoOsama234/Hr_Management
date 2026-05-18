@@ -21,9 +21,9 @@ class LoanModel {
   String? updatedAt;
   String? deletedAt;
   int? createdBy;
-  String? updatedBy;
-  String? deletedBy;
-  String? merchantId;
+  int? updatedBy;
+  int? deletedBy;
+  int? merchantId;
 
   LoanModel(
       {this.id,

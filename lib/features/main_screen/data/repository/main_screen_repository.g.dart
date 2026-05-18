@@ -31,7 +31,7 @@ class _MainScreenServiceClient implements MainScreenServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/employee-attendance',
+            'https://hala-cars.com/api/employee-attendance/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

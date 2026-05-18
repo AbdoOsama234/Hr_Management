@@ -27,7 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   /// ================= INIT =================
-  Future<void> loadProfile([MainScreenState? mainState]) async {
+  Future<void> loadProfile([MainState? mainState]) async {
     try {
       emit(const ProfileLoading());
 

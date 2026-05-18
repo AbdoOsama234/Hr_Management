@@ -20,7 +20,7 @@ class Constants {
 
   static const String googleMapsKey = 'AIzaSyCy0grHvjq-Fj1ZOXZSs6U124zyzyHX8PA';
   static const passwordLengthGlobal = 8;
-
+  static const List<String> supportedPhoneCodes = ['+966', '+20'];
   static const double defaultRadius = 10.0;
   static const double defaultSmallRadius = 5.0;
   static const double defaultSearshRadius = 20;

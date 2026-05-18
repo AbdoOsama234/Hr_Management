@@ -148,6 +148,8 @@ class AppPreferences {
 
   Future<void> login(LoginModel user) async {
     userToken = user.token!;
+    print("============token ${userToken}");
+    print("============id ${user.user?.id}");
     userId = user.user?.id.orZero().toString() ?? "";
     await userData(user.user);
   }

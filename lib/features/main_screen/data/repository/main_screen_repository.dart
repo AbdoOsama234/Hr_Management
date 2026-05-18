@@ -24,8 +24,8 @@ abstract class MainScreenServiceClient {
   _MainScreenServiceClient;
 
 
-  @GET(ApiUrls.employeeAttendance)
-  Future<BaseResponse<AttendanceModel>> getAttendance(@Path("id") int id,);
+  @GET("${ApiUrls.employeeAttendance}/{employeesId}")
+  Future<BaseResponse<AttendanceModel>> getAttendance(@Path("employeesId") int id,);
 
 }
 

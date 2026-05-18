@@ -46,8 +46,8 @@ class CustomTextField extends StatefulWidget {
     this.max = 1,
     this.min,
     this.onChange,
-    required this.type,
-    required this.validator,
+    this.type,
+    this.validator,
     this.onTapPassword,
     super.key,
     this.prefix,
@@ -123,12 +123,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             textDirection: widget.align ? _textDir.value : TextDirection.rtl,
             onSaved: (widget.onSaved != null)
                 ? (newValue) {
-                    if (newValue!.trim().length < 100) {
-                      final dir = getDirection(newValue);
-                      if (dir != value) _textDir.value = dir;
-                    }
-                    return widget.onSaved!(newValue);
-                  }
+              if (newValue!.trim().length < 100) {
+                final dir = getDirection(newValue);
+                if (dir != value) _textDir.value = dir;
+              }
+              return widget.onSaved!(newValue);
+            }
                 : null,
             onChanged: (input) {
               if (input.trim().length < 100) {
@@ -145,7 +145,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 widget.onChange!(input);
               }
             },
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            //autovalidateMode: AutovalidateMode.onUserInteraction,
             enabled: widget.enable,
             focusNode: widget.focusNode,
             onFieldSubmitted: (value) {
@@ -185,64 +185,64 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               prefixIconConstraints: (!widget.isPhone)
                   ? const BoxConstraints(
-                      minWidth: 25,
-                      minHeight: 25,
-                      maxHeight: 55,
-                      maxWidth: 55,
-                    )
+                // minWidth: 25,
+                // minHeight: 25,
+                maxHeight: 55,
+                maxWidth: 100,
+              )
                   : null,
               suffixIcon: widget.type == TextInputType.visiblePassword
                   ? Material(
-                      color: Colors.transparent,
-                      shape: const CircleBorder(),
-                      clipBehavior: Clip.hardEdge,
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 3.w,
-                            vertical: 2.w,
-                          ),
-                          child: Icon(
-                            showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: AppColors.iconBgColor,
-                          ),
-                        ),
-                      ),
-                    )
+                color: Colors.transparent,
+                shape: const CircleBorder(),
+                clipBehavior: Clip.hardEdge,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3.w,
+                      vertical: 2.w,
+                    ),
+                    child: Icon(
+                      showPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              )
                   : widget.suffixIcon != null
                   ? Padding(
-                      padding: EdgeInsetsDirectional.only(start: 3.w, end: 5.w),
-                      child: widget.suffixIcon,
-                    )
+                padding: EdgeInsetsDirectional.only(start: 3.w, end: 5.w),
+                child: widget.suffixIcon,
+              )
                   : null,
               prefixIcon: widget.prefix != null
                   ? GestureDetector(
-                      onTap: widget.onTapPassword,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                          start: 5.w,
-                          end: 3.w,
-                        ),
-                        child: widget.prefix,
-                      ),
-                    )
+                onTap: widget.onTapPassword,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: 5.w,
+                    end: 3.w,
+                  ),
+                  child: widget.prefix,
+                ),
+              )
                   : null,
               hintText: widget.hint!,
               labelText: widget.hint!,
               labelStyle: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSub.withOpacity(0.5),
+                color: AppColors.textSub.withValues(alpha: 0.5),
               ),
               hintStyle: TextStyle(
                 fontSize: 16,
-                color: AppColors.textSub.withOpacity(0.5),
+                color: AppColors.textSub.withValues(alpha: 0.5),
               ),
               enabledBorder: enabledBorder(radius: widget.radius.sp),
               border: border(radius: widget.radius.sp),
