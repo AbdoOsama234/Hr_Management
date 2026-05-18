@@ -47,7 +47,19 @@ class _HolidayView extends StatefulWidget {
 
 class _HolidayViewState extends State<_HolidayView> {
   final searchController = TextEditingController();
+  final scrollController = ScrollController();
+
   Timer? _debounce;
+
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        context.read<HolidayCubit>().getAllHolidays(loadMore: true);
+      }
+    });
+  }
 
   void _showRequestForm() {
     final cubit = context.read<HolidayCubit>();
@@ -78,6 +90,8 @@ class _HolidayViewState extends State<_HolidayView> {
   @override
   void dispose() {
     searchController.dispose();
+    scrollController.dispose();
+
     _debounce?.cancel();
     super.dispose();
   }
@@ -124,6 +138,9 @@ class _HolidayViewState extends State<_HolidayView> {
                 prefix: const AppAssetImage(
                   uri: AppAssets.search,
                   color: AppColors.primary,
+                  fit: BoxFit.scaleDown,
+                  width: 23,
+                  height: 23,
                 ),
                 onChange: (value) {
                   if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -151,6 +168,7 @@ class _HolidayViewState extends State<_HolidayView> {
                           children: [
                             Expanded(
                               child: ListView.builder(
+                                controller: scrollController,
                                 itemCount: cubit.holidays.length,
                                 itemBuilder: (context, index) {
                                   return HolidayRequestCard(

@@ -48,8 +48,19 @@ class _ErrandView extends StatefulWidget {
 
 class _ErrandViewState extends State<_ErrandView> {
   final searchController = TextEditingController();
+  final scrollController = ScrollController();
 
   Timer? _debounce;
+
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        context.read<ErrandCubit>().getAllErrands(loadMore: true);
+      }
+    });
+  }
 
   void _showRequestForm() {
     final cubit = context.read<ErrandCubit>();
@@ -60,12 +71,7 @@ class _ErrandViewState extends State<_ErrandView> {
       body: BlocProvider.value(
         value: cubit,
         child: ErrandRequestForm(
-          onSubmit: (
-              startDate,
-              endDate,
-              days,
-              reason,
-              ) {
+          onSubmit: (startDate, endDate, days, reason) {
             cubit.createErrands(
               model: ErrandRequest(
                 fromDate: startDate.toString().split(" ").first,
@@ -83,6 +89,8 @@ class _ErrandViewState extends State<_ErrandView> {
   @override
   void dispose() {
     searchController.dispose();
+    scrollController.dispose();
+
     _debounce?.cancel();
     super.dispose();
   }
@@ -91,29 +99,23 @@ class _ErrandViewState extends State<_ErrandView> {
   Widget build(BuildContext context) {
     return BlocListener<ErrandCubit, ErrandState>(
       listenWhen: (prev, current) =>
-      current is DeleteErrandSuccess ||
+          current is DeleteErrandSuccess ||
           current is DeleteErrandError ||
           current is UpdateErrandSuccess ||
           current is UpdateErrandError,
 
       listener: (context, state) {
         if (state is DeleteErrandSuccess) {
-          CustomToast.show(
-            message: "delete_success".tr(),
-          );
+          CustomToast.show(message: "delete_success".tr());
         }
 
         if (state is UpdateErrandSuccess) {
-          CustomToast.show(
-            message: "update_success".tr(),
-          );
+          CustomToast.show(message: "update_success".tr());
         }
       },
 
       child: Scaffold(
-        appBar: CustomAppBar(
-          title: 'Errand Requests'.tr(),
-        ),
+        appBar: CustomAppBar(title: 'Errand Requests'.tr()),
 
         body: Padding(
           padding: const EdgeInsets.all(15),
@@ -128,6 +130,9 @@ class _ErrandViewState extends State<_ErrandView> {
                 prefix: const AppAssetImage(
                   uri: AppAssets.search,
                   color: AppColors.primary,
+                  fit: BoxFit.scaleDown,
+                  width: 23,
+                  height: 23,
                 ),
 
                 onChange: (value) {
@@ -135,10 +140,7 @@ class _ErrandViewState extends State<_ErrandView> {
                     _debounce!.cancel();
                   }
 
-                  _debounce = Timer(
-                    const Duration(milliseconds: 500),
-                        () {},
-                  );
+                  _debounce = Timer(const Duration(milliseconds: 500), () {});
                 },
 
                 validator: Validations.noValidation,
@@ -149,7 +151,7 @@ class _ErrandViewState extends State<_ErrandView> {
               Expanded(
                 child: BlocBuilder<ErrandCubit, ErrandState>(
                   buildWhen: (previous, current) =>
-                  current is GetAllErrandsLoading ||
+                      current is GetAllErrandsLoading ||
                       current is GetAllErrandsLoaded ||
                       current is GetAllErrandsError ||
                       current is PaginationLoading,
@@ -161,11 +163,9 @@ class _ErrandViewState extends State<_ErrandView> {
                       onRefresh: () => cubit.getAllErrands(),
 
                       child: CustomApiBuilderView(
-                        isLoading:
-                        state is GetAllErrandsLoading,
+                        isLoading: state is GetAllErrandsLoading,
 
-                        isError:
-                        state is GetAllErrandsError,
+                        isError: state is GetAllErrandsError,
 
                         isEmpty: cubit.errands.isEmpty,
 
@@ -173,12 +173,12 @@ class _ErrandViewState extends State<_ErrandView> {
                           children: [
                             Expanded(
                               child: ListView.builder(
+                                controller: scrollController,
                                 itemCount: cubit.errands.length,
 
                                 itemBuilder: (context, index) {
                                   return ErrandRequestCard(
-                                    request:
-                                    cubit.errands[index],
+                                    request: cubit.errands[index],
                                   );
                                 },
                               ),
@@ -187,33 +187,25 @@ class _ErrandViewState extends State<_ErrandView> {
                             AppSizedBox.h1,
 
                             if (state is PaginationLoading)
-                              const Center(
-                                child: LoaderWidget(),
-                              ),
+                              const Center(child: LoaderWidget()),
                           ],
                         ),
 
-                        loadingWidget:
-                        AppShimmer.verticalList(),
+                        loadingWidget: AppShimmer.verticalList(),
 
-                        onRetry: () =>
-                            cubit.getAllErrands(),
+                        onRetry: () => cubit.getAllErrands(),
 
-                        errorMessage:
-                        state is GetAllErrandsError
+                        errorMessage: state is GetAllErrandsError
                             ? state.error
                             : null,
 
-                        emptyTitle:
-                        "no_errands".tr(),
+                        emptyTitle: "no_errands".tr(),
 
-                        emptyDescription:
-                        "no_data".tr(),
+                        emptyDescription: "no_data".tr(),
 
                         onEmpty: _showRequestForm,
 
-                        onEmptyButtonText:
-                        "add_errand".tr(),
+                        onEmptyButtonText: "add_errand".tr(),
                       ),
                     );
                   },
@@ -223,11 +215,9 @@ class _ErrandViewState extends State<_ErrandView> {
           ),
         ),
 
-        floatingActionButton:
-        BlocBuilder<ErrandCubit, ErrandState>(
+        floatingActionButton: BlocBuilder<ErrandCubit, ErrandState>(
           builder: (context, state) {
-            final cubit =
-            context.read<ErrandCubit>();
+            final cubit = context.read<ErrandCubit>();
 
             if (cubit.errands.isEmpty) {
               return const SizedBox();

@@ -34,7 +34,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request',
+            'https://hala-cars.com/api/permissions-request/permissions-request',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -55,7 +55,10 @@ class _PermissionServiceClient implements PermissionServiceClient {
   }
 
   @override
-  Future<BaseResponse<AllPermissions>> getAllPermissions(int page) async {
+  Future<BaseResponse<AllPermissions>> getAllPermissions(
+    int id,
+    int page,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
@@ -64,7 +67,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request',
+            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -98,7 +101,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/${id}',
+            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -125,7 +128,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/${id}',
+            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

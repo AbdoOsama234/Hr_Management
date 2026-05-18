@@ -10,7 +10,7 @@ class LoanModel {
   int? companyId;
   String? requestNumber;
   int? branchesId;
-  String? employeesId;
+  int? employeesId;
   String? requestDate;
   String? loanType;
   String? amount;

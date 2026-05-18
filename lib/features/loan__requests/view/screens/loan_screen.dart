@@ -8,12 +8,10 @@ import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/app_validation.dart';
-
 import 'package:hr_manegement/core/di/di.dart';
 
 import 'package:hr_manegement/features/loan__requests/controller/loan_cubit.dart';
 import 'package:hr_manegement/features/loan__requests/controller/loan_state.dart';
-
 import 'package:hr_manegement/features/loan__requests/data/models/loan_request.dart';
 
 import '../../../../ sheard/componnents/app_asset_image.dart';
@@ -33,9 +31,7 @@ class LoanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-      getIt<LoanCubit>()
-        ..getAllLoans(),
+      create: (_) => getIt<LoanCubit>()..getAllLoans(),
       child: const _LoanView(),
     );
   }
@@ -45,57 +41,42 @@ class _LoanView extends StatefulWidget {
   const _LoanView();
 
   @override
-  State<_LoanView> createState() =>
-      _LoanViewState();
+  State<_LoanView> createState() => _LoanViewState();
 }
 
-class _LoanViewState
-    extends State<_LoanView> {
-
-  final searchController =
-  TextEditingController();
+class _LoanViewState extends State<_LoanView> {
+  final searchController = TextEditingController();
+  final scrollController = ScrollController();
 
   Timer? _debounce;
 
-  void _showRequestForm() {
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        context.read<LoanCubit>().getAllLoans(loadMore: true);
+      }
+    });
+  }
 
-    final cubit =
-    context.read<LoanCubit>();
+  void _showRequestForm() {
+    final cubit = context.read<LoanCubit>();
 
     showAppBottomSheet(
       context: context,
-
       title: 'Request Loan'.tr(),
-
       body: BlocProvider.value(
         value: cubit,
-
         child: LoanRequestForm(
-          onSubmit: (
-              date,
-              amount,
-              loanType,
-              installments,
-              notes,
-              ) {
-
+          onSubmit: (date, amount, loanType, installments, notes) {
             cubit.createLoans(
               model: LoanRequest(
-
-                requestDate:
-                date
-                    .toString()
-                    .split(" ")
-                    .first,
-
+                requestDate: date.toString().split(" ").first,
                 amount: amount,
-
                 loanType: loanType,
-
-                installments:int.tryParse(
-                installments,
-                ),
-
+                installments: int.tryParse(installments),
                 notes: notes,
               ),
             );
@@ -107,251 +88,94 @@ class _LoanViewState
 
   @override
   void dispose() {
-
     searchController.dispose();
-
+    scrollController.dispose();
     _debounce?.cancel();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocListener<
-        LoanCubit,
-        LoanState>(
-
-      listenWhen:
-          (prev, current) =>
-
-      current
-      is DeleteLoanSuccess ||
-
-          current
-          is DeleteLoanError ||
-
-          current
-          is UpdateLoanSuccess ||
-
-          current
-          is UpdateLoanError,
-
-      listener: (
-          context,
-          state,
-          ) {
-
-        if (state
-        is DeleteLoanSuccess) {
-
-          CustomToast.show(
-            message:
-            "delete_success"
-                .tr(),
-          );
+    return BlocListener<LoanCubit, LoanState>(
+      listenWhen: (prev, current) =>
+          current is DeleteLoanSuccess ||
+          current is DeleteLoanError ||
+          current is UpdateLoanSuccess ||
+          current is UpdateLoanError,
+      listener: (context, state) {
+        if (state is DeleteLoanSuccess) {
+          CustomToast.show(message: "delete_success".tr());
         }
-
-        if (state
-        is UpdateLoanSuccess) {
-
-          CustomToast.show(
-            message:
-            "update_success"
-                .tr(),
-          );
+        if (state is UpdateLoanSuccess) {
+          CustomToast.show(message: "update_success".tr());
         }
       },
-
       child: Scaffold(
-
-        appBar: CustomAppBar(
-          title:
-          'Loan Requests'
-              .tr(),
-        ),
-
+        appBar: CustomAppBar(title: 'Loan Requests'.tr()),
         body: Padding(
-          padding:
-          const EdgeInsets.all(
-            15,
-          ),
-
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-
-              /// SEARCH
               CustomTextField(
-                hint:
-                'search_by_name'
-                    .tr(),
-
-                type:
-                TextInputType
-                    .text,
-
-                controller:
-                searchController,
-
-                prefix:
-                const AppAssetImage(
-                  uri:
-                  AppAssets.search,
-
-                  color:
-                  AppColors.primary,
+                hint: 'search_by_name'.tr(),
+                type: TextInputType.text,
+                controller: searchController,
+                prefix: const AppAssetImage(
+                  uri: AppAssets.search,
+                  color: AppColors.primary,
+                  fit: BoxFit.scaleDown,
+                  width: 23,
+                  height: 23,
                 ),
-
                 onChange: (value) {
-
-                  if (_debounce
-                      ?.isActive ??
-                      false) {
-
-                    _debounce!
-                        .cancel();
-                  }
-
-                  _debounce = Timer(
-                    const Duration(
-                      milliseconds:
-                      500,
-                    ),
-
-                        () {},
-                  );
+                  if (_debounce?.isActive ?? false) _debounce!.cancel();
+                  _debounce = Timer(const Duration(milliseconds: 500), () {});
                 },
-
-                validator:
-                Validations
-                    .noValidation,
+                validator: Validations.noValidation,
               ),
-
               AppSizedBox.h2,
-
-              /// LIST
               Expanded(
-                child: BlocBuilder<
-                    LoanCubit,
-                    LoanState>(
-
-                  buildWhen: (
-                      previous,
-                      current,
-                      ) =>
-
-                  current
-                  is GetAllLoansLoading ||
-
-                      current
-                      is GetAllLoansLoaded ||
-
-                      current
-                      is GetAllLoansError ||
-
-                      current
-                      is PaginationLoading,
-
-                  builder: (
-                      context,
-                      state,
-                      ) {
-
-                    final cubit =
-                    LoanCubit.get(
-                      context,
-                    );
-
+                child: BlocBuilder<LoanCubit, LoanState>(
+                  buildWhen: (previous, current) =>
+                      current is GetAllLoansLoading ||
+                      current is GetAllLoansLoaded ||
+                      current is GetAllLoansError ||
+                      current is PaginationLoading,
+                  builder: (context, state) {
+                    var cubit = LoanCubit.get(context);
                     return RefreshIndicator(
-
-                      onRefresh:
-                          () => cubit
-                          .getAllLoans(),
-
-                      child:
-                      CustomApiBuilderView(
-
-                        isLoading:
-                        state
-                        is GetAllLoansLoading,
-
-                        isError:
-                        state
-                        is GetAllLoansError,
-
-                        isEmpty:
-                        cubit
-                            .loans
-                            .isEmpty,
-
-                        contentBuilder:
-                            () => Column(
+                      onRefresh: () => cubit.getAllLoans(),
+                      child: CustomApiBuilderView(
+                        isLoading: state is GetAllLoansLoading,
+                        isError: state is GetAllLoansError,
+                        isEmpty: cubit.loans.isEmpty,
+                        contentBuilder: () => Column(
                           children: [
-
                             Expanded(
-                              child:
-                              ListView.builder(
-
-                                itemCount:
-                                cubit
-                                    .loans
-                                    .length,
-
-                                itemBuilder:
-                                    (
-                                    context,
-                                    index,
-                                    ) {
-
+                              child: ListView.builder(
+                                controller: scrollController,
+                                itemCount: cubit.loans.length,
+                                itemBuilder: (context, index) {
                                   return LoanRequestCard(
-                                    request:
-                                    cubit
-                                        .loans[index],
+                                    request: cubit.loans[index],
                                   );
                                 },
                               ),
                             ),
-
                             AppSizedBox.h1,
-
-                            if (state
-                            is PaginationLoading)
-
-                              const Center(
-                                child:
-                                LoaderWidget(),
-                              ),
+                            if (state is PaginationLoading)
+                              const Center(child: LoaderWidget()),
                           ],
                         ),
-
-                        loadingWidget:
-                        AppShimmer
-                            .verticalList(),
-
-                        onRetry:
-                            () => cubit
-                            .getAllLoans(),
-
-                        errorMessage:
-                        state
-                        is GetAllLoansError
+                        loadingWidget: AppShimmer.verticalList(),
+                        onRetry: () => cubit.getAllLoans(),
+                        errorMessage: state is GetAllLoansError
                             ? state.error
                             : null,
-
-                        emptyTitle:
-                        "no_loans"
-                            .tr(),
-
-                        emptyDescription:
-                        "no_data"
-                            .tr(),
-
-                        onEmpty:
-                        _showRequestForm,
-
-                        onEmptyButtonText:
-                        "add_loan"
-                            .tr(),
+                        emptyTitle: "no_loans".tr(),
+                        emptyDescription: "no_data".tr(),
+                        onEmpty: _showRequestForm,
+                        onEmptyButtonText: "add_loan".tr(),
                       ),
                     );
                   },
@@ -360,36 +184,16 @@ class _LoanViewState
             ],
           ),
         ),
-
-        floatingActionButton:
-        BlocBuilder<
-            LoanCubit,
-            LoanState>(
-
-          builder: (
-              context,
-              state,
-              ) {
-
-            final cubit =
-            context.read<
-                LoanCubit>();
-
+        floatingActionButton: BlocBuilder<LoanCubit, LoanState>(
+          builder: (context, state) {
+            final cubit = context.read<LoanCubit>();
             if (cubit.loans.isEmpty) {
               return const SizedBox();
             }
-
             return FloatingActionButton(
-              onPressed:
-              _showRequestForm,
-
-              backgroundColor:
-              AppColors.primary,
-
-              child:
-              const Icon(
-                Icons.add,
-              ),
+              onPressed: _showRequestForm,
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.add),
             );
           },
         ),

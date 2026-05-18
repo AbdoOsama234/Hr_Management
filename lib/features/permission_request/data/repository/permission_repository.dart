@@ -1,4 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:hr_manegement/core/di/di.dart';
+import 'package:hr_manegement/core/extensions.dart';
+import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/network/error_handler.dart';
@@ -19,7 +22,12 @@ class PermissionRepository {
   Future<Either<Failure, BaseResponse<AllPermissions>>> getAllPermissions(
     int page,
   ) async {
-    return await _safeApi.call(apiCall: _service.getAllPermissions(page));
+    return await _safeApi.call(
+      apiCall: _service.getAllPermissions(
+        (getIt<AppPreferences>().loadUserData?.id).orZero(),
+        page,
+      ),
+    );
   }
 
   Future<Either<Failure, BaseResponse<PermissionModel>>> createPermission(
@@ -35,7 +43,9 @@ class PermissionRepository {
     return await _safeApi.call(apiCall: _service.updatePermission(id, body));
   }
 
-  Future<Either<Failure, BaseResponse<dynamic>>> deletePermission(int id) async {
+  Future<Either<Failure, BaseResponse<dynamic>>> deletePermission(
+    int id,
+  ) async {
     return await _safeApi.call(apiCall: _service.deletePermission(id));
   }
 }

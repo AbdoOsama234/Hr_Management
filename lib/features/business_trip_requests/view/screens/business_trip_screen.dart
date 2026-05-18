@@ -46,7 +46,20 @@ class _BusinessTripView extends StatefulWidget {
 
 class _BusinessTripViewState extends State<_BusinessTripView> {
   final searchController = TextEditingController();
+  final scrollController = ScrollController();
+
   Timer? _debounce;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        context.read<BusinessTripCubit>().getAllTrips(loadMore: true);
+      }
+    });
+  }
 
   void _showRequestForm() {
     final cubit = context.read<BusinessTripCubit>();
@@ -77,6 +90,8 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
   @override
   void dispose() {
     searchController.dispose();
+    scrollController.dispose();
+
     _debounce?.cancel();
     super.dispose();
   }
@@ -86,7 +101,7 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
     return BlocListener<BusinessTripCubit, BusinessTripState>(
       listenWhen: (prev, current) =>
           current is DeleteTripSuccess ||
-          current is DeleteTripError||
+          current is DeleteTripError ||
           current is UpdateTripSuccess ||
           current is UpdateTripError,
 
@@ -94,10 +109,9 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
         if (state is DeleteTripSuccess) {
           CustomToast.show(message: state.error ?? "delete_success".tr());
         }
-        if (state is UpdateTripSuccess){
-          CustomToast.show(message: state.error??"update_success".tr());
+        if (state is UpdateTripSuccess) {
+          CustomToast.show(message: state.error ?? "update_success".tr());
         }
-
       },
 
       child: Scaffold(
@@ -113,6 +127,9 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
                 prefix: const AppAssetImage(
                   uri: AppAssets.search,
                   color: AppColors.primary,
+                  fit: BoxFit.scaleDown,
+                  width: 23,
+                  height: 23,
                 ),
                 onChange: (value) {
                   if (_debounce?.isActive ?? false) _debounce!.cancel();
@@ -140,6 +157,7 @@ class _BusinessTripViewState extends State<_BusinessTripView> {
                           children: [
                             Expanded(
                               child: ListView.builder(
+                                controller: scrollController,
                                 itemCount: cubit.trips.length,
                                 itemBuilder: (context, index) {
                                   return BusinessTripRequestCard(

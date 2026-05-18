@@ -21,14 +21,26 @@ import '../../controller/permission_state.dart';
 import '../widgets/permission_request_card.dart';
 import '../widgets/permission_request_form.dart';
 
-class PermissionScreen extends StatefulWidget {
+class PermissionScreen extends StatelessWidget {
   const PermissionScreen({super.key});
 
   @override
-  State<PermissionScreen> createState() => _PermissionScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<PermissionCubit>(),
+      child: const _PermissionView(),
+    );
+  }
 }
 
-class _PermissionScreenState extends State<PermissionScreen> {
+class _PermissionView extends StatefulWidget {
+  const _PermissionView({super.key});
+
+  @override
+  State<_PermissionView> createState() => _PermissionScreenState();
+}
+
+class _PermissionScreenState extends State<_PermissionView> {
   void _showRequestForm(BuildContext context) {
     showAppBottomSheet(
       context: context,
@@ -42,110 +54,130 @@ class _PermissionScreenState extends State<PermissionScreen> {
   }
 
   var searchController = TextEditingController();
+  final scrollController = ScrollController();
+
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        context.read<PermissionCubit>().getAllPermissions(loadMore: true);
+      }
+    });
+    context.read<PermissionCubit>().getAllPermissions();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    scrollController.dispose();
+
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   Timer? _debounce;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<PermissionCubit>()..getAllPermissions(),
-      child: Scaffold(
-        appBar: CustomAppBar(title: 'Permission Requests'.tr()),
-        body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              CustomTextField(
-                hint: 'search_by_name'.tr(),
-                type: TextInputType.text,
-                controller: searchController,
-                prefix: const AppAssetImage(
-                  uri: AppAssets.search,
-                  color: AppColors.primary,
-                  fit: BoxFit.scaleDown,
-                  width: 23,
-                  height: 23,
-                ),
-                onChange: (value) {
-                  if (_debounce?.isActive ?? false) {
-                    _debounce!.cancel();
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Permission Requests'.tr()),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            CustomTextField(
+              hint: 'search_by_name'.tr(),
+              type: TextInputType.text,
+              controller: searchController,
+              prefix: const AppAssetImage(
+                uri: AppAssets.search,
+                color: AppColors.primary,
+                fit: BoxFit.scaleDown,
+                width: 23,
+                height: 23,
+              ),
+              onChange: (value) {
+                if (_debounce?.isActive ?? false) {
+                  _debounce!.cancel();
+                }
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  print("Search value is $value");
+                });
+              },
+              validator: Validations.noValidation,
+            ),
+            AppSizedBox.h2,
+
+            Expanded(
+              child: BlocBuilder<PermissionCubit, PermissionState>(
+                builder: (context, state) {
+                  final cubit = context.read<PermissionCubit>();
+
+                  if (state is GetAllPermissionsLoading) {
+                    return const Center(child: LoaderWidget());
                   }
-                  _debounce = Timer(const Duration(milliseconds: 500), () {
-                    print("Search value is $value");
-                  });
-                },
-                validator: Validations.noValidation,
-              ),
-              AppSizedBox.h2,
 
-              Expanded(
-                child: BlocBuilder<PermissionCubit, PermissionState>(
-                  builder: (context, state) {
-                    final cubit = context.read<PermissionCubit>();
+                  if (cubit.permissions.isEmpty &&
+                      state is GetAllPermissionsLoaded) {
+                    return EmptyScreen(
+                      title: 'No Permission Requests'.tr(),
+                      description:
+                          "You haven't submitted any permission requests yet."
+                              .tr(),
+                      buttonText: 'Request Permission'.tr(),
+                      image: AppAssets.appLogo,
 
-                    if (state is GetAllPermissionsLoading) {
-                      return const Center(child: LoaderWidget());
-                    }
-
-                    if (cubit.permissions.isEmpty &&
-                        state is GetAllPermissionsLoaded) {
-                      return EmptyScreen(
-                        title: 'No Permission Requests'.tr(),
-                        description:
-                            "You haven't submitted any permission requests yet."
-                                .tr(),
-                        buttonText: 'Request Permission'.tr(),
-                        image: AppAssets.appLogo,
-
-                        onTap: () => _showRequestForm(context),
-                      );
-                    }
-
-                    return RefreshIndicator(
-                      onRefresh: () => cubit.getAllPermissions(),
-                      child: ListView.builder(
-                        itemCount:
-                            cubit.permissions.length +
-                            (state is PaginationLoading ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index < cubit.permissions.length) {
-                            final request = cubit.permissions[index];
-                            return TweenAnimationBuilder<double>(
-                              duration: Duration(
-                                milliseconds: 300 + (index * 100),
-                              ),
-                              tween: Tween(begin: 0.0, end: 1.0),
-                              curve: Curves.easeIn,
-                              builder: (context, value, child) {
-                                return Opacity(
-                                  opacity: value,
-                                  child: Transform.translate(
-                                    offset: Offset(0, 20 * (1 - value)),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: PermissionRequestCard(request: request),
-                            );
-                          } else {
-                            return const Center(child: LoaderWidget());
-                          }
-                        },
-                      ),
+                      onTap: () => _showRequestForm(context),
                     );
-                  },
-                ),
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () => cubit.getAllPermissions(),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount:
+                          cubit.permissions.length +
+                          (state is PaginationLoading ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index < cubit.permissions.length) {
+                          final request = cubit.permissions[index];
+                          return TweenAnimationBuilder<double>(
+                            duration: Duration(
+                              milliseconds: 300 + (index * 100),
+                            ),
+                            tween: Tween(begin: 0.0, end: 1.0),
+                            curve: Curves.easeIn,
+                            builder: (context, value, child) {
+                              return Opacity(
+                                opacity: value,
+                                child: Transform.translate(
+                                  offset: Offset(0, 20 * (1 - value)),
+                                  child: child,
+                                ),
+                              );
+                            },
+                            child: PermissionRequestCard(request: request),
+                          );
+                        } else {
+                          return const Center(child: LoaderWidget());
+                        }
+                      },
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        floatingActionButton: BlocBuilder<PermissionCubit, PermissionState>(
-          builder: (context, state) {
-            return FloatingActionButton(
-              onPressed: () => _showRequestForm(context),
-              backgroundColor: AppColors.primary,
-              child: const Icon(Icons.add, color: Colors.white),
-            );
-          },
-        ),
+      ),
+      floatingActionButton: BlocBuilder<PermissionCubit, PermissionState>(
+        builder: (context, state) {
+          return FloatingActionButton(
+            onPressed: () => _showRequestForm(context),
+            backgroundColor: AppColors.primary,
+            child: const Icon(Icons.add, color: Colors.white),
+          );
+        },
       ),
     );
   }

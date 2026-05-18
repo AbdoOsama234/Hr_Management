@@ -11,7 +11,7 @@ LoanModel _$LoanModelFromJson(Map<String, dynamic> json) => LoanModel(
   companyId: (json['company_id'] as num?)?.toInt(),
   requestNumber: json['request_number'] as String?,
   branchesId: (json['branches_id'] as num?)?.toInt(),
-  employeesId: json['employees_id'] as String?,
+  employeesId: (json['employees_id'] as num?)?.toInt(),
   requestDate: json['request_date'] as String?,
   loanType: json['loan_type'] as String?,
   amount: json['amount'] as String?,

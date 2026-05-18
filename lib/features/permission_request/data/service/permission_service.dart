@@ -20,8 +20,9 @@ abstract class PermissionServiceClient {
     @Body() PermissionRequest body,
   );
 
-  @GET(ApiUrls.permissionRequest)
+  @GET("${ApiUrls.permissionRequest}/{id}")
   Future<BaseResponse<AllPermissions>> getAllPermissions(
+    @Path('id') int id,
     @Query('page') int page,
   );
 

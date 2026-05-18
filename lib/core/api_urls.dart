@@ -15,14 +15,12 @@ class ApiUrls {
   static const String errandRequests = '${baseApiUrl}missions-request';
   static const String holidayRequests = '${baseApiUrl}vacation-request';
   static const String loanRequests = '${baseApiUrl}loans-request';
-  static const String permissionRequest = '${baseApiUrl}permissions-request';
+  static const String permissionRequest =
+      '${baseApiUrl}permissions-request/permissions-request';
   static const String tasks = '${baseApiUrl}tasks';
 
   ///dashboard
   static const String employeeAttendance = '${baseApiUrl}employee-attendance';
-
-
-
 
   //AUTH APIS
   static const String login = 'login';
