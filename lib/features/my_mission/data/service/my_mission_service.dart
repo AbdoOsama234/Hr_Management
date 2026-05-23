@@ -25,7 +25,7 @@ abstract class MyMissionServiceClient {
       @Query('page') int page);
 
   /// 📥 Get task details by id
-  @GET("${ApiUrls.tasks}/{id}")
+  @GET("${ApiUrls.tasks}/show/{id}")
   Future<BaseResponse<MyMissionDetailsModel>> getTaskDetails(
     @Path("id") int id,
   );

@@ -61,7 +61,7 @@ class _MyMissionServiceClient implements MyMissionServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/tasks/${id}',
+            'https://hala-cars.com/api/tasks/show/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

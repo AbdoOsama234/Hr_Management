@@ -22,6 +22,7 @@ import '../../../../core/di/di.dart' show getIt;
 import '../../../../core/helpers/background_tracking_services.dart';
 import '../../../../data/storage/local/app_prefs.dart' show AppPreferences;
 import '../../../employee/view/screens/branches_screen.dart';
+import '../../../employees_requests/view/screens/employees_requests_screen.dart';
 import '../../../my_mission/view/screens/my_mission_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
@@ -89,14 +90,14 @@ class MainDrawer extends StatelessWidget {
                             onTap: () =>
                                 _navigateTo(context, const BranchesScreen()),
                           ),
-                          // DrawerMenuItem(
-                          //   icon: Icons.task_alt_rounded,
-                          //   title: 'employees_requests'.tr(),
-                          //   onTap: () => _navigateTo(
-                          //     context,
-                          //     const EmployeesRequestsScreen(),
-                          //   ),
-                          // ),
+                          DrawerMenuItem(
+                            icon: Icons.task_alt_rounded,
+                            title: 'employees_requests'.tr(),
+                            onTap: () => _navigateTo(
+                              context,
+                              const EmployeesRequestsScreen(),
+                            ),
+                          ),
                           DrawerMenuItem(
                             icon: Icons.task_alt_rounded,
                             title: 'my_missions'.tr(),

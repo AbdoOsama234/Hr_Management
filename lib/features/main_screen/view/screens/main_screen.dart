@@ -148,14 +148,6 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                             /// Today Status
                             const TodayStatusCard(),
 
-                            AppSizedBox.h3,
-
-                            Text(
-                              "attendance_glance".tr(),
-                              style: AppTextStyle.body.copyWith(),
-                            ),
-
-                            AppSizedBox.h2,
 
                             /// Attendance Summary
                             // AttendanceSummaryCard(
@@ -171,7 +163,6 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                             //   lateHoursUsed: dashboard.lateHoursUsed,
                             //   lateHoursAllowed: dashboard.lateHoursAllowed,
                             // ),
-                            AppSizedBox.h3,
 
                             // /// Weekly Report
                             // WeeklyReportList(logs: dashboard.weeklyReport),

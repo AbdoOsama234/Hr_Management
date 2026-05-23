@@ -59,23 +59,53 @@ class _TrackingScreenState extends State<TrackingScreen> {
     setState(() {});
   }
 
-  Future<void> _handleLocationPermission() async {
+  Future<bool> _handleLocationPermission() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
     if (!serviceEnabled) {
-      throw Exception('Location services are disabled.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enable location services'),
+        ),
+      );
+      return false;
     }
 
     LocationPermission permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Location permission denied'),
+          ),
+        );
+        return false;
+      }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw Exception('Location permissions are permanently denied.');
-    }
-  }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Location permission permanently denied',
+          ),
+          action: SnackBarAction(
+            label: 'Settings',
+            onPressed: () {
+              Geolocator.openAppSettings();
+            },
+          ),
+        ),
+      );
 
+      return false;
+    }
+
+    return true;
+  }
   Future<void> _goToMyLocation() async {
     final position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
