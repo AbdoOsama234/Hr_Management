@@ -21,9 +21,6 @@ import '../../controller/main_screen_cubit.dart';
 
 import '../widgets/employee_header.dart';
 import '../widgets/today_status_card.dart';
-import '../widgets/attendance_summary_card.dart';
-import '../widgets/late_hours_card.dart';
-import '../widgets/weekly_report_list.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/admin_instructions_widget.dart';
 

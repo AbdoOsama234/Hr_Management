@@ -42,8 +42,12 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
       _hoursController.text = widget.request!.hours?.toString() ?? '';
       _startDate = DateTime.tryParse(widget.request!.fromDatetime ?? '');
       _endDate = DateTime.tryParse(widget.request!.toDatetime ?? '');
-      if (_startDate != null) _startDateController.text = dateFoemated(_startDate.toString());
-      if (_endDate != null) _endDateController.text = dateFoemated(_endDate.toString());
+      if (_startDate != null) {
+        _startDateController.text = dateFoemated(_startDate.toString());
+      }
+      if (_endDate != null) {
+        _endDateController.text = dateFoemated(_endDate.toString());
+      }
     }
     super.initState();
   }
@@ -118,14 +122,11 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
                     _startDate != null &&
                     _endDate != null) {
                   final model = PermissionRequest(
+                    type: "test",
                     fromDatetime: _startDate!.toIso8601String(),
                     toDatetime: _endDate!.toIso8601String(),
                     hours: _hoursController.text.trim(),
                     requestNotes: _reasonController.text.trim(),
-                    type: "permission", // Assuming a default type or handle as needed
-                    status: "new",
-                    branchesId: widget.request?.branchesId ?? 4, // Default or from existing
-                    createdBy: 78, // This should probably come from a user provider/cubit
                   );
 
                   widget.onSubmit(model);

@@ -22,7 +22,7 @@ class _LoanServiceClient implements LoanServiceClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<AllLoans>> getAllLoans(int page) async {
+  Future<BaseResponse<AllLoans>> getAllLoans(int id, int page) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
@@ -31,7 +31,7 @@ class _LoanServiceClient implements LoanServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/loans-request',
+            'https://hala-cars.com/api/loans-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -264,6 +264,7 @@ class LoanRequestCard extends StatelessWidget {
   }
 
   /// UPDATE
+
   Widget updateIcon() {
     return Builder(
       builder: (context) {
@@ -275,25 +276,16 @@ class LoanRequestCard extends StatelessWidget {
               context: context,
 
               title: 'Update Loan Request'.tr(),
-
               body: LoanRequestForm(
                 request: request,
-
                 buttonText: 'Update Request'.tr(),
-
-                onSubmit: (date, amount, loanType, installments, notes) {
+                onSubmit: (date, amount, loanType, notes) {
                   context.read<LoanCubit>().updateLoans(
                     id: request.id!,
-
                     model: LoanRequest(
                       requestDate: formatDateForApi(date),
-
                       amount: amount,
-
                       loanType: loanType,
-
-                      installments: int.tryParse(installments),
-
                       notes: notes,
                     ),
                   );

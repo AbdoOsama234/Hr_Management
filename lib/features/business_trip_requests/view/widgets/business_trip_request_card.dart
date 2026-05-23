@@ -29,6 +29,7 @@ class BusinessTripRequestCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 2.h),
       padding: EdgeInsets.all(4.w),
+
       decoration: BoxDecoration(
         color: AppColors.backGround2,
         borderRadius: BorderRadius.circular(20),

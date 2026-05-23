@@ -19,8 +19,10 @@ abstract class MyMissionServiceClient {
       _MyMissionServiceClient;
 
   /// 📥 Get all tasks (pagination)
-  @GET(ApiUrls.tasks)
-  Future<BaseResponse<AllMyMissions>> getAllTasks(@Query('page') int page);
+  @GET("${ApiUrls.tasks}/{id}")
+  Future<BaseResponse<AllMyMissions>> getAllTasks(
+      @Path('id') int id,
+      @Query('page') int page);
 
   /// 📥 Get task details by id
   @GET("${ApiUrls.tasks}/{id}")

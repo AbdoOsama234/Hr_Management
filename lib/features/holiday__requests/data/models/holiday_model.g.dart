@@ -11,7 +11,7 @@ HolidayModel _$HolidayModelFromJson(Map<String, dynamic> json) => HolidayModel(
   companyId: (json['company_id'] as num?)?.toInt(),
   requestNumber: json['request_number'] as String?,
   branchesId: (json['branches_id'] as num?)?.toInt(),
-  employeesId: json['employees_id'] as String?,
+  employeesId: (json['employees_id'] as num?)?.toInt(),
   managementId: json['management_id'] as String?,
   requestDate: json['request_date'] as String?,
   type: json['type'] as String?,

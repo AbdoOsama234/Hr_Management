@@ -264,5 +264,12 @@
   "delete_success": "Delete Success",
   "update_success": "Update Success",
   "Holiday Requests": "Holiday Requests",
-  "add_holiday_request": "Add holiday request"
+  "add_holiday_request": "Add holiday request",
+  "no_permission_requests": "No permission requests",
+  "request_permission": "Request Permission",
+  "something_went_wrong": "Something went wrong",
+  "Loan Type": "Loan Type",
+  "Notes": "Notes",
+  "mission_details": "Mission details"
+
 }

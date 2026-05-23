@@ -9,7 +9,6 @@ import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/my_app.dart';
 import 'package:hr_manegement/features/main_screen/controller/main_screen_cubit.dart';
 import 'package:hr_manegement/features/main_screen/controller/main_screen_state.dart';
-import 'package:hr_manegement/features/main_screen/data/models/attendance_model.dart';
 
 class TodayStatusCard extends StatelessWidget {
   const TodayStatusCard({super.key});

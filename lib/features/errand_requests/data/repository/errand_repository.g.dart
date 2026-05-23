@@ -22,7 +22,7 @@ class _ErrandServiceClient implements ErrandServiceClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<AllErrand>> getAll(int page) async {
+  Future<BaseResponse<AllErrand>> getAll(int id, int page) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
@@ -31,7 +31,7 @@ class _ErrandServiceClient implements ErrandServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/missions-request',
+            'https://hala-cars.com/api/missions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -5,6 +5,7 @@ import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/app_validation.dart';
+import 'package:hr_manegement/features/loan__requests/data/models/loan_request.dart';
 
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_button.dart';
@@ -15,14 +16,13 @@ import '../../data/models/loan_model.dart';
 
 class LoanRequestForm extends StatefulWidget {
   final Function(
+      // LoanRequest model,
     DateTime date,
     String amount,
     String loanType,
-    String installments,
     String notes,
   )
   onSubmit;
-
   final LoanModel? request;
   final String? buttonText;
 
@@ -39,12 +39,11 @@ class LoanRequestForm extends StatefulWidget {
 
 class _LoanRequestFormState extends State<LoanRequestForm> {
   final _formKey = GlobalKey<FormState>();
-
+  final _dateController = TextEditingController();
   final _amountController = TextEditingController();
   final _loanTypeController = TextEditingController();
-  final _installmentsController = TextEditingController();
   final _notesController = TextEditingController();
-  final _dateController = TextEditingController();
+
 
   DateTime? _selectedDate;
 
@@ -53,10 +52,10 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
     super.initState();
 
     if (widget.request != null) {
+
       _amountController.text = widget.request?.amount ?? '';
       _loanTypeController.text = widget.request?.loanType ?? '';
-      _installmentsController.text =
-          widget.request?.installments?.toString() ?? '';
+      widget.request?.installments?.toString() ?? '';
       _notesController.text = widget.request?.notes ?? '';
 
       if (widget.request?.requestDate != null) {
@@ -72,7 +71,6 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
   void dispose() {
     _amountController.dispose();
     _loanTypeController.dispose();
-    _installmentsController.dispose();
     _notesController.dispose();
     _dateController.dispose();
     super.dispose();
@@ -88,15 +86,15 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
       return;
     }
 
-    widget.onSubmit(
-      _selectedDate!,
-      _amountController.text.trim(),
-      _loanTypeController.text.trim(),
-      _installmentsController.text.trim(),
-      _notesController.text.trim(),
-    );
+    // widget.onSubmit(
+    //   _selectedDate!,
+    //   _amountController.text.trim(),
+    //   _loanTypeController.text.trim(),
+    //   _installmentsController.text.trim(),
+    //   _notesController.text.trim(),
+    // );
 
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   @override
@@ -163,19 +161,6 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
             ),
             AppSizedBox.h2,
 
-            /// INSTALLMENTS
-            Text('Installments'.tr(), style: const TextStyle(fontSize: 16)),
-            AppSizedBox.h1,
-            CustomTextField(
-              controller: _installmentsController,
-              hint: 'Installments'.tr(),
-              type: TextInputType.number,
-              validator: (value) {
-                return Validations.numberValidation(value);
-              },
-            ),
-            AppSizedBox.h2,
-
             /// NOTES
             Text('Notes'.tr(), style: const TextStyle(fontSize: 16)),
             AppSizedBox.h1,
@@ -184,9 +169,6 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
               hint: 'Notes'.tr(),
               type: TextInputType.multiline,
               max: 4,
-              validator: (value) {
-                return Validations.normalValidation(value);
-              },
             ),
             AppSizedBox.h4,
 
@@ -196,9 +178,10 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
               width: double.infinity,
               radius: 12,
               txtcolor: Colors.white,
-              onTap: _submit,
+              onTap:_submit
             ),
             AppSizedBox.h4,
+
           ],
         ),
       ),

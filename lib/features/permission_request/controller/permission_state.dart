@@ -19,7 +19,11 @@ class PaginationLoading extends PermissionState {}
 /// ➕ CREATE
 class CreatePermissionLoading extends PermissionState {}
 
-class CreatePermissionSuccess extends PermissionState {}
+class CreatePermissionSuccess extends PermissionState {
+  final String? message;
+
+  CreatePermissionSuccess({this.message});
+}
 
 class CreatePermissionError extends PermissionState {
   final String? error;
@@ -34,7 +38,11 @@ class DeletePermissionLoading extends PermissionState {
   DeletePermissionLoading({required this.id});
 }
 
-class DeletePermissionSuccess extends PermissionState {}
+class DeletePermissionSuccess extends PermissionState {
+  final String? message;
+
+  DeletePermissionSuccess({this.message});
+}
 
 class DeletePermissionError extends PermissionState {
   final String? error;
@@ -49,7 +57,11 @@ class UpdatePermissionLoading extends PermissionState {
   UpdatePermissionLoading({required this.id});
 }
 
-class UpdatePermissionSuccess extends PermissionState {}
+class UpdatePermissionSuccess extends PermissionState {
+  final String? message;
+
+  UpdatePermissionSuccess({this.message});
+}
 
 class UpdatePermissionError extends PermissionState {
   final String? error;

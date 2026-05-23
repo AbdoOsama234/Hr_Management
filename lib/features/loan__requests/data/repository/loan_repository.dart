@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/features/loan__requests/data/models/loan_model.dart';
 import 'package:hr_manegement/features/loan__requests/data/models/loan_request.dart';
 import 'package:injectable/injectable.dart';
@@ -8,9 +9,11 @@ import 'package:retrofit/http.dart';
 
 import '../../../../core/api_urls.dart';
 
+import '../../../../core/di/di.dart';
 import '../../../../core/network/error_handler.dart';
 import '../../../../core/network/save_api.dart';
 import '../../../../data/models/base_response.dart';
+import '../../../../data/storage/local/app_prefs.dart';
 
 part 'loan_repository.g.dart';
 
@@ -23,8 +26,13 @@ abstract class LoanServiceClient {
 
 
 /// 📥 GET ALL
-@GET(ApiUrls.loanRequests)
-Future<BaseResponse<AllLoans>> getAllLoans(@Query('page') int page,);
+@GET("${ApiUrls.loanRequests}/{id}")
+Future<BaseResponse<AllLoans>> getAllLoans(
+    @Path('id') int id,
+    @Query('page') int page,);
+
+
+
 
 
 /// ➕ CREATE
@@ -59,7 +67,11 @@ this._safeApi,
 /// 📥 GET ALL
 /// =========================
 Future<Either<Failure,BaseResponse<AllLoans>>>getAllLoans(int page,) async {
-return await _safeApi.call(apiCall: _service.getAllLoans(page),);
+return await _safeApi.call(apiCall: _service.getAllLoans(
+  (getIt<AppPreferences>().loadUserData?.id).orZero(),
+    page,
+
+),);
 }
 
 /// =========================

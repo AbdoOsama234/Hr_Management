@@ -11,7 +11,7 @@ class HolidayModel {
   int? companyId;
   String? requestNumber;
   int? branchesId;
-  String? employeesId;
+  int? employeesId;
   String? managementId;
   String? requestDate;
   String? type;

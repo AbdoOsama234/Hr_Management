@@ -11,29 +11,57 @@ class MyMissionModel {
   String? subject;
   String? status;
   String? date;
-  @JsonKey(name: 'due_date')
-  String? dueDate;
-  @JsonKey(name: 'start_date')
-  String? startDate;
-  @JsonKey(name: 'end_date')
-  String? endDate;
-  @JsonKey(name: 'priority_id')
+  String? desc;
+  int? customerId;
+  int? contactId;
+  int? assignTo;
+  int? companyId;
+  int? sectionId;
   int? priorityId;
-  @JsonKey(name: 'task_status_id')
+  String? link;
+  String? file;
+  String? dueDate;
+  String? startDate;
+  String? endDate;
+  int? createdBy;
+  int? updatedBy;
+  int? deletedBy;
+  int? deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  int? position;
   int? taskStatusId;
+  int? teamId;
+  int? merchantId;
 
-  MyMissionModel({
-    this.id,
-    this.sr,
-    this.subject,
-    this.status,
-    this.date,
-    this.dueDate,
-    this.startDate,
-    this.endDate,
-    this.priorityId,
-    this.taskStatusId,
-  });
+  MyMissionModel(
+      {this.id,
+        this.sr,
+        this.subject,
+        this.status,
+        this.date,
+        this.desc,
+        this.customerId,
+        this.contactId,
+        this.assignTo,
+        this.companyId,
+        this.sectionId,
+        this.priorityId,
+        this.link,
+        this.file,
+        this.dueDate,
+        this.startDate,
+        this.endDate,
+        this.createdBy,
+        this.updatedBy,
+        this.deletedBy,
+        this.deletedAt,
+        this.createdAt,
+        this.updatedAt,
+        this.position,
+        this.taskStatusId,
+        this.teamId,
+        this.merchantId});
 
   factory MyMissionModel.fromJson(Map<String, dynamic> json) =>
       _$MyMissionModelFromJson(json);

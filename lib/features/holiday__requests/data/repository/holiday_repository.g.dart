@@ -55,7 +55,7 @@ class _HolidayServiceClient implements HolidayServiceClient {
   }
 
   @override
-  Future<BaseResponse<AllHolidays>> getAllRequests(int page) async {
+  Future<BaseResponse<AllHolidays>> getAllRequests(int id, int page) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
@@ -64,7 +64,7 @@ class _HolidayServiceClient implements HolidayServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/vacation-request',
+            'https://hala-cars.com/api/vacation-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 import 'package:hr_manegement/features/main_screen/data/models/attendance_model.dart';
-import 'package:hr_manegement/features/main_screen/data/models/employee_dashboard.dart';
 import 'package:hr_manegement/features/main_screen/data/repository/main_screen_repository.dart';
 import 'main_screen_state.dart';
 
@@ -16,8 +15,7 @@ export 'main_screen_state.dart';
 class MainCubit extends Cubit<MainState> {
   final MainScreenRepository _repository;
 
-  static MainCubit get(BuildContext context) =>
-      context.read<MainCubit>();
+  static MainCubit get(BuildContext context) => context.read<MainCubit>();
 
   MainCubit(this._repository) : super(MainInitial());
 
@@ -30,7 +28,9 @@ class MainCubit extends Cubit<MainState> {
   Future<void> getAttendance() async {
     emit(GetAttendanceLoading());
 
-    final employeeId = getIt<AppPreferences>().loadUserData?.employeesId ?? 0; // fallback to 488 if null
+    final employeeId =
+        getIt<AppPreferences>().loadUserData?.employeesId ??
+        0; // fallback to 488 if null
 
     final result = await _repository.getAttendance(employeeId);
 
@@ -60,11 +60,13 @@ class MainCubit extends Cubit<MainState> {
   void toggleTaskCompletion() {
     final currentState = state;
     if (currentState is MainScreenLoaded) {
-      emit(MainScreenLoaded(
-        dashboard: currentState.dashboard.copyWith(
-          isTaskCompleted: !currentState.dashboard.isTaskCompleted,
+      emit(
+        MainScreenLoaded(
+          dashboard: currentState.dashboard.copyWith(
+            isTaskCompleted: !currentState.dashboard.isTaskCompleted,
+          ),
         ),
-      ));
+      );
     }
   }
 }

@@ -12,7 +12,7 @@ ErrandModel _$ErrandModelFromJson(Map<String, dynamic> json) => ErrandModel(
   requestNumber: json['request_number'] as String?,
   requestDate: json['request_date'] as String?,
   tripType: json['trip_type'] as String?,
-  employeesId: json['employees_id'] as String?,
+  employeesId: (json['employees_id'] as num?)?.toInt(),
   alternateEmployeeId: json['alternate_employee_id'] as String?,
   managementId: json['management_id'] as String?,
   branchesId: (json['branches_id'] as num?)?.toInt(),

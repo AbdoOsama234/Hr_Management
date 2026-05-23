@@ -259,5 +259,12 @@
   "delete_success": "تم الحذف بنجاح",
   "update_success": "تم التحديث بنجاح",
   "Holiday Requests": "طلبات الإجازات",
-  "add_holiday_request": "إضافة طلب إجازة"
+  "add_holiday_request": "إضافة طلب إجازة",
+  "no_permission_requests": "لا توجد طلبات أذونات",
+  "request_permission": "طلب إذن",
+  "something_went_wrong": "حدث خطأ ما",
+  "Loan Type": "نوع السلفه",
+  "Notes": "ملاحظات",
+
+  "mission_details": "تفاصيل المهمه"
 }

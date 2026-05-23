@@ -1,12 +1,14 @@
 // ignore_for_file: unused_field
 
 import 'dart:convert';
-
+import 'package:dio/dio.dart';
+import 'package:hr_manegement/core/di/module/dio_module.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/di/di.dart';
 import '../../../features/auth/data/model/user_model.dart';
 
 @singleton
@@ -150,13 +152,16 @@ class AppPreferences {
     userToken = user.token!;
     print("============token ${userToken}");
     print("============id ${user.user?.id}");
+
     userId = user.user?.id.orZero().toString() ?? "";
+    getIt<Dio>().updateHeader(this);
     await userData(user.user);
   }
 
   Future<void> logOut() async {
     userToken = "";
     userId = "";
+    getIt<Dio>().updateHeader(this);
     await removeUserData();
   }
 }

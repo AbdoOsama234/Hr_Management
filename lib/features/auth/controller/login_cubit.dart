@@ -30,7 +30,9 @@ class LoginCubit extends Cubit<LoginState> {
         },
         (r) async {
           if (r.result != null) {
-            await getIt<AppPreferences>().login(r.result!);
+            var appPreferences = getIt<AppPreferences>();
+            await appPreferences.login(r.result!);
+
             //start for background tracking
             BackgroundTrackingManager.start();
             emit(LoginSuccess(data: r.result!));

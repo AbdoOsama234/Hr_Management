@@ -1,18 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/extensions.dart';
-import 'package:intl_mobile_field/country_picker_dialog.dart';
-import 'package:intl_mobile_field/mobile_number.dart';
-import 'package:intl_mobile_field/intl_mobile_field.dart';
+
 import '../../../../core/app_colors.dart';
 import '../../core/text_style.dart';
-import 'custom_text_field.dart';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 
 import 'package:country_picker/country_picker.dart';
-
 
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -80,11 +73,12 @@ class _CodePickerTextFieldState extends State<CodePickerTextField> {
         .toSet()
         .toList();
 
-    final targetCode = (widget.initCountryCode ?? Constants.supportedPhoneCodes.first)
-        .replaceAll('+', '');
+    final targetCode =
+        (widget.initCountryCode ?? Constants.supportedPhoneCodes.first)
+            .replaceAll('+', '');
 
     selectedCountry = allCountries.firstWhere(
-          (c) => c.phoneCode == targetCode,
+      (c) => c.phoneCode == targetCode,
       orElse: () => myFilteredCountries.isNotEmpty
           ? myFilteredCountries.first
           : allCountries.first,
@@ -92,9 +86,9 @@ class _CodePickerTextFieldState extends State<CodePickerTextField> {
   }
 
   void showCountryPickerBottomSheet(
-      BuildContext context,
-      Function(Country) onCountrySelected,
-      ) {
+    BuildContext context,
+    Function(Country) onCountrySelected,
+  ) {
     TextEditingController searchController = TextEditingController();
     List<Country> currentFilteredCountries = myFilteredCountries;
     Country? tempSelected = selectedCountry;
@@ -167,11 +161,16 @@ class _CodePickerTextFieldState extends State<CodePickerTextField> {
 
                           final lowerQuery = query.toLowerCase();
 
-                          currentFilteredCountries = allCountries.where((country) {
+                          currentFilteredCountries = allCountries.where((
+                            country,
+                          ) {
                             final englishName = country.name.toLowerCase();
-                            final arabicName = CountryLocalizations.of(context)
-                                ?.countryName(countryCode: country.countryCode)
-                                ?.toLowerCase() ??
+                            final arabicName =
+                                CountryLocalizations.of(context)
+                                    ?.countryName(
+                                      countryCode: country.countryCode,
+                                    )
+                                    ?.toLowerCase() ??
                                 englishName;
                             final phoneCode = country.phoneCode;
 
@@ -191,8 +190,10 @@ class _CodePickerTextFieldState extends State<CodePickerTextField> {
                       itemCount: currentFilteredCountries.length,
                       itemBuilder: (context, index) {
                         final country = currentFilteredCountries[index];
-                        final localizedName = CountryLocalizations.of(context)
-                            ?.countryName(countryCode: country.countryCode) ??
+                        final localizedName =
+                            CountryLocalizations.of(
+                              context,
+                            )?.countryName(countryCode: country.countryCode) ??
                             country.name;
                         final isSelected = country == tempSelected;
 
@@ -210,7 +211,10 @@ class _CodePickerTextFieldState extends State<CodePickerTextField> {
                             style: AppTextStyle.hint,
                           ),
                           trailing: isSelected
-                              ? const Icon(Icons.check, color: AppColors.primary)
+                              ? const Icon(
+                                  Icons.check,
+                                  color: AppColors.primary,
+                                )
                               : null,
                           onTap: () {
                             setModalState(() {

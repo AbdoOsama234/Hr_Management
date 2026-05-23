@@ -70,13 +70,12 @@ class _LoanViewState extends State<_LoanView> {
       body: BlocProvider.value(
         value: cubit,
         child: LoanRequestForm(
-          onSubmit: (date, amount, loanType, installments, notes) {
+          onSubmit: (date, amount, loanType, notes) {
             cubit.createLoans(
               model: LoanRequest(
                 requestDate: date.toString().split(" ").first,
                 amount: amount,
                 loanType: loanType,
-                installments: int.tryParse(installments),
                 notes: notes,
               ),
             );

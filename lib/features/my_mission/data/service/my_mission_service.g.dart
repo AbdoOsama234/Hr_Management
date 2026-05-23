@@ -22,7 +22,7 @@ class _MyMissionServiceClient implements MyMissionServiceClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<AllMyMissions>> getAllTasks(int page) async {
+  Future<BaseResponse<AllMyMissions>> getAllTasks(int id, int page) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
@@ -31,7 +31,7 @@ class _MyMissionServiceClient implements MyMissionServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/tasks',
+            'https://hala-cars.com/api/tasks/${id}',
             queryParameters: queryParameters,
             data: _data,
           )

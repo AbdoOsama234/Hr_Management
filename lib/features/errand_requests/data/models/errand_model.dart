@@ -11,7 +11,7 @@ class ErrandModel {
   String? requestNumber;
   String? requestDate;
   String? tripType;
-  String? employeesId;
+  int? employeesId;
   String? alternateEmployeeId;
   String? managementId;
   int? branchesId;

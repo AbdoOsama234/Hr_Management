@@ -3,13 +3,16 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:hr_manegement/core/extensions.dart';
 
 import '../../../../core/api_urls.dart';
+import '../../../../core/di/di.dart';
 import '../../../../core/network/error_handler.dart';
 import '../../../../core/network/save_api.dart';
 
 import '../../../../data/models/base_response.dart';
 
+import '../../../../data/storage/local/app_prefs.dart';
 import '../models/errand_model.dart';
 import '../models/errand_request.dart';
 
@@ -25,8 +28,10 @@ abstract class ErrandServiceClient {
   _ErrandServiceClient;
 
   /// 📥 GET ALL
-  @GET(ApiUrls.errandRequests)
-  Future<BaseResponse<AllErrand>> getAll(@Query('page') int page,);
+  @GET("${ApiUrls.errandRequests}/{id}")
+  Future<BaseResponse<AllErrand>> getAll(
+      @Path('id') int id,
+      @Query('page') int page,);
 
 
   /// ➕ CREATE
@@ -61,7 +66,10 @@ class ErrandRepository {
   /// 📥 GET ALL
   /// =========================
   Future<Either<Failure,BaseResponse<AllErrand>>>getAllErrands(int page,) async {
-    return await _safeApi.call(apiCall: _service.getAll(page),);
+    return await _safeApi.call(apiCall: _service.getAll(
+        (getIt<AppPreferences>().loadUserData?.id).orZero(),
+        page
+    ),);
   }
 
   /// =========================

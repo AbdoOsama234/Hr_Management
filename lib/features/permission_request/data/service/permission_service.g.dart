@@ -34,7 +34,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/permissions-request',
+            'https://hala-cars.com/api/permissions-request',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -67,7 +67,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
+            'https://hala-cars.com/api/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -101,7 +101,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
+            'https://hala-cars.com/api/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -128,7 +128,7 @@ class _PermissionServiceClient implements PermissionServiceClient {
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://hala-cars.com/api/permissions-request/permissions-request/${id}',
+            'https://hala-cars.com/api/permissions-request/${id}',
             queryParameters: queryParameters,
             data: _data,
           )
