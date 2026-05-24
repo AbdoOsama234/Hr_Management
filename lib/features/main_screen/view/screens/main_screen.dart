@@ -13,6 +13,7 @@ import 'package:hr_manegement/features/my_mission/controller/my_mission_cubit.da
 import 'package:hr_manegement/features/my_mission/data/models/my_mission_model.dart';
 
 import '../../../../core/helpers/background_tracking_services.dart';
+import '../../../business_trip_requests/controller/business_trip_cubit.dart';
 import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 
@@ -67,115 +68,127 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<MainCubit, MainState>(
-        listener: (context, state) {
-          if (state is MainScreenLoaded) {
-            /// 🔥 هنا بنبعت الداتا للـ ProfileCubit
-            context.read<ProfileCubit>().loadProfile(state);
-          }
-        },
-        child: BlocBuilder<MainCubit, MainState>(
-          builder: (context, state) {
-            // final dashboard = state.dashboard;
+    var cubit = MainCubit.get(context);
 
-            return BlocBuilder<AppCubit, AppState>(
-              builder: (context, appState) {
-                return Column(
-                  children: [
-                    /// 🔥 الهيدر بقى reactive
-                    EmployeeHeader(
-                      onMenuTap: () {
-                        widget.scaffoldKey.currentState?.openDrawer();
-                      },
-                      onNotificationTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NotificationsScreen(),
+    return RefreshIndicator(
+
+      onRefresh: ()async{
+
+        await cubit.loadDashboard();
+        await cubit.getAttendance();
+
+      },
+
+      child: Scaffold(
+        body: BlocListener<MainCubit, MainState>(
+          listener: (context, state) {
+            if (state is MainScreenLoaded) {
+              /// 🔥 هنا بنبعت الداتا للـ ProfileCubit
+              context.read<ProfileCubit>().loadProfile(state);
+            }
+          },
+          child: BlocBuilder<MainCubit, MainState>(
+            builder: (context, state) {
+              // final dashboard = state.dashboard;
+
+              return BlocBuilder<AppCubit, AppState>(
+                builder: (context, appState) {
+                  return Column(
+                    children: [
+                      /// 🔥 الهيدر بقى reactive
+                      EmployeeHeader(
+                        onMenuTap: () {
+                          widget.scaffoldKey.currentState?.openDrawer();
+                        },
+                        onNotificationTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NotificationsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.w,
+                            vertical: 2.h,
                           ),
-                        );
-                      },
-                    ),
-
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.w,
-                          vertical: 2.h,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            /// Welcome
-                            Text(
-                              "welcome_back".tr(),
-                              style: AppTextStyle.subHeadline.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-
-                            AppSizedBox.h3,
-
-                            /// Admin Instructions
-                            AdminInstructionsWidget(),
-
-                            AppSizedBox.h3,
-
-                            /// Daily Tasks
-                            BlocProvider(
-                              create: (context) => getIt<MyMissionCubit>(),
-                              child: MyMissionItemCard(
-                                taxt: "daily_task".tr(),
-                                icon: Icon(
-                                  Icons.task_alt,
-                                  size: 4.w,
-                                  color: AppColors.primary.withOpacity(0.6),
-                                ),
-                                mission: MyMissionModel(
-                                  id: 1,
-                                  startDate: DateTime.now().toIso8601String(),
-                                  endDate: DateTime.now().toIso8601String(),
-                                  subject: 'daily_task_desc'.tr(),
-                                  taskStatusId: 1,
-                                  priorityId: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// Welcome
+                              Text(
+                                "welcome_back".tr(),
+                                style: AppTextStyle.subHeadline.copyWith(
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ),
-                            SizedBox(height: .5.h),
 
-                            /// Today Status
-                            const TodayStatusCard(),
+                              AppSizedBox.h3,
+
+                              /// Admin Instructions
+                              AdminInstructionsWidget(),
+
+                              AppSizedBox.h3,
+
+                              /// Daily Tasks
+                              BlocProvider(
+                                create: (context) => getIt<MyMissionCubit>(),
+                                child: MyMissionItemCard(
+                                  taxt: "daily_task".tr(),
+                                  icon: Icon(
+                                    Icons.task_alt,
+                                    size: 4.w,
+                                    color: AppColors.primary.withOpacity(0.6),
+                                  ),
+                                  mission: MyMissionModel(
+                                    id: 1,
+                                    startDate: DateTime.now().toIso8601String(),
+                                    endDate: DateTime.now().toIso8601String(),
+                                    subject: 'daily_task_desc'.tr(),
+                                    taskStatusId: 1,
+                                    priorityId: 1,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: .5.h),
+
+                              /// Today Status
+                              const TodayStatusCard(),
 
 
-                            /// Attendance Summary
-                            // AttendanceSummaryCard(
-                            //   presentDays: dashboard.presentDays,
-                            //   leaveDays: dashboard.leaveDays,
-                            //   allowedLateHours: dashboard.lateHoursAllowed,
-                            // ),
+                              /// Attendance Summary
+                              // AttendanceSummaryCard(
+                              //   presentDays: dashboard.presentDays,
+                              //   leaveDays: dashboard.leaveDays,
+                              //   allowedLateHours: dashboard.lateHoursAllowed,
+                              // ),
 
-                            // AppSizedBox.h3,
+                              // AppSizedBox.h3,
 
-                            // /// Late Hours
-                            // LateHoursCard(
-                            //   lateHoursUsed: dashboard.lateHoursUsed,
-                            //   lateHoursAllowed: dashboard.lateHoursAllowed,
-                            // ),
+                              // /// Late Hours
+                              // LateHoursCard(
+                              //   lateHoursUsed: dashboard.lateHoursUsed,
+                              //   lateHoursAllowed: dashboard.lateHoursAllowed,
+                              // ),
 
-                            // /// Weekly Report
-                            // WeeklyReportList(logs: dashboard.weeklyReport),
-                            AppSizedBox.h3,
-                          ],
+                              // /// Weekly Report
+                              // WeeklyReportList(logs: dashboard.weeklyReport),
+                              AppSizedBox.h3,
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

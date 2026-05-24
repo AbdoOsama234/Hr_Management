@@ -8,32 +8,50 @@ class MyMissionDetailsModel {
   int? id;
   String? sr;
   String? subject;
+  String? status;
+  String? date;
   String? desc;
-  @JsonKey(name: 'assign_to')
+  String? customerId;
+  String? contactId;
   int? assignTo;
-  @JsonKey(name: 'priority_id')
+  int? companyId;
+  String? sectionId;
   int? priorityId;
-  @JsonKey(name: 'due_date')
+  String? link;
+  String? file;
   String? dueDate;
-  @JsonKey(name: 'start_date')
   String? startDate;
-  @JsonKey(name: 'end_date')
   String? endDate;
-  @JsonKey(name: 'task_status_id')
+  int? position;
   int? taskStatusId;
+  int? teamId;
+  int? merchantId;
+  String? createdAt;
 
-  MyMissionDetailsModel({
-    this.id,
-    this.sr,
-    this.subject,
-    this.desc,
-    this.assignTo,
-    this.priorityId,
-    this.dueDate,
-    this.startDate,
-    this.endDate,
-    this.taskStatusId,
-  });
+  MyMissionDetailsModel(
+      {this.id,
+        this.sr,
+        this.subject,
+        this.status,
+        this.date,
+        this.desc,
+        this.customerId,
+        this.contactId,
+        this.assignTo,
+        this.companyId,
+        this.sectionId,
+        this.priorityId,
+        this.link,
+        this.file,
+        this.dueDate,
+        this.startDate,
+        this.endDate,
+        this.position,
+        this.taskStatusId,
+        this.teamId,
+        this.merchantId,
+        this.createdAt
+      });
 
   factory MyMissionDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$MyMissionDetailsModelFromJson(json);
