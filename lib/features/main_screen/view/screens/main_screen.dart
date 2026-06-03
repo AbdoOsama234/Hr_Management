@@ -39,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<MainCubit>()
+        ..getInstructions()
         ..loadDashboard()
         ..getAttendance(),
       child: Scaffold(
@@ -71,12 +72,9 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
     var cubit = MainCubit.get(context);
 
     return RefreshIndicator(
-
-      onRefresh: ()async{
-
+      onRefresh: () async {
         await cubit.loadDashboard();
         await cubit.getAttendance();
-
       },
 
       child: Scaffold(
@@ -159,7 +157,6 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
 
                               /// Today Status
                               const TodayStatusCard(),
-
 
                               /// Attendance Summary
                               // AttendanceSummaryCard(

@@ -270,6 +270,10 @@
   "something_went_wrong": "Something went wrong",
   "Loan Type": "Loan Type",
   "Notes": "Notes",
-  "mission_details": "Mission details"
+  "mission_details": "Mission details",
+  "absent": "Absent",
+  "incomplete": "Incomplete",
+  "late": "Late",
+  "leave": "Leave"
 
 }

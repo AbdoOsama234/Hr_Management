@@ -265,6 +265,9 @@
   "something_went_wrong": "حدث خطأ ما",
   "Loan Type": "نوع السلفه",
   "Notes": "ملاحظات",
-
-  "mission_details": "تفاصيل المهمه"
+  "mission_details": "تفاصيل المهمه",
+  "absent": "غائب",
+  "incomplete": "حاضر",
+  "late": "متأخر",
+  "leave": "إجازة"
 }

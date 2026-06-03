@@ -7,6 +7,7 @@ import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/data/storage/local/app_prefs.dart';
 import 'package:hr_manegement/features/main_screen/data/models/attendance_model.dart';
 import 'package:hr_manegement/features/main_screen/data/repository/main_screen_repository.dart';
+import '../data/models/instructions_model.dart';
 import 'main_screen_state.dart';
 
 export 'main_screen_state.dart';
@@ -21,6 +22,7 @@ class MainCubit extends Cubit<MainState> {
 
   /// 📥 DATA
   AttendanceModel? attendance;
+  InstructionsModel? instructions;
 
   /// =========================
   /// 🔹 GET ATTENDANCE (API)
@@ -29,8 +31,7 @@ class MainCubit extends Cubit<MainState> {
     emit(GetAttendanceLoading());
 
     final employeeId =
-        getIt<AppPreferences>().loadUserData?.employeesId ??
-        0; // fallback to 488 if null
+        getIt<AppPreferences>().loadUserData?.employeesId ?? 0; //
 
     final result = await _repository.getAttendance(employeeId);
 
@@ -43,6 +44,20 @@ class MainCubit extends Cubit<MainState> {
         emit(GetAttendanceSuccess(attendance: response.result));
       },
     );
+  }
+
+  ///INSTRUCTIONS
+
+  Future<void> getInstructions() async {
+    instructions = null;
+    emit(GetInstructionsLoading());
+    final result = await _repository.getInstructions();
+    result.fold((failure) => emit(MainScreenError(failure.message)), (
+      response,
+    ) {
+      instructions = response.result;
+      emit(GetInstructionsSuccess());
+    });
   }
 
   /// =========================

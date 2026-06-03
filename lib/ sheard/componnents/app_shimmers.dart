@@ -33,7 +33,14 @@ class AppShimmer {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.shimmerGradientColorStart,
+            AppColors.shimmerGradientColorEnd,
+          ],
+        ),
         borderRadius: BorderRadius.circular(radius),
       ),
     );
@@ -196,63 +203,60 @@ class AppShimmer {
   }
 
   // -------------------- VERTICAL LIST --------------------
-    static Widget verticalList({double? width}) {
-      return wrapper(
-        child: ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 5,
-          separatorBuilder: (_, __) => SizedBox(height: 2.h),
-          itemBuilder: (_, __) => Container(
-            padding: EdgeInsets.all(4.w),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                /// 👤 Row (avatar + text)
-                Row(
-                  children: [
-                    /// avatar circle
-                    box(width: 12.w, height: 12.w, radius: 50),
+  static Widget verticalList({double? width}) {
+    return wrapper(
+      child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 5,
+        separatorBuilder: (_, __) => SizedBox(height: 2.h),
+        itemBuilder: (_, __) => Container(
+          padding: EdgeInsets.all(4.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+              /// 👤 Row (avatar + text)
+              Row(
+                children: [
+                  /// avatar circle
+                  box(width: 12.w, height: 12.w, radius: 50),
 
-                    SizedBox(width: 4.w),
+                  SizedBox(width: 4.w),
 
-                    /// name + subtitle
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          box(height: 2.h, width: 40.w),
-                          SizedBox(height: 1.h),
-                          box(height: 1.5.h, width: 25.w),
-                        ],
-                      ),
+                  /// name + subtitle
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        box(height: 2.h, width: 40.w),
+                        SizedBox(height: 1.h),
+                        box(height: 1.5.h, width: 25.w),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                SizedBox(height: 2.h),
+              SizedBox(height: 2.h),
 
-                /// 🔘 buttons row
-                Row(
-                  children: [
-                    Expanded(
-                      child: box(height: 4.h, radius: 10),
-                    ),
-                    SizedBox(width: 3.w),
-                    Expanded(
-                      child: box(height: 4.h, radius: 10),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              /// 🔘 buttons row
+              Row(
+                children: [
+                  Expanded(child: box(height: 4.h, radius: 10)),
+                  SizedBox(width: 3.w),
+                  Expanded(child: box(height: 4.h, radius: 10)),
+                ],
+              ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
+
   // -------------------- DASHBOARD --------------------
   static Widget dashboard() {
     return SingleChildScrollView(

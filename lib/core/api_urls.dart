@@ -20,6 +20,9 @@ class ApiUrls {
 
   ///dashboard
   static const String employeeAttendance = '${baseApiUrl}employee-attendance';
+  static const String instructions = '${baseApiUrl}instructions/';
+
+
 
   //AUTH APIS
   static const String login = 'login';

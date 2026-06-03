@@ -14,19 +14,25 @@ import '../../../../data/storage/remote/dio_helper/dio_helper.dart';
 import '../models/attendance_model.dart';
 import '../models/daily_work_log.dart';
 import '../models/employee_dashboard.dart';
+import '../models/instructions_model.dart';
 
 part 'main_screen_repository.g.dart';
-
 
 @RestApi(baseUrl: ApiUrls.baseApiUrl)
 abstract class MainScreenServiceClient {
   factory MainScreenServiceClient(Dio dio, {String baseUrl}) =
-  _MainScreenServiceClient;
+      _MainScreenServiceClient;
 
-
+  ///employeeAttendance
   @GET("${ApiUrls.employeeAttendance}/{employeesId}")
-  Future<BaseResponse<AttendanceModel>> getAttendance(@Path("employeesId") int id,);
+  Future<BaseResponse<AttendanceModel>> getAttendance(
+    @Path("employeesId") int id,
+  );
 
+  ///Instructions
+
+  @GET(ApiUrls.instructions)
+  Future<BaseResponse<List<InstructionsModel>>> getInstructions();
 }
 
 /// =========================
@@ -38,17 +44,19 @@ class MainScreenRepository {
   final SafeApi _safeApi;
   final DioHelper dioRequest;
 
+  MainScreenRepository(this._service, this._safeApi, this.dioRequest);
 
-  MainScreenRepository(this._service, this._safeApi,this.dioRequest);
-
-  /// 📥 Get all
+  /// 📥 Get attendance
   Future<Either<Failure, BaseResponse<AttendanceModel>>> getAttendance(
-      int id,
-      ) async {
+    int id,
+  ) async {
     return await _safeApi.call(apiCall: _service.getAttendance(id));
   }
 
-
+  Future<Either<Failure, BaseResponse<InstructionsModel>>>
+  getInstructions() async {
+    return await _safeApi.call(apiCall: _service.getInstructions());
+  }
 
   ///FackData
   Future<Either<FailureException, EmployeeDashboard>> getDashboard() async {
@@ -115,5 +123,4 @@ class MainScreenRepository {
       return Left(ServerFailure("Failed to load dashboard data"));
     }
   }
-
 }
