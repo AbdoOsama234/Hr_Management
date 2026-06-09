@@ -52,12 +52,12 @@ class _MainScreenServiceClient implements MainScreenServiceClient {
   }
 
   @override
-  Future<BaseResponse<List<InstructionsModel>>> getInstructions() async {
+  Future<BaseResponse<InstructionsModel>> getInstructions() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<List<InstructionsModel>>>(
+    final _options = _setStreamType<BaseResponse<InstructionsModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -68,18 +68,11 @@ class _MainScreenServiceClient implements MainScreenServiceClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<List<InstructionsModel>> _value;
+    late BaseResponse<InstructionsModel> _value;
     try {
-      _value = BaseResponse<List<InstructionsModel>>.fromJson(
+      _value = BaseResponse<InstructionsModel>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                  .map<InstructionsModel>(
-                    (i) =>
-                        InstructionsModel.fromJson(i as Map<String, dynamic>),
-                  )
-                  .toList()
-            : List.empty(),
+        (json) => InstructionsModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);

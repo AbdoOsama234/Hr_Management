@@ -32,7 +32,7 @@ abstract class MainScreenServiceClient {
   ///Instructions
 
   @GET(ApiUrls.instructions)
-  Future<BaseResponse<List<InstructionsModel>>> getInstructions();
+  Future<BaseResponse<InstructionsModel>> getInstructions();
 }
 
 /// =========================
