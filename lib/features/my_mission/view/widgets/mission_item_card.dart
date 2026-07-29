@@ -6,7 +6,11 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
+import '../../../../ sheard/componnents/loading_widget.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
+import '../../../../ sheard/componnents/show_app_toast.dart';
 import '../../../../ sheard/componnents/show_bottom_sheet.dart';
+import '../../controller/my_mission_state.dart';
 import '../../data/models/my_mission_model.dart';
 import '../../data/models/my_mission_request.dart';
 import '../../controller/my_mission_cubit.dart';
@@ -66,12 +70,12 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
 
               // Call the API to update
               context.read<MyMissionCubit>().updateMission(
-                    id: widget.mission.id!,
-                    model: MyMissionRequest(
-                      taskStatusId: statusId,
-                      priorityId: widget.mission.priorityId,
-                    ),
-                  );
+                id: widget.mission.id!,
+                model: MyMissionRequest(
+                  taskStatusId: statusId,
+                  priorityId: widget.mission.priorityId,
+                ),
+              );
             },
           );
         }).toList(),
@@ -127,9 +131,9 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
       case 1:
         return Colors.blue;
       case 2:
-        return Colors.orange;
+        return AppColors.orange;
       case 3:
-        return Colors.red;
+        return AppColors.rose;
       default:
         return Colors.blue;
     }
@@ -171,7 +175,10 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
           children: [
             Row(
               children: [
-                if (widget.icon != null) ...[widget.icon!, SizedBox(width: 2.w)],
+                if (widget.icon != null) ...[
+                  widget.icon!,
+                  SizedBox(width: 2.w),
+                ],
                 if (widget.taxt != null && widget.taxt!.isNotEmpty)
                   Text(
                     widget.taxt ?? "",
@@ -197,8 +204,8 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
                       widget.mission.startDate != null
                           ? dateFoemated(widget.mission.startDate!)
                           : (widget.mission.date != null
-                              ? dateFoemated(widget.mission.date!)
-                              : ''),
+                                ? dateFoemated(widget.mission.date!)
+                                : ''),
                       style: AppTextStyle.hint.copyWith(
                         color: AppColors.textMain,
                         fontWeight: FontWeight.bold,
@@ -258,40 +265,86 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
               children: [
                 _buildPriorityChip(widget.mission.priorityId),
                 const Spacer(),
-                InkWell(
-                  onTap: _showChangeStatusBottomSheet,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 2.w,
-                      vertical: 0.8.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.primary.withOpacity(0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.edit, size: 4.w, color: AppColors.primary),
-                        SizedBox(width: 1.w),
-                        Text(
-                          'change_status'.tr(),
-                          style: AppTextStyle.hint.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
+                /// ✏️ Change Status
+                BlocConsumer<MyMissionCubit, MyMissionState>(
+                  buildWhen: (previous, current) =>
+                      current is UpdateMissionLoading ||
+                      current is UpdateMissionSuccess ||
+                      current is UpdateMissionError,
+
+                  listener: (context, state) {
+                    if (state is UpdateMissionError) {
+                      CustomToast.show(
+                        message: state.error.orEmpty(),
+                        type: ToastType.error,
+                      );
+                    }
+                  },
+
+                  builder: (context, state) {
+                    return CustomApiBuilderView(
+                      isLoading:
+                          state is UpdateMissionLoading && state.id == widget.mission.id,
+
+                      isError: state is UpdateMissionError,
+
+                      showErrorView: false,
+                      showEmptyView: false,
+
+                      loadingWidget: LoaderWidget(size: 40),
+
+                      contentBuilder: () => changeStatusButton(),
+
+                      onRetry: () {
+                        changeStatusButton();
+                      },
+
+                      errorMessage: state is UpdateMissionError ? state.error : null,
+                    );
+                  },
                 ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget changeStatusButton() {
+    return Builder(
+      builder: (context) {
+        return InkWell(
+          onTap: _showChangeStatusBottomSheet,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 2.w,
+              vertical: 0.8.h,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.3),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.edit, size: 4.w, color: AppColors.primary),
+                SizedBox(width: 1.w),
+                Text(
+                  'change_status'.tr(),
+                  style: AppTextStyle.hint.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

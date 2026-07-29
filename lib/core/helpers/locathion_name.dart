@@ -16,20 +16,16 @@ class LocationHelper {
   /// ===============================
   static Future<String> getLocationName(LatLng position) async {
     try {
+      log("Lat: ${position.latitude}, Lng: ${position.longitude}");
       final lang = getIt<AppPreferences>().lang;
       log("lang in getLocationName is $lang");
-
       await setLocaleIdentifier(lang);
-
       final placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );
-
       if (placemarks.isEmpty) return "";
-
       final p = placemarks.first;
-
       return [
         p.name,
         p.locality,
@@ -110,9 +106,7 @@ class LocationHelper {
         return null;
       }
 
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      final position = await Geolocator.getCurrentPosition();
 
       return LatLng(position.latitude, position.longitude);
     } catch (e) {

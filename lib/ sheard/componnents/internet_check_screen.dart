@@ -68,7 +68,7 @@ class _InternetCheckWidgetState extends State<InternetCheckWidget> {
               backgroundColor: AppColors.primary,
               icon: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: const Icon(
+                child: const FaIcon(
                   FontAwesomeIcons.wifi,
                   color: Colors.white,
                   size: 30,

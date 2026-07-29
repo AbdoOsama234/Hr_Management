@@ -10,9 +10,13 @@ import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/features/my_mission/controller/my_mission_cubit.dart';
-import 'package:hr_manegement/features/my_mission/data/models/my_mission_model.dart';
+import 'package:hr_manegement/features/my_mission/controller/my_mission_state.dart';
 
 import '../../../../core/helpers/background_tracking_services.dart';
+import '../../../../ sheard/componnents/app_shimmers.dart';
+import '../../../../ sheard/componnents/loading_widget.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
+import '../../../../ sheard/componnents/show_app_toast.dart';
 import '../../../business_trip_requests/controller/business_trip_cubit.dart';
 import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
@@ -32,16 +36,30 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
+class MainScreenn extends StatefulWidget {
+  const MainScreenn({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
 class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<MainCubit>()
-        ..getInstructions()
-        ..loadDashboard()
-        ..getAttendance(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<MainCubit>()
+            ..getInstructions()
+            ..loadDashboard()
+            ..getAttendance(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<MyMissionCubit>()..getAllMissions(),
+        ),
+      ],
       child: Scaffold(
         key: _scaffoldKey,
         drawer: const MainDrawer(),
@@ -71,46 +89,48 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
   Widget build(BuildContext context) {
     var cubit = MainCubit.get(context);
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        await cubit.loadDashboard();
-        await cubit.getAttendance();
-      },
+    return Scaffold(
+      body: BlocListener<MainCubit, MainState>(
+        listener: (context, state) {
+          if (state is MainScreenLoaded) {
+            /// 🔥 هنا بنبعت الداتا للـ ProfileCubit
+            context.read<ProfileCubit>().loadProfile(state);
+          }
+        },
+        child: BlocBuilder<MainCubit, MainState>(
+          builder: (context, state) {
+            // final dashboard = state.dashboard;
 
-      child: Scaffold(
-        body: BlocListener<MainCubit, MainState>(
-          listener: (context, state) {
-            if (state is MainScreenLoaded) {
-              /// 🔥 هنا بنبعت الداتا للـ ProfileCubit
-              context.read<ProfileCubit>().loadProfile(state);
-            }
-          },
-          child: BlocBuilder<MainCubit, MainState>(
-            builder: (context, state) {
-              // final dashboard = state.dashboard;
+            return BlocBuilder<AppCubit, AppState>(
+              builder: (context, appState) {
+                return Column(
+                  children: [
+                    /// 🔥 الهيدر بقى reactive
+                    EmployeeHeader(
+                      onMenuTap: () {
+                        widget.scaffoldKey.currentState?.openDrawer();
+                      },
+                      onNotificationTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
+                          ),
+                        );
+                      },
+                    ),
 
-              return BlocBuilder<AppCubit, AppState>(
-                builder: (context, appState) {
-                  return Column(
-                    children: [
-                      /// 🔥 الهيدر بقى reactive
-                      EmployeeHeader(
-                        onMenuTap: () {
-                          widget.scaffoldKey.currentState?.openDrawer();
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          await cubit.loadDashboard();
+                          await cubit.getAttendance();
                         },
-                        onNotificationTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NotificationsScreen(),
-                            ),
-                          );
-                        },
-                      ),
-
-                      Expanded(
                         child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+
+                          ),
                           padding: EdgeInsets.symmetric(
                             horizontal: 5.w,
                             vertical: 2.h,
@@ -130,30 +150,32 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
 
                               /// Admin Instructions
                               AdminInstructionsWidget(),
-
                               AppSizedBox.h3,
 
-                              /// Daily Tasks
-                              BlocProvider(
-                                create: (context) => getIt<MyMissionCubit>(),
-                                child: MyMissionItemCard(
-                                  taxt: "daily_task".tr(),
-                                  icon: Icon(
-                                    Icons.task_alt,
-                                    size: 4.w,
-                                    color: AppColors.primary.withOpacity(0.6),
-                                  ),
-                                  mission: MyMissionModel(
-                                    id: 1,
-                                    startDate: DateTime.now().toIso8601String(),
-                                    endDate: DateTime.now().toIso8601String(),
-                                    subject: 'daily_task_desc'.tr(),
-                                    taskStatusId: 1,
-                                    priorityId: 1,
-                                  ),
-                                ),
+                              /// Last Mission
+                              BlocBuilder<MyMissionCubit, MyMissionState>(
+                                builder: (context, state) {
+                                  final missionCubit = context.read<MyMissionCubit>();
+
+                                  if (state is GetAllMissionsLoading) {
+                                    return AppShimmer.verticalList();
+                                  }
+
+                                  if (missionCubit.missions.isEmpty) {
+                                    return const SizedBox();
+                                  }
+
+                                  return MyMissionItemCard(
+                                    mission: missionCubit.missions.first,
+                                    taxt: "آخر مهمة".tr(),
+                                    icon: const Icon(
+                                      Icons.task_alt,
+                                      color: AppColors.primary,
+                                    ),
+                                  );
+                                },
                               ),
-                              SizedBox(height: .5.h),
+                              AppSizedBox.h3,
 
                               /// Today Status
                               const TodayStatusCard(),
@@ -180,12 +202,12 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                           ),
                         ),
                       ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         ),
       ),
     );

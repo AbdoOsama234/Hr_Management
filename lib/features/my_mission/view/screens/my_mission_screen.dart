@@ -46,14 +46,11 @@ class _MyMissionViewState extends State<_MyMissionView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
-        MyMissionCubit.get(
-          context,
-        ).getAllMissions(loadMore: true);
+        context.read<MyMissionCubit>().getAllMissions(loadMore: true);
       }
     });
 

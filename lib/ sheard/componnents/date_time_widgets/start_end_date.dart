@@ -86,6 +86,8 @@ class _DatesRowState extends State<DatesRow> {
                   prefix: const AppAssetImage(
                     uri: AppAssets.calendar2,
                     color: AppColors.primary,
+                    width: 30,
+
                   ),
                   validator: (value) {
                     return Validations.normalValidation(value);
@@ -122,6 +124,7 @@ class _DatesRowState extends State<DatesRow> {
                   prefix: const AppAssetImage(
                     uri: AppAssets.calendar2,
                     color: AppColors.primary,
+                    width: 30,
                   ),
 
                   validator: (value) {
