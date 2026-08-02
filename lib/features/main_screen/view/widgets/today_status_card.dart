@@ -10,7 +10,6 @@ import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 import 'package:hr_manegement/my_app.dart';
 import 'package:hr_manegement/features/main_screen/controller/main_screen_cubit.dart';
-import 'package:hr_manegement/features/main_screen/controller/main_screen_state.dart';
 
 class TodayStatusCard extends StatelessWidget {
   const TodayStatusCard({super.key});
@@ -78,7 +77,7 @@ class TodayStatusCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
@@ -158,8 +157,8 @@ class TodayStatusCard extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.all(2.w),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(
-                                    MyApp.isDark ? .12 : .08,
+                                  color: AppColors.primary.withValues(
+                                    alpha: MyApp.isDark ? .12 : .08,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -251,7 +250,7 @@ class TodayStatusCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.w),
         decoration: BoxDecoration(
-          color: color.withOpacity(isDark ? .06 : .04),
+          color: color.withValues(alpha: isDark ? .06 : .04),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

@@ -39,7 +39,7 @@ class _MyMissionView extends StatefulWidget {
 }
 
 class _MyMissionViewState extends State<_MyMissionView> {
-  final scrollController=ScrollController();
+  final scrollController = ScrollController();
   final searchController = TextEditingController();
   Timer? _debounce;
   int? _selectedStatusFilter;
@@ -53,7 +53,6 @@ class _MyMissionViewState extends State<_MyMissionView> {
         context.read<MyMissionCubit>().getAllMissions(loadMore: true);
       }
     });
-
   }
 
   String _getStatusLabel(int statusId) {
@@ -83,8 +82,7 @@ class _MyMissionViewState extends State<_MyMissionView> {
   Widget build(BuildContext context) {
     return BlocListener<MyMissionCubit, MyMissionState>(
       listenWhen: (prev, current) =>
-          current is UpdateMissionSuccess ||
-          current is UpdateMissionError,
+          current is UpdateMissionSuccess || current is UpdateMissionError,
       listener: (context, state) {
         if (state is UpdateMissionSuccess) {
           CustomToast.show(message: "update_success".tr());
@@ -112,12 +110,16 @@ class _MyMissionViewState extends State<_MyMissionView> {
                         return ListTile(
                           title: Text(_getStatusLabel(statusId)),
                           trailing: isSelected
-                              ? const Icon(Icons.check, color: AppColors.primary)
+                              ? const Icon(
+                                  Icons.check,
+                                  color: AppColors.primary,
+                                )
                               : null,
                           onTap: () {
                             setState(() {
-                              _selectedStatusFilter =
-                                  isSelected ? null : statusId;
+                              _selectedStatusFilter = isSelected
+                                  ? null
+                                  : statusId;
                             });
                             Navigator.pop(context);
                           },
@@ -142,11 +144,13 @@ class _MyMissionViewState extends State<_MyMissionView> {
                     final filteredMissions = _selectedStatusFilter == null
                         ? cubit.missions
                         : cubit.missions
-                            .where((m) => m.taskStatusId == _selectedStatusFilter)
-                            .toList();
+                              .where(
+                                (m) => m.taskStatusId == _selectedStatusFilter,
+                              )
+                              .toList();
 
                     return RefreshIndicator(
-                      onRefresh: () => cubit.getAllMissions(),
+                      onRefresh: cubit.getAllMissions,
                       child: CustomApiBuilderView(
                         isLoading: state is GetAllMissionsLoading,
                         isError: state is GetAllMissionsError,
@@ -170,7 +174,7 @@ class _MyMissionViewState extends State<_MyMissionView> {
                           ],
                         ),
                         loadingWidget: AppShimmer.verticalList(),
-                        onRetry: () => cubit.getAllMissions(),
+                        onRetry: cubit.getAllMissions,
                         errorMessage: state is GetAllMissionsError
                             ? state.error
                             : null,

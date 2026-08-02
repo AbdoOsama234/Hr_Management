@@ -53,7 +53,7 @@ class HolidayRequestCard extends StatelessWidget {
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 4.w,
-                    color: AppColors.primary.withOpacity(0.6),
+                    color: AppColors.primary.withValues(alpha: 0.6),
                   ),
                   SizedBox(width: 2.w),
                   Text(
@@ -77,7 +77,7 @@ class HolidayRequestCard extends StatelessWidget {
               Icon(
                 Icons.access_time_rounded,
                 size: 4.w,
-                color: AppColors.primary.withOpacity(0.6),
+                color: AppColors.primary.withValues(alpha: 0.6),
               ),
               SizedBox(width: 2.w),
               Text(
@@ -134,15 +134,15 @@ class HolidayRequestCard extends StatelessWidget {
                     showErrorView: false,
                     showEmptyView: false,
 
-                    loadingWidget: LoaderWidget(size: 40),
+                    loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder: () => updateIcon(),
+                    contentBuilder: updateIcon,
 
-                    onRetry: () {
-                      updateIcon();
-                    },
+                    onRetry: updateIcon,
 
-                    errorMessage: state is UpdateHolidayError ? state.error : null,
+                    errorMessage: state is UpdateHolidayError
+                        ? state.error
+                        : null,
                   );
                 },
               ),
@@ -160,10 +160,12 @@ class HolidayRequestCard extends StatelessWidget {
                     isError: state is DeleteHolidayError,
                     showErrorView: false,
                     showEmptyView: false,
-                    loadingWidget: LoaderWidget(size: 40),
-                    contentBuilder: () => deleteIcon(),
+                    loadingWidget: const LoaderWidget(size: 40),
+                    contentBuilder: deleteIcon,
                     onRetry: () => cubit.deleteHoliday(holiday.id!),
-                    errorMessage: state is DeleteHolidayError ? state.error : null,
+                    errorMessage: state is DeleteHolidayError
+                        ? state.error
+                        : null,
                   );
                 },
                 listener: (BuildContext context, HolidayState state) {
@@ -186,7 +188,7 @@ class HolidayRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(Icons.delete, color: AppColors.primary),
+          icon: const Icon(Icons.delete, color: AppColors.primary),
           onTap: () {
             showAppOptionBottomSheet(
               context: context,
@@ -220,7 +222,7 @@ class HolidayRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(Icons.edit, color: AppColors.primary),
+          icon: const Icon(Icons.edit, color: AppColors.primary),
           onTap: () {
             showAppBottomSheet(
               context: context,
@@ -278,7 +280,7 @@ class HolidayRequestCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(

@@ -63,7 +63,7 @@ class AppPreferences {
   }
 
   String get firebaseToken => _getData(_firebaseToken, '');
-  set firebaseToken(data) => _putData(_firebaseToken, data);
+  set firebaseToken(String data) => _putData(_firebaseToken, data);
 
   String get lang => _getData(_lang, Constants.defaultLanguage);
 
@@ -150,7 +150,7 @@ class AppPreferences {
 
   Future<void> login(LoginModel user) async {
     userToken = user.token!;
-    print("============token ${userToken}");
+    print("============token $userToken");
     print("============id ${user.user?.id}");
 
     userId = user.user?.id.orZero().toString() ?? "";

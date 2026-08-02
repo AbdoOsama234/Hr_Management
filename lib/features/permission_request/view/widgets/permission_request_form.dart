@@ -92,9 +92,7 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
               controller: _hoursController,
               hint: 'Permission Hours'.tr(),
               type: const TextInputType.numberWithOptions(decimal: true),
-              validator: (value) {
-                return Validations.numberValidation(value);
-              },
+              validator: Validations.numberValidation,
             ),
             AppSizedBox.h2,
             Text(
@@ -107,9 +105,7 @@ class _PermissionRequestFormState extends State<PermissionRequestForm> {
               hint: 'Reason'.tr(),
               type: TextInputType.multiline,
               max: 4,
-              validator: (value) {
-                return Validations.normalValidation(value);
-              },
+              validator: Validations.normalValidation,
             ),
             AppSizedBox.h4,
             CustomButton(

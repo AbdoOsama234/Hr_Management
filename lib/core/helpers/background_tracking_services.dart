@@ -70,8 +70,7 @@ class BackgroundTrackingManager {
   }
 
   static Future<void> stop() async {
-    final service = FlutterBackgroundService();
-    service.invoke("stopService");
+    FlutterBackgroundService().invoke("stopService");
   }
 
   /// Main service entry point for both Android and iOS (foreground only)

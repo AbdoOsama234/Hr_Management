@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,7 +28,7 @@ import '../../../employees_requests/view/screens/employees_requests_screen.dart'
 import '../../../my_mission/view/screens/my_mission_screen.dart';
 import '../../../profile/controller/profile_cubit.dart';
 import '../../../profile/controller/profile_state.dart';
-import 'DrawerSection.dart';
+import 'drawer_section.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -48,7 +50,7 @@ class MainDrawer extends StatelessWidget {
           } else if (state.avatarUrl != null && state.avatarUrl!.isNotEmpty) {
             imageProvider = NetworkImage(state.avatarUrl!);
           } else {
-            imageProvider = AssetImage(AppAssets.avatar2);
+            imageProvider = const AssetImage(AppAssets.avatar2);
           }
         }
 
@@ -164,9 +166,7 @@ class MainDrawer extends StatelessWidget {
                             trailingIcon: MyApp.isDark
                                 ? Icons.light_mode_rounded
                                 : Icons.dark_mode_rounded,
-                            onTap: () {
-                              appCubit.changeTheme();
-                            },
+                            onTap: appCubit.changeTheme,
                           ),
                           DrawerMenuItem(
                             icon: Icons.language_rounded,
@@ -200,7 +200,9 @@ class MainDrawer extends StatelessWidget {
                     await BackgroundTrackingManager.stop();
                     await Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
                       (route) => false,
                     );
                   },

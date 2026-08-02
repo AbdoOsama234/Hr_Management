@@ -27,7 +27,7 @@ class CustomDropDownMenu extends StatelessWidget {
     return DropdownButtonFormField(
       items: items,
       onChanged: onChanged,
-      value: value,
+      initialValue: value,
       validator: validator,
       dropdownColor: AppColors.backGround2,
       style: AppTextStyle.body.copyWith(color: AppColors.textMain),
@@ -41,16 +41,19 @@ class CustomDropDownMenu extends StatelessWidget {
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppColors.iconBackGround.withOpacity(0.05),
+        fillColor: AppColors.iconBackGround.withValues(alpha: 0.05),
         hintText: label,
         labelText: label,
         labelStyle: AppTextStyle.title.copyWith(
-          color: AppColors.textSub.withOpacity(0.6),
+          color: AppColors.textSub.withValues(alpha: 0.6),
         ),
         hintStyle: AppTextStyle.body.copyWith(
-          color: AppColors.textSub.withOpacity(0.4),
+          color: AppColors.textSub.withValues(alpha: 0.4),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         prefixIcon: prefixIcon,
         enabledBorder: enabledBorder(radius: 10),
         border: border(radius: 10),

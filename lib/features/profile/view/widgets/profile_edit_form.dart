@@ -7,7 +7,6 @@ import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/extensions.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-
 import '../../../../ sheard/componnents/custom_button.dart';
 import '../../../../ sheard/componnents/custom_text_field.dart';
 import '../../controller/profile_cubit.dart';
@@ -66,10 +65,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
               offset: const Offset(0, 5),
             ),
           ],
-          border: Border.all(
-            color: AppColors.borderColor,
-            width: 1,
-          ),
+          border: Border.all(color: AppColors.borderColor, width: 1),
         ),
         child: Form(
           key: _formKey,
@@ -174,7 +170,7 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                 validator: (value) => null,
                 prefix: Icon(
                   Icons.work_outline_rounded,
-                  color: AppColors.textSub.withOpacity(0.5),
+                  color: AppColors.textSub.withValues(alpha: 0.5),
                   size: 5.w,
                 ),
               ),
@@ -186,14 +182,13 @@ class _ProfileEditFormState extends State<ProfileEditForm> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () =>
-                          context.read<ProfileCubit>().cancelEdit(),
+                      onTap: () => context.read<ProfileCubit>().cancelEdit(),
                       child: Container(
                         height: 6.4.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: AppColors.primary.withOpacity(0.3),
+                            color: AppColors.primary.withValues(alpha: 0.3),
                             width: 1.5,
                           ),
                         ),

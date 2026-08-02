@@ -66,16 +66,16 @@ class _InternetCheckWidgetState extends State<InternetCheckWidget> {
               message:
                   "${"No Internet Connection!".tr()}\n${"Please check your connection.".tr()}",
               backgroundColor: AppColors.primary,
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const FaIcon(
+              icon: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: FaIcon(
                   FontAwesomeIcons.wifi,
                   color: Colors.white,
                   size: 30,
                 ),
               ),
               textStyle: AppTextStyle.body.copyWith(color: Colors.white),
-              messagePadding: EdgeInsets.all(10),
+              messagePadding: const EdgeInsets.all(10),
             ),
           ),
         ),

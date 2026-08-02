@@ -30,8 +30,8 @@ class _DrawerSectionState extends State<DrawerSection> {
       padding: EdgeInsets.all(2.w),
       decoration: BoxDecoration(
         color: MyApp.isDark
-            ? Colors.white.withOpacity(0.03)
-            : Colors.black.withOpacity(0.02),
+            ? Colors.white.withValues(alpha: 0.03)
+            : Colors.black.withValues(alpha: 0.02),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -53,7 +53,6 @@ class _DrawerSectionState extends State<DrawerSection> {
                       fontSize: 12.sp,
                       color: AppColors.textMain,
                       overflow: TextOverflow.ellipsis,
-
                     ),
                   ),
                 ),

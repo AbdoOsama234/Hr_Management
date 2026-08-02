@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -42,9 +44,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
     _mapStyle = await rootBundle.loadString(AppAssets.mapStyle);
     await _handleLocationPermission();
 
-    final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    final position = await Geolocator.getCurrentPosition();
 
     _currentLatLng = LatLng(position.latitude, position.longitude);
 
@@ -64,9 +64,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enable location services'),
-        ),
+        const SnackBar(content: Text('Please enable location services')),
       );
       return false;
     }
@@ -78,9 +76,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Location permission denied'),
-          ),
+          const SnackBar(content: Text('Location permission denied')),
         );
         return false;
       }
@@ -88,15 +84,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Location permission permanently denied',
-          ),
+        const SnackBar(
+          content: Text('Location permission permanently denied'),
           action: SnackBarAction(
             label: 'Settings',
-            onPressed: () {
-              Geolocator.openAppSettings();
-            },
+            onPressed: Geolocator.openAppSettings,
           ),
         ),
       );
@@ -106,10 +98,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
     return true;
   }
+
   Future<void> _goToMyLocation() async {
-    final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    final position = await Geolocator.getCurrentPosition();
 
     final latLng = LatLng(position.latitude, position.longitude);
 
@@ -167,12 +158,12 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   gradient: LinearGradient(
                     colors: [
                       AppColors.primary,
-                      AppColors.primary.withOpacity(0.8),
+                      AppColors.primary.withValues(alpha: 0.8),
                     ],
                   ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.my_location,
                   size: 20,
                   color: AppColors.white,
@@ -235,7 +226,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.mintGreen.withOpacity(0.1),
+                      color: AppColors.mintGreen.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(

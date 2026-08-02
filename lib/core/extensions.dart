@@ -98,7 +98,7 @@ extension OnStringToDateTime on String {
 
 extension OnColor on Color {
   MaterialColor getMaterialColor() {
-    return MaterialColor(value, getSwatch());
+    return MaterialColor(toARGB32(), getSwatch());
   }
 
   Map<int, Color> getSwatch() {

@@ -74,7 +74,7 @@ class LoanRequestCard extends StatelessWidget {
 
                     size: 4.w,
 
-                    color: AppColors.primary.withOpacity(0.6),
+                    color: AppColors.primary.withValues(alpha: 0.6),
                   ),
 
                   SizedBox(width: 2.w),
@@ -163,9 +163,9 @@ class LoanRequestCard extends StatelessWidget {
 
                     loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder: () => updateIcon(),
+                    contentBuilder: updateIcon,
 
-                    onRetry: () => updateIcon(),
+                    onRetry: updateIcon,
 
                     errorMessage: state is UpdateLoanError ? state.error : null,
                   );
@@ -205,7 +205,7 @@ class LoanRequestCard extends StatelessWidget {
 
                     loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder: () => deleteIcon(),
+                    contentBuilder: deleteIcon,
 
                     onRetry: () => cubit.deleteLoans(request.id!),
 
@@ -225,7 +225,7 @@ class LoanRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(Icons.delete, color: AppColors.primary),
+          icon: const Icon(Icons.delete, color: AppColors.primary),
 
           onTap: () {
             showAppOptionBottomSheet(
@@ -269,7 +269,7 @@ class LoanRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(Icons.edit, color: AppColors.primary),
+          icon: const Icon(Icons.edit, color: AppColors.primary),
 
           onTap: () {
             showAppBottomSheet(
@@ -347,7 +347,7 @@ class LoanRequestCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
 
       decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
 
         borderRadius: BorderRadius.circular(10),
       ),

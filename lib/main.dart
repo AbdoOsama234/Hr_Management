@@ -26,12 +26,9 @@ void main() async {
   //when your app has initialized, make a call to remove() to remove the splash screen.
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  NotificationService notificationService = NotificationService.instance;
-  notificationService.initialize();
+  NotificationService.instance.initialize();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  Future.delayed(const Duration(milliseconds: 500), () {
-    FlutterNativeSplash.remove();
-  });
+  Future.delayed(const Duration(milliseconds: 500), FlutterNativeSplash.remove);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

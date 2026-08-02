@@ -5,7 +5,6 @@ import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/app_validation.dart';
-import 'package:hr_manegement/features/loan__requests/data/models/loan_request.dart';
 
 import '../../../../ sheard/componnents/app_asset_image.dart';
 import '../../../../ sheard/componnents/custom_button.dart';
@@ -16,7 +15,7 @@ import '../../data/models/loan_model.dart';
 
 class LoanRequestForm extends StatefulWidget {
   final Function(
-      // LoanRequest model,
+    // LoanRequest model,
     DateTime date,
     String amount,
     String loanType,
@@ -44,7 +43,6 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
   final _loanTypeController = TextEditingController();
   final _notesController = TextEditingController();
 
-
   DateTime? _selectedDate;
 
   @override
@@ -52,7 +50,6 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
     super.initState();
 
     if (widget.request != null) {
-
       _amountController.text = widget.request?.amount ?? '';
       _loanTypeController.text = widget.request?.loanType ?? '';
       widget.request?.installments?.toString() ?? '';
@@ -128,9 +125,7 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
                   uri: AppAssets.calendar2,
                   color: AppColors.primary,
                 ),
-                validator: (value) {
-                  return Validations.normalValidation(value);
-                },
+                validator: Validations.normalValidation,
               ),
             ),
             AppSizedBox.h2,
@@ -142,9 +137,7 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
               controller: _amountController,
               hint: 'Loan Amount'.tr(),
               type: const TextInputType.numberWithOptions(decimal: true),
-              validator: (value) {
-                return Validations.numberValidation(value);
-              },
+              validator: Validations.numberValidation,
             ),
             AppSizedBox.h2,
 
@@ -155,9 +148,7 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
               controller: _loanTypeController,
               hint: 'Loan Type'.tr(),
               type: TextInputType.text,
-              validator: (value) {
-                return Validations.normalValidation(value);
-              },
+              validator: Validations.normalValidation,
             ),
             AppSizedBox.h2,
 
@@ -178,10 +169,9 @@ class _LoanRequestFormState extends State<LoanRequestForm> {
               width: double.infinity,
               radius: 12,
               txtcolor: Colors.white,
-              onTap:_submit
+              onTap: _submit,
             ),
             AppSizedBox.h4,
-
           ],
         ),
       ),

@@ -209,7 +209,7 @@ class _ProfileHeaderState extends State<ProfileHeader>
                     vertical: 0.4.h,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.12),
+                    color: AppColors.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(

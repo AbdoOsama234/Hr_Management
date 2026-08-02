@@ -55,7 +55,7 @@ class DrawerProfileHeader extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     AppColors.primary,
-                    AppColors.primary.withOpacity(0.4),
+                    AppColors.primary.withValues(alpha: 0.4),
                   ],
                 ),
               ),
@@ -88,7 +88,7 @@ class DrawerProfileHeader extends StatelessWidget {
                       vertical: 0.3.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.12),
+                      color: AppColors.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -105,7 +105,7 @@ class DrawerProfileHeader extends StatelessWidget {
             ),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppColors.primary.withOpacity(0.5),
+              color: AppColors.primary.withValues(alpha: 0.5),
               size: 4.w,
             ),
           ],

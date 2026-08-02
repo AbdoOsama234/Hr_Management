@@ -38,7 +38,7 @@ class EmployeeHeader extends StatelessWidget {
           } else if (state.avatarUrl != null && state.avatarUrl!.isNotEmpty) {
             imageProvider = NetworkImage(state.avatarUrl!);
           } else {
-            imageProvider = AssetImage(AppAssets.avatar2);
+            imageProvider = const AssetImage(AppAssets.avatar2);
           }
         }
 
@@ -134,7 +134,7 @@ class EmployeeHeader extends StatelessWidget {
                       vertical: 0.4.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.12),
+                      color: AppColors.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -157,15 +157,15 @@ class EmployeeHeader extends StatelessWidget {
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.primary.withOpacity(0.8),
-                      AppColors.primary.withOpacity(0.3),
+                      AppColors.primary.withValues(alpha: 0.8),
+                      AppColors.primary.withValues(alpha: 0.3),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.3),
+                      color: AppColors.primary.withValues(alpha: 0.3),
                       blurRadius: 14,
                       spreadRadius: 1,
                     ),

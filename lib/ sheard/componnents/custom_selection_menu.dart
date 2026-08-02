@@ -4,12 +4,13 @@ import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-class CustomSelectionMenu extends StatelessWidget {
+class CustomSelectionMenu<T> extends StatelessWidget {
   final String label;
-  final List<String> items;
-  final String? value;
-  final ValueChanged<String?> onChanged;
-  final String? Function(String?)? validator;
+  final List<T> items;
+  final T? value;
+  final ValueChanged<T?> onChanged;
+  final String? Function(dynamic)? validator;
+  final String Function(T)? itemToString;
 
   const CustomSelectionMenu({
     super.key,
@@ -17,12 +18,13 @@ class CustomSelectionMenu extends StatelessWidget {
     required this.items,
     required this.value,
     required this.onChanged,
+    this.itemToString,
     this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FormField<String>(
+    return FormField<T>(
       validator: validator,
       initialValue: value,
       builder: (state) {
@@ -34,17 +36,20 @@ class CustomSelectionMenu extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: AppColors.backGround2.withOpacity(0.5),
+                color: AppColors.backGround2.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
                   color: state.hasError
-                      ? Colors.red.withOpacity(0.5)
-                      : Colors.grey.withOpacity(0.1),
+                      ? Colors.red.withValues(alpha: 0.5)
+                      : Colors.grey.withValues(alpha: 0.1),
                 ),
               ),
               child: Row(
                 children: items.map((item) {
                   final bool isSelected = value == item;
+                  final String displayText = itemToString != null
+                      ? itemToString!(item)
+                      : (item is String ? item.tr() : item.toString());
                   return Expanded(
                     child: GestureDetector(
                       onTap: () {
@@ -63,7 +68,9 @@ class CustomSelectionMenu extends StatelessWidget {
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: AppColors.primary.withOpacity(0.3),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.3,
+                                    ),
                                     blurRadius: 10,
                                     offset: const Offset(0, 4),
                                   ),
@@ -73,18 +80,20 @@ class CustomSelectionMenu extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Radio<String>(
-                              value: item,
+                            RadioGroup<T>(
                               groupValue: value,
                               onChanged: (val) {
                                 onChanged(val);
                                 state.didChange(val);
                               },
-                              activeColor: Colors.white,
+                              child: Radio<T>(
+                                value: item,
+                                activeColor: Colors.white,
+                              ),
                             ),
                             Flexible(
                               child: Text(
-                                item.tr(),
+                                displayText,
                                 style: AppTextStyle.body.copyWith(
                                   color: isSelected
                                       ? Colors.white

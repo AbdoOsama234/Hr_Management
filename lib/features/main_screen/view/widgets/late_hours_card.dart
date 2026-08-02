@@ -20,16 +20,17 @@ class LateHoursCard extends StatelessWidget {
 
   Color get _statusColor {
     if (_progress <= 0.2) return AppColors.primary; // Red if less than 20% left
-    if (_progress <= 0.5)
+    if (_progress <= 0.5) {
       return AppColors.orange; // Orange if less than 50% left
+    }
     return AppColors.mintGreen; // Green if more than 50% left
   }
 
   @override
   Widget build(BuildContext context) {
     final Color trackBg = MyApp.isDark
-        ? AppColors.darkGrey.withOpacity(0.15)
-        : Colors.grey.withOpacity(0.12);
+        ? AppColors.darkGrey.withValues(alpha: 0.15)
+        : Colors.grey.withValues(alpha: 0.12);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
@@ -56,7 +57,9 @@ class LateHoursCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
-                  color: _statusColor.withOpacity(MyApp.isDark ? 0.12 : 0.08),
+                  color: _statusColor.withValues(
+                    alpha: MyApp.isDark ? 0.12 : 0.08,
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -77,9 +80,13 @@ class LateHoursCard extends StatelessWidget {
                   vertical: 0.6.h,
                 ),
                 decoration: BoxDecoration(
-                  color: _statusColor.withOpacity(MyApp.isDark ? 0.12 : 0.08),
+                  color: _statusColor.withValues(
+                    alpha: MyApp.isDark ? 0.12 : 0.08,
+                  ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: _statusColor.withOpacity(0.2)),
+                  border: Border.all(
+                    color: _statusColor.withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Text(
                   '${'used'.tr()} ${lateHoursUsed.toInt()} ${'hours'.tr()}',
@@ -209,7 +216,7 @@ class LateHoursCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.8.h),
       decoration: BoxDecoration(
-        color: dotColor.withOpacity(0.5),
+        color: dotColor.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(

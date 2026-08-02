@@ -15,9 +15,9 @@ class CustomDialog extends StatelessWidget {
     return await showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionDuration: const Duration(milliseconds: 400),
-      pageBuilder: (_, __, ___) {
+      pageBuilder: (_, _, _) {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: CustomDialog(dialogContent: dialogContent),

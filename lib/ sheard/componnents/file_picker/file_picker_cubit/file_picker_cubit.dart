@@ -11,7 +11,8 @@ import 'file_picker_state.dart';
 class FilePickerCubit extends Cubit<FilePickerState> {
   FilePickerCubit() : super(FilePickernInitial());
 
-  static FilePickerCubit get(context) => BlocProvider.of(context);
+  static FilePickerCubit get(BuildContext context) =>
+      context.read<FilePickerCubit>();
 
   File? image;
   DocumentHelper documentHelper = DocumentHelper();
