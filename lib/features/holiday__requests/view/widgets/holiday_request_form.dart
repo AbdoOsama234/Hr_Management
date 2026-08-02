@@ -24,8 +24,7 @@ class HolidayRequestForm extends StatefulWidget {
   });
 
   @override
-  State<HolidayRequestForm> createState() =>
-      _HolidayRequestFormState();
+  State<HolidayRequestForm> createState() => _HolidayRequestFormState();
 }
 
 class _HolidayRequestFormState extends State<HolidayRequestForm> {
@@ -128,18 +127,12 @@ class _HolidayRequestFormState extends State<HolidayRequestForm> {
 
             AppSizedBox.h2,
 
-            Text(
-              'Holiday Days'.tr(),
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text('Holiday Days'.tr(), style: const TextStyle(fontSize: 16)),
             AppSizedBox.h1,
 
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade300),
                 borderRadius: BorderRadius.circular(12),
@@ -157,10 +150,7 @@ class _HolidayRequestFormState extends State<HolidayRequestForm> {
 
             AppSizedBox.h2,
 
-            Text(
-              'Reason'.tr(),
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text('Reason'.tr(), style: const TextStyle(fontSize: 16)),
             AppSizedBox.h1,
 
             CustomTextField(
@@ -168,9 +158,7 @@ class _HolidayRequestFormState extends State<HolidayRequestForm> {
               hint: 'Reason'.tr(),
               type: TextInputType.multiline,
               max: 4,
-              validator: (value) {
-                return Validations.normalValidation(value);
-              },
+              validator: Validations.normalValidation,
             ),
 
             AppSizedBox.h4,

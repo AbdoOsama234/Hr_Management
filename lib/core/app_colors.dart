@@ -28,26 +28,26 @@ class AppColors {
 
   // 🧱 Borders & Dividers
   static Color get borderColor => MyApp.isDark
-      ? Colors.white.withOpacity(.06)
-      : Colors.grey.withOpacity(.12);
+      ? Colors.white.withValues(alpha: .06)
+      : Colors.grey.withValues(alpha: .12);
 
   static Color get dividerColor => MyApp.isDark
-      ? Colors.white.withOpacity(0.08)
-      : Colors.grey.withOpacity(0.15);
+      ? Colors.white.withValues(alpha: 0.08)
+      : Colors.grey.withValues(alpha: 0.15);
 
   // 🎯 Icons
   static Color get iconBgColor => MyApp.isDark
-      ? Colors.white.withOpacity(0.08)
-      : Colors.black.withOpacity(0.1);
+      ? Colors.white.withValues(alpha: 0.08)
+      : Colors.black.withValues(alpha: 0.1);
 
   static Color get iconBorderColor => MyApp.isDark
-      ? Colors.white.withOpacity(0.06)
-      : Colors.black.withOpacity(0.06);
+      ? Colors.white.withValues(alpha: 0.06)
+      : Colors.black.withValues(alpha: 0.06);
 
   // 🌫 Shadows
   static Color get shadowColor => MyApp.isDark
-      ? Colors.black.withOpacity(0.6)
-      : Colors.grey.withOpacity(0.2);
+      ? Colors.black.withValues(alpha: 0.6)
+      : Colors.grey.withValues(alpha: 0.2);
 
   // 🧩 Misc
   static Color get badgeBorderColor =>
@@ -123,10 +123,10 @@ class AppColors {
   static const Color textFieldHint = Color(0xff8E8E93);
 
   static Color get shimmerGradientColorStart =>
-      MyApp.isDark ? Color(0xff333639) : Colors.grey.shade300;
+      MyApp.isDark ? const Color(0xff333639) : Colors.grey.shade300;
 
   static Color get shimmerGradientColorEnd => MyApp.isDark
-      ? Color(0xff333639).withValues(alpha: 0.3)
+      ? const Color(0xff333639).withValues(alpha: 0.3)
       : Colors.grey.shade100;
 
   // 🎯 Accent

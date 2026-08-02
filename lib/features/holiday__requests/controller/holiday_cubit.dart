@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -12,8 +11,7 @@ import 'holiday_state.dart';
 class HolidayCubit extends Cubit<HolidayState> {
   final HolidayRepository _repository;
 
-  static HolidayCubit get(BuildContext context) =>
-      context.read<HolidayCubit>();
+  static HolidayCubit get(BuildContext context) => context.read<HolidayCubit>();
 
   HolidayCubit(this._repository) : super(HolidayInitial());
 
@@ -96,27 +94,22 @@ class HolidayCubit extends Cubit<HolidayState> {
   /// =========================
   Future<void> updateHoliday({
     required int id,
-    required HolidayRequest model}) async{
-
+    required HolidayRequest model,
+  }) async {
     emit(UpdateHolidayLoading(id: id));
 
-    final result=await _repository.updateHoliday(id,model);
+    final result = await _repository.updateHoliday(id, model);
 
     result.fold(
-        (failure){
-          emit(UpdateHolidayError(error: failure.message));
+      (failure) {
+        emit(UpdateHolidayError(error: failure.message));
+      },
 
-        },
+      (response) async {
+        emit(UpdateHolidaySuccess());
 
-        (response)async{
-
-          emit(UpdateHolidaySuccess());
-
-          await getAllHolidays();
-
-        }
-        );
-
+        await getAllHolidays();
+      },
+    );
   }
-
 }

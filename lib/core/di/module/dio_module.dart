@@ -25,16 +25,13 @@ abstract class DioModule {
   Future<Dio> getDio(AppPreferences preferences) async {
     Dio dio = Dio();
     (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      HttpClient client = HttpClient();
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      HttpClient client = HttpClient()
+        ..badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
       return client;
     };
     dio.updateHeader(preferences);
-
     if (kDebugMode) {
-      //PrettyDioLogger
-      //LogInterceptor
       dio.interceptors.addAll([
         PrettyDioLogger(
           requestBody: true,

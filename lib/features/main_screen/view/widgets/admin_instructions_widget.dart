@@ -69,8 +69,8 @@ class AdminInstructionsWidget extends StatelessWidget {
                         padding: EdgeInsets.all(2.w),
                         decoration: BoxDecoration(
                           color: MyApp.isDark
-                              ? AppColors.primary.withOpacity(0.12)
-                              : AppColors.primary.withOpacity(0.08),
+                              ? AppColors.primary.withValues(alpha: 0.12)
+                              : AppColors.primary.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(

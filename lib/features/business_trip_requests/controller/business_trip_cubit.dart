@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -96,28 +95,22 @@ class BusinessTripCubit extends Cubit<BusinessTripState> {
   /// =========================
   Future<void> updateTrip({
     required int id,
-    required BusinessTripRequest model}) async{
-
+    required BusinessTripRequest model,
+  }) async {
     emit(UpdateTripLoading(id: id));
 
-    final result=await _repository.updateTrip(id,model);
-    
+    final result = await _repository.updateTrip(id, model);
+
     result.fold(
-        (failure){
-          emit(UpdateTripError(error: failure.message));
+      (failure) {
+        emit(UpdateTripError(error: failure.message));
+      },
 
-        },
-        
-        
-        (response)async{
-          
-          emit(UpdateTripSuccess());
+      (response) async {
+        emit(UpdateTripSuccess());
 
-          await getAllTrips();
-          
-        }
-        );
-
+        await getAllTrips();
+      },
+    );
   }
-
 }

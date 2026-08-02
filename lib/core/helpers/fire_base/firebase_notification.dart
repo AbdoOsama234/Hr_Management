@@ -137,9 +137,7 @@ class NotificationService {
 
   Future<void> _setupMessageHandlers() async {
     //foreground message
-    FirebaseMessaging.onMessage.listen((message) {
-      showNotification(message);
-    });
+    FirebaseMessaging.onMessage.listen(showNotification);
 
     // background message
     FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMessage);

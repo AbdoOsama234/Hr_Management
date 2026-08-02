@@ -1,6 +1,5 @@
 import '../data/models/attendance_model.dart';
 import '../data/models/employee_dashboard.dart';
-import '../data/models/instructions_model.dart';
 
 abstract class MainState {}
 
@@ -21,7 +20,6 @@ class GetAttendanceError extends MainState {
   GetAttendanceError({this.error});
 }
 
-
 ///instructions
 
 class GetInstructionsLoading extends MainState {}
@@ -33,6 +31,7 @@ class GetInstructionsError extends MainState {
 
   GetInstructionsError({this.error});
 }
+
 /// 📥 DASHBOARD (Keep existing)
 class MainScreenLoading extends MainState {}
 

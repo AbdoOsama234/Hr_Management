@@ -33,7 +33,7 @@ class _MapIconState extends State<MapIcon> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(1000)),
+              borderRadius: const BorderRadius.all(Radius.circular(1000)),
               child: AppAssetImage(
                 uri: widget.image,
                 fit: BoxFit.contain,
@@ -42,7 +42,7 @@ class _MapIconState extends State<MapIcon> {
                 // placeHolder: widget.placeHolder ?? AppAssets.avatar,
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: const BoxDecoration(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/text_style.dart';
 
-showSuccessesAppDialog({
+void showSuccessesAppDialog({
   required BuildContext context,
   String? message,
   String? title,
@@ -20,7 +20,7 @@ showSuccessesAppDialog({
   );
 }
 
-showErorrAppDialog({
+void showErorrAppDialog({
   required BuildContext context,
   String? message,
   String? title,
@@ -36,7 +36,7 @@ showErorrAppDialog({
   );
 }
 
-showInfoAppDialog({
+void showInfoAppDialog({
   required BuildContext context,
   String? message,
   String? title,

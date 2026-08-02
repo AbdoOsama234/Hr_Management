@@ -90,7 +90,7 @@ class EmployeesRequestsItemCard extends StatelessWidget {
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 4.w,
-                    color: AppColors.primary.withOpacity(0.6),
+                    color: AppColors.primary.withValues(alpha: 0.6),
                   ),
                   SizedBox(width: 2.w),
                   Text(
@@ -117,9 +117,11 @@ class EmployeesRequestsItemCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(3.w),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.05),
+                color: AppColors.primary.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,10 +155,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 1.2.h),
                       decoration: BoxDecoration(
-                        color: AppColors.mintGreen.withOpacity(0.1),
+                        color: AppColors.mintGreen.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppColors.mintGreen.withOpacity(0.3),
+                          color: AppColors.mintGreen.withValues(alpha: 0.3),
                         ),
                       ),
                       alignment: Alignment.center,
@@ -189,10 +191,10 @@ class EmployeesRequestsItemCard extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 1.2.h),
                       decoration: BoxDecoration(
-                        color: AppColors.rose.withOpacity(0.1),
+                        color: AppColors.rose.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppColors.rose.withOpacity(0.3),
+                          color: AppColors.rose.withValues(alpha: 0.3),
                         ),
                       ),
                       alignment: Alignment.center,
@@ -385,7 +387,6 @@ class EmployeesRequestsItemCard extends StatelessWidget {
           ],
         );
       case RequestType.permission:
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -395,13 +396,11 @@ class EmployeesRequestsItemCard extends StatelessWidget {
                 Icon(
                   Icons.access_time_rounded,
                   size: 4.w,
-                  color: AppColors.primary.withOpacity(0.6),
+                  color: AppColors.primary.withValues(alpha: 0.6),
                 ),
                 SizedBox(width: 2.w),
-
               ],
             ),
-
           ],
         );
     }
@@ -429,7 +428,7 @@ class EmployeesRequestsItemCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
@@ -468,9 +467,9 @@ class EmployeesRequestsItemCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.4.h),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
+        color: AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
       ),
       child: Text(
         label,

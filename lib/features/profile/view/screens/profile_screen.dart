@@ -136,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Container(
                     padding: EdgeInsets.all(2.w),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -161,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         vertical: 1.h,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(

@@ -1,12 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/app_sized_box.dart';
 import 'package:hr_manegement/core/text_style.dart';
+import 'package:hr_manegement/features/my_mission/data/models/my_mission_details_model.dart';
+
 import '../../../../ sheard/componnents/custom_app_bar.dart';
-import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
 import '../../../../ sheard/componnents/date_time_widgets/common.dart';
+import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
 import '../../controller/my_mission_cubit.dart';
 import '../../controller/my_mission_state.dart';
 import '../../data/models/my_mission_request.dart';
@@ -73,35 +75,39 @@ class MissionDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard(details) {
+  Widget _buildInfoCard(MyMissionDetailsModel? details) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.05),
+        color: AppColors.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
       ),
       child: Column(
         children: [
-          _buildRowInfo(Icons.tag, 'SR', details.sr ?? ''),
+          _buildRowInfo(Icons.tag, 'SR', details?.sr ?? ''),
           const Divider(height: 30),
           _buildRowInfo(
             Icons.calendar_today,
             'start_date'.tr(),
-            details.startDate != null ? dateFoemated(details.startDate!) : '-',
+            details?.startDate != null
+                ? dateFoemated(details?.startDate ?? "")
+                : '-',
           ),
           const SizedBox(height: 15),
           _buildRowInfo(
             Icons.event,
             'end_date'.tr(),
-            details.endDate != null ? dateFoemated(details.endDate!) : '-',
+            details?.endDate != null
+                ? dateFoemated(details?.endDate ?? "")
+                : '-',
           ),
           const SizedBox(height: 15),
           _buildRowInfo(
             Icons.priority_high,
             'mission_importance'.tr(),
-            _getPriorityLabel(details.priorityId),
-            valueColor: _getPriorityColor(details.priorityId),
+            _getPriorityLabel(details?.priorityId),
+            valueColor: _getPriorityColor(details?.priorityId),
           ),
         ],
       ),
@@ -134,7 +140,11 @@ class MissionDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusSection(context, cubit, details) {
+  Widget _buildStatusSection(
+    BuildContext context,
+    MyMissionCubit cubit,
+    MyMissionDetailsModel? details,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -150,14 +160,14 @@ class MissionDetailsScreen extends StatelessWidget {
           spacing: 10,
           runSpacing: 10,
           children: [1, 2, 3, 4].map((statusId) {
-            final isSelected = details.taskStatusId == statusId;
+            final isSelected = details?.taskStatusId == statusId;
             return InkWell(
               onTap: () {
                 cubit.updateMission(
-                  id: details.id!,
+                  id: details?.id ?? 0,
                   model: MyMissionRequest(
                     taskStatusId: statusId,
-                    priorityId: details.priorityId,
+                    priorityId: details?.priorityId,
                   ),
                 );
               },

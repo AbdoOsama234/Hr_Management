@@ -167,7 +167,7 @@ class _PermissionScreenViewState extends State<_PermissionScreenView> {
                     final cubit = PermissionCubit.get(context);
 
                     return RefreshIndicator(
-                      onRefresh: () => cubit.getAllPermissions(),
+                      onRefresh: cubit.getAllPermissions,
                       child: CustomApiBuilderView(
                         isLoading: state is GetAllPermissionsLoading,
                         isError: state is GetAllPermissionsError,
@@ -193,7 +193,7 @@ class _PermissionScreenViewState extends State<_PermissionScreenView> {
                           ],
                         ),
                         loadingWidget: AppShimmer.verticalList(),
-                        onRetry: () => cubit.getAllPermissions(),
+                        onRetry: cubit.getAllPermissions,
                         errorMessage: state is GetAllPermissionsError
                             ? state.error
                             : null,

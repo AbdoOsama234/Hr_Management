@@ -7,7 +7,6 @@ import 'package:hr_manegement/core/app_assets.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 import '../../../../core/app_sized_box.dart';
 import 'app_asset_image.dart';
 import 'app_logo.dart';
@@ -31,8 +30,9 @@ Future<dynamic> showAppBottomSheet({
     ),
 
     builder: (context) => Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.backGround2,
@@ -48,7 +48,7 @@ Future<dynamic> showAppBottomSheet({
                   width: 12.w,
                   height: 0.6.h,
                   decoration: BoxDecoration(
-                    color: AppColors.textSub.withOpacity(0.2),
+                    color: AppColors.textSub.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

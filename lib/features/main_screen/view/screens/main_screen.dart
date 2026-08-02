@@ -14,10 +14,6 @@ import 'package:hr_manegement/features/my_mission/controller/my_mission_state.da
 
 import '../../../../core/helpers/background_tracking_services.dart';
 import '../../../../ sheard/componnents/app_shimmers.dart';
-import '../../../../ sheard/componnents/loading_widget.dart';
-import '../../../../ sheard/componnents/screen_builder/screen_builder.dart';
-import '../../../../ sheard/componnents/show_app_toast.dart';
-import '../../../business_trip_requests/controller/business_trip_cubit.dart';
 import '../../../my_mission/view/widgets/mission_item_card.dart';
 import '../../../notifications/view/screens/notifications_screen.dart';
 
@@ -56,9 +52,7 @@ class _MainScreenState extends State<MainScreen> {
             ..loadDashboard()
             ..getAttendance(),
         ),
-        BlocProvider(
-          create: (_) => getIt<MyMissionCubit>()..getAllMissions(),
-        ),
+        BlocProvider(create: (_) => getIt<MyMissionCubit>()..getAllMissions()),
       ],
       child: Scaffold(
         key: _scaffoldKey,
@@ -129,7 +123,6 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                         child: SingleChildScrollView(
                           physics: const AlwaysScrollableScrollPhysics(
                             parent: BouncingScrollPhysics(),
-
                           ),
                           padding: EdgeInsets.symmetric(
                             horizontal: 5.w,
@@ -149,13 +142,14 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                               AppSizedBox.h3,
 
                               /// Admin Instructions
-                              AdminInstructionsWidget(),
+                              const AdminInstructionsWidget(),
                               AppSizedBox.h3,
 
                               /// Last Mission
                               BlocBuilder<MyMissionCubit, MyMissionState>(
                                 builder: (context, state) {
-                                  final missionCubit = context.read<MyMissionCubit>();
+                                  final missionCubit = context
+                                      .read<MyMissionCubit>();
 
                                   if (state is GetAllMissionsLoading) {
                                     return AppShimmer.verticalList();

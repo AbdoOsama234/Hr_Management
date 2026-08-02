@@ -136,10 +136,7 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
 
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade300),
                 borderRadius: BorderRadius.circular(12),
@@ -157,10 +154,7 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
 
             AppSizedBox.h2,
 
-            Text(
-              'Reason'.tr(),
-              style: const TextStyle(fontSize: 16),
-            ),
+            Text('Reason'.tr(), style: const TextStyle(fontSize: 16)),
             AppSizedBox.h1,
 
             CustomTextField(
@@ -168,9 +162,7 @@ class _BusinessTripRequestFormState extends State<BusinessTripRequestForm> {
               hint: 'Reason'.tr(),
               type: TextInputType.multiline,
               max: 4,
-              validator: (value) {
-                return Validations.normalValidation(value);
-              },
+              validator: Validations.normalValidation,
             ),
 
             AppSizedBox.h4,

@@ -143,8 +143,8 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        final cubit = context.read<MyMissionCubit>();
-        cubit.getMissionDetails(widget.mission.id!);
+        final cubit = context.read<MyMissionCubit>()
+          ..getMissionDetails(widget.mission.id!);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -197,7 +197,7 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
                     Icon(
                       Icons.calendar_today_rounded,
                       size: 4.w,
-                      color: AppColors.primary.withOpacity(0.6),
+                      color: AppColors.primary.withValues(alpha: 0.6),
                     ),
                     SizedBox(width: 2.w),
                     Text(
@@ -247,7 +247,7 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
                   Icon(
                     Icons.date_range_rounded,
                     size: 4.w,
-                    color: AppColors.primary.withOpacity(0.6),
+                    color: AppColors.primary.withValues(alpha: 0.6),
                   ),
                   SizedBox(width: 2.w),
                   Text(
@@ -285,22 +285,23 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
                   builder: (context, state) {
                     return CustomApiBuilderView(
                       isLoading:
-                          state is UpdateMissionLoading && state.id == widget.mission.id,
+                          state is UpdateMissionLoading &&
+                          state.id == widget.mission.id,
 
                       isError: state is UpdateMissionError,
 
                       showErrorView: false,
                       showEmptyView: false,
 
-                      loadingWidget: LoaderWidget(size: 40),
+                      loadingWidget: const LoaderWidget(size: 40),
 
-                      contentBuilder: () => changeStatusButton(),
+                      contentBuilder: changeStatusButton,
 
-                      onRetry: () {
-                        changeStatusButton();
-                      },
+                      onRetry: changeStatusButton,
 
-                      errorMessage: state is UpdateMissionError ? state.error : null,
+                      errorMessage: state is UpdateMissionError
+                          ? state.error
+                          : null,
                     );
                   },
                 ),
@@ -318,15 +319,12 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
         return InkWell(
           onTap: _showChangeStatusBottomSheet,
           child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 2.w,
-              vertical: 0.8.h,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.8.h),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primary.withValues(alpha: 0.3),
               ),
             ),
             child: Row(
@@ -355,7 +353,7 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(MyApp.isDark ? 0.15 : 0.1),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
@@ -375,9 +373,9 @@ class _MyMissionItemCardState extends State<MyMissionItemCard> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.4.h),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         label,

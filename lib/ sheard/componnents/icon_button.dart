@@ -60,11 +60,15 @@ class AppMainIconButton extends StatelessWidget {
             ),
             child: Transform(
               alignment: Alignment.center,
-              transform:
-                  (getIt<AppPreferences>().lang == Constants.arLanguage)
-                        ? (Matrix4.identity()..scale(-1.0, 1.0))
-                        : Matrix4.identity()
-                    ..scale(1.0, 1.0),
+              transform: Matrix4.identity()
+                ..scaleByDouble(
+                  getIt<AppPreferences>().lang == Constants.arLanguage
+                      ? -1.0
+                      : 1.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                ),
               child: AppAssetImage(
                 uri: icon,
                 height: iconSize,

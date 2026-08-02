@@ -45,8 +45,8 @@ class EmployeeCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(3.w),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(
-                    MyApp.isDark ? 0.12 : 0.08,
+                  color: AppColors.primary.withValues(
+                    alpha: MyApp.isDark ? 0.12 : 0.08,
                   ),
                   shape: BoxShape.circle,
                 ),
@@ -102,7 +102,7 @@ class EmployeeCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 1.2.h),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.08),
+                      color: AppColors.primary.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
@@ -127,7 +127,7 @@ class EmployeeCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 1.2.h),
                     decoration: BoxDecoration(
-                      color: AppColors.mintGreen.withOpacity(0.1),
+                      color: AppColors.mintGreen.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(

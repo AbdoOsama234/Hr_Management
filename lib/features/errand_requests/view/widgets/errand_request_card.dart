@@ -28,10 +28,7 @@ import 'errand_request_form.dart';
 class ErrandRequestCard extends StatelessWidget {
   final ErrandModel request;
 
-  const ErrandRequestCard({
-    super.key,
-    required this.request,
-  });
+  const ErrandRequestCard({super.key, required this.request});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +40,7 @@ class ErrandRequestCard extends StatelessWidget {
         color: AppColors.backGround2,
         borderRadius: BorderRadius.circular(20),
 
-        border: Border.all(
-          color: AppColors.borderColor,
-        ),
+        border: Border.all(color: AppColors.borderColor),
 
         boxShadow: [
           BoxShadow(
@@ -59,11 +54,9 @@ class ErrandRequestCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           /// 📅 DATE
           Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
             children: [
               Row(
@@ -71,8 +64,7 @@ class ErrandRequestCard extends StatelessWidget {
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 4.w,
-                    color: AppColors.primary
-                        .withOpacity(0.6),
+                    color: AppColors.primary.withValues(alpha: 0.6),
                   ),
 
                   SizedBox(width: 2.w),
@@ -100,8 +92,7 @@ class ErrandRequestCard extends StatelessWidget {
               Icon(
                 Icons.access_time_rounded,
                 size: 4.w,
-                color: AppColors.primary
-                    .withOpacity(0.6),
+                color: AppColors.primary.withValues(alpha: 0.6),
               ),
 
               SizedBox(width: 2.w),
@@ -121,8 +112,7 @@ class ErrandRequestCard extends StatelessWidget {
 
           /// 📝 NOTES + ACTIONS
           Row(
-            crossAxisAlignment:
-            CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
 
             children: [
               Expanded(
@@ -141,7 +131,7 @@ class ErrandRequestCard extends StatelessWidget {
               /// ✏ UPDATE
               BlocConsumer<ErrandCubit, ErrandState>(
                 buildWhen: (previous, current) =>
-                current is UpdateErrandLoading ||
+                    current is UpdateErrandLoading ||
                     current is UpdateErrandSuccess ||
                     current is UpdateErrandError,
 
@@ -157,26 +147,20 @@ class ErrandRequestCard extends StatelessWidget {
                 builder: (context, state) {
                   return CustomApiBuilderView(
                     isLoading:
-                    state is UpdateErrandLoading &&
-                        state.id == request.id,
+                        state is UpdateErrandLoading && state.id == request.id,
 
-                    isError:
-                    state is UpdateErrandError,
+                    isError: state is UpdateErrandError,
 
                     showErrorView: false,
                     showEmptyView: false,
 
-                    loadingWidget:
-                    LoaderWidget(size: 40),
+                    loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder: () => updateIcon(),
+                    contentBuilder: updateIcon,
 
-                    onRetry: () {
-                      updateIcon();
-                    },
+                    onRetry: updateIcon,
 
-                    errorMessage:
-                    state is UpdateErrandError
+                    errorMessage: state is UpdateErrandError
                         ? state.error
                         : null,
                   );
@@ -188,7 +172,7 @@ class ErrandRequestCard extends StatelessWidget {
               /// 🗑 DELETE
               BlocConsumer<ErrandCubit, ErrandState>(
                 buildWhen: (previous, current) =>
-                current is DeleteErrandLoading ||
+                    current is DeleteErrandLoading ||
                     current is DeleteErrandSuccess ||
                     current is DeleteErrandError,
 
@@ -202,32 +186,24 @@ class ErrandRequestCard extends StatelessWidget {
                 },
 
                 builder: (context, state) {
-                  final cubit =
-                  ErrandCubit.get(context);
+                  final cubit = ErrandCubit.get(context);
 
                   return CustomApiBuilderView(
                     isLoading:
-                    state is DeleteErrandLoading &&
-                        state.id == request.id,
+                        state is DeleteErrandLoading && state.id == request.id,
 
-                    isError:
-                    state is DeleteErrandError,
+                    isError: state is DeleteErrandError,
 
                     showErrorView: false,
                     showEmptyView: false,
 
-                    loadingWidget:
-                    LoaderWidget(size: 40),
+                    loadingWidget: const LoaderWidget(size: 40),
 
-                    contentBuilder: () => deleteIcon(),
+                    contentBuilder: deleteIcon,
 
-                    onRetry: () =>
-                        cubit.deleteErrands(
-                          request.id!,
-                        ),
+                    onRetry: () => cubit.deleteErrands(request.id!),
 
-                    errorMessage:
-                    state is DeleteErrandError
+                    errorMessage: state is DeleteErrandError
                         ? state.error
                         : null,
                   );
@@ -244,41 +220,30 @@ class ErrandRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(
-            Icons.delete,
-            color: AppColors.primary,
-          ),
+          icon: const Icon(Icons.delete, color: AppColors.primary),
 
           onTap: () {
             showAppOptionBottomSheet(
               context: context,
 
-              title:
-              "Are you sure you want to delete this request?"
-                  .tr(),
+              title: "Are you sure you want to delete this request?".tr(),
 
               option1: BottomSheetOption(
                 title: "Yes".tr(),
 
-                backGroundColor:
-                Colors.transparent,
+                backGroundColor: Colors.transparent,
 
                 onTap: () {
                   Navigator.pop(context);
 
-                  context
-                      .read<ErrandCubit>()
-                      .deleteErrands(
-                    request.id!,
-                  );
+                  context.read<ErrandCubit>().deleteErrands(request.id!);
                 },
               ),
 
               option2: BottomSheetOption(
                 title: "No".tr(),
 
-                backGroundColor:
-                AppColors.primary,
+                backGroundColor: AppColors.primary,
 
                 textColor: AppColors.white,
 
@@ -297,49 +262,30 @@ class ErrandRequestCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         return AppIcon(
-          icon: Icon(
-            Icons.edit,
-            color: AppColors.primary,
-          ),
+          icon: const Icon(Icons.edit, color: AppColors.primary),
 
           onTap: () {
             showAppBottomSheet(
               context: context,
 
-              title:
-              'Update Errand Request'.tr(),
+              title: 'Update Errand Request'.tr(),
 
               body: ErrandRequestForm(
                 request: request,
-                buttonText:
-                'Update Request'.tr(),
+                buttonText: 'Update Request'.tr(),
 
-                onSubmit: (
-                    startDate,
-                    endDate,
-                    days,
-                    reason,
-                    ) {
-                  context
-                      .read<ErrandCubit>()
-                      .updateErrands(
+                onSubmit: (startDate, endDate, days, reason) {
+                  context.read<ErrandCubit>().updateErrands(
                     id: request.id!,
 
                     model: ErrandRequest(
-                      fromDate:
-                      formatDateForApi(
-                        startDate,
-                      ),
+                      fromDate: formatDateForApi(startDate),
 
-                      toDate:
-                      formatDateForApi(
-                        endDate,
-                      ),
+                      toDate: formatDateForApi(endDate),
 
                       daysCount: days,
 
-                      requestNotes:
-                      reason,
+                      requestNotes: reason,
                     ),
                   );
                 },
@@ -385,25 +331,18 @@ class ErrandRequestCard extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 3.w,
-        vertical: 0.6.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.6.h),
 
       decoration: BoxDecoration(
-        color: color.withOpacity(
-          MyApp.isDark ? 0.15 : 0.1,
-        ),
+        color: color.withValues(alpha: MyApp.isDark ? 0.15 : 0.1),
 
-        borderRadius:
-        BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10),
       ),
 
       child: Text(
         label,
 
-        style: AppTextStyle.smallBody
-            .copyWith(
+        style: AppTextStyle.smallBody.copyWith(
           color: color,
           fontWeight: FontWeight.bold,
         ),
@@ -412,9 +351,6 @@ class ErrandRequestCard extends StatelessWidget {
   }
 
   String formatDateForApi(DateTime date) {
-    return date
-        .toString()
-        .split(' ')
-        .first;
+    return date.toString().split(' ').first;
   }
 }

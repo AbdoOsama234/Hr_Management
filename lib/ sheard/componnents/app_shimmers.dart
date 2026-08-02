@@ -90,7 +90,7 @@ class AppShimmer {
         itemCount: 10,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (_, __) => box(),
+        itemBuilder: (_, _) => box(),
       ),
     );
   }
@@ -110,7 +110,7 @@ class AppShimmer {
           ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (_, __) => box(),
+          itemBuilder: (_, _) => box(),
         ),
       ),
     );
@@ -150,7 +150,7 @@ class AppShimmer {
           CarouselSlider.builder(
             itemCount: 5,
             options: CarouselOptions(height: 15.h, viewportFraction: 0.3),
-            itemBuilder: (_, __, ___) {
+            itemBuilder: (_, _, _) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Column(
@@ -191,9 +191,9 @@ class AppShimmer {
             height: listHeight ?? 20.h,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (_, __) =>
+              itemBuilder: (_, _) =>
                   box(width: width ?? double.infinity, height: height ?? 275),
-              separatorBuilder: (_, __) => SizedBox(width: 5.w),
+              separatorBuilder: (_, _) => SizedBox(width: 5.w),
               itemCount: 5,
             ),
           ),
@@ -209,8 +209,8 @@ class AppShimmer {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: 5,
-        separatorBuilder: (_, __) => SizedBox(height: 2.h),
-        itemBuilder: (_, __) => Container(
+        separatorBuilder: (_, _) => SizedBox(height: 2.h),
+        itemBuilder: (_, _) => Container(
           padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

@@ -12,12 +12,8 @@ import '../../../../ sheard/componnents/date_time_widgets/start_end_date.dart';
 import '../../data/models/errand_model.dart';
 
 class ErrandRequestForm extends StatefulWidget {
-  final Function(
-      DateTime startDate,
-      DateTime endDate,
-      int days,
-      String reason,
-      ) onSubmit;
+  final Function(DateTime startDate, DateTime endDate, int days, String reason)
+  onSubmit;
 
   final ErrandModel? request;
 
@@ -31,39 +27,28 @@ class ErrandRequestForm extends StatefulWidget {
   });
 
   @override
-  State<ErrandRequestForm> createState() =>
-      _ErrandRequestFormState();
+  State<ErrandRequestForm> createState() => _ErrandRequestFormState();
 }
 
-class _ErrandRequestFormState
-    extends State<ErrandRequestForm> {
-
+class _ErrandRequestFormState extends State<ErrandRequestForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final _reasonController =
-  TextEditingController();
+  final _reasonController = TextEditingController();
 
-  final _startDateController =
-  TextEditingController();
+  final _startDateController = TextEditingController();
 
-  final _endDateController =
-  TextEditingController();
+  final _endDateController = TextEditingController();
 
   DateTime? _startDate;
 
   DateTime? _endDate;
 
   int get _calculatedDays {
-    if (_startDate == null ||
-        _endDate == null) {
+    if (_startDate == null || _endDate == null) {
       return 0;
     }
 
-    final days =
-        _endDate!
-            .difference(_startDate!)
-            .inDays +
-            1;
+    final days = _endDate!.difference(_startDate!).inDays + 1;
 
     return days > 0 ? days : 0;
   }
@@ -73,29 +58,18 @@ class _ErrandRequestFormState
     super.initState();
 
     if (widget.request != null) {
-      _reasonController.text =
-          widget.request!.requestNotes ?? '';
+      _reasonController.text = widget.request!.requestNotes ?? '';
 
-      _startDate = DateTime.tryParse(
-        widget.request!.fromDate ?? '',
-      );
+      _startDate = DateTime.tryParse(widget.request!.fromDate ?? '');
 
-      _endDate = DateTime.tryParse(
-        widget.request!.toDate ?? '',
-      );
+      _endDate = DateTime.tryParse(widget.request!.toDate ?? '');
 
       if (_startDate != null) {
-        _startDateController.text =
-            dateFoemated(
-              _startDate.toString(),
-            );
+        _startDateController.text = dateFoemated(_startDate.toString());
       }
 
       if (_endDate != null) {
-        _endDateController.text =
-            dateFoemated(
-              _endDate.toString(),
-            );
+        _endDateController.text = dateFoemated(_endDate.toString());
       }
     }
   }
@@ -112,37 +86,21 @@ class _ErrandRequestFormState
   }
 
   void _submit() {
-    if (!_formKey.currentState!
-        .validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    if (_startDate == null ||
-        _endDate == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Please select start and end date'
-                .tr(),
-          ),
-        ),
+    if (_startDate == null || _endDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select start and end date'.tr())),
       );
 
       return;
     }
 
     if (_calculatedDays <= 0) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(
-        SnackBar(
-          content: Text(
-            'End date must be after start date'
-                .tr(),
-          ),
-        ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('End date must be after start date'.tr())),
       );
 
       return;
@@ -165,39 +123,28 @@ class _ErrandRequestFormState
 
       child: SingleChildScrollView(
         child: Column(
-          mainAxisSize:
-          MainAxisSize.min,
+          mainAxisSize: MainAxisSize.min,
 
-          crossAxisAlignment:
-          CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-
             /// 📅 DATES
             DatesRow(
-              startDateController:
-              _startDateController,
+              startDateController: _startDateController,
 
-              endDateController:
-              _endDateController,
+              endDateController: _endDateController,
 
-              startTitel:
-              'start_date'.tr(),
+              startTitel: 'start_date'.tr(),
 
-              endTitel:
-              'end_date'.tr(),
+              endTitel: 'end_date'.tr(),
 
-              onStartDateChanged: (
-                  value,
-                  ) {
+              onStartDateChanged: (value) {
                 setState(() {
                   _startDate = value;
                 });
               },
 
-              onEndDateChanged: (
-                  value,
-                  ) {
+              onEndDateChanged: (value) {
                 setState(() {
                   _endDate = value;
                 });
@@ -207,48 +154,27 @@ class _ErrandRequestFormState
             AppSizedBox.h2,
 
             /// ⏱ DAYS
-            Text(
-              'Errand Days'.tr(),
-
-              style:
-              const TextStyle(
-                fontSize: 16,
-              ),
-            ),
+            Text('Errand Days'.tr(), style: const TextStyle(fontSize: 16)),
 
             AppSizedBox.h1,
 
             Container(
               width: double.infinity,
 
-              padding:
-              const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
               decoration: BoxDecoration(
-                border: Border.all(
-                  color:
-                  Colors.grey.shade300,
-                ),
+                border: Border.all(color: Colors.grey.shade300),
 
-                borderRadius:
-                BorderRadius.circular(
-                  12,
-                ),
+                borderRadius: BorderRadius.circular(12),
               ),
 
               child: Text(
-                _calculatedDays > 0
-                    ? '$_calculatedDays ${'days'.tr()}'
-                    : " ",
+                _calculatedDays > 0 ? '$_calculatedDays ${'days'.tr()}' : " ",
 
-                style:
-                const TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  fontWeight:
-                  FontWeight.w500,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -256,43 +182,27 @@ class _ErrandRequestFormState
             AppSizedBox.h2,
 
             /// 📝 REASON
-            Text(
-              'Reason'.tr(),
-
-              style:
-              const TextStyle(
-                fontSize: 16,
-              ),
-            ),
+            Text('Reason'.tr(), style: const TextStyle(fontSize: 16)),
 
             AppSizedBox.h1,
 
             CustomTextField(
-              controller:
-              _reasonController,
+              controller: _reasonController,
 
               hint: 'Reason'.tr(),
 
-              type:
-              TextInputType.multiline,
+              type: TextInputType.multiline,
 
               max: 4,
 
-              validator: (value) {
-                return Validations
-                    .normalValidation(
-                  value,
-                );
-              },
+              validator: Validations.normalValidation,
             ),
 
             AppSizedBox.h4,
 
             /// 🔘 BUTTON
             CustomButton(
-              text:
-              widget.buttonText ??
-                  'submit_request'.tr(),
+              text: widget.buttonText ?? 'submit_request'.tr(),
 
               width: double.infinity,
 

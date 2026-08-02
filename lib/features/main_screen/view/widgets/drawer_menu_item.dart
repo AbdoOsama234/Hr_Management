@@ -34,8 +34,8 @@ class DrawerMenuItem extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      highlightColor: AppColors.primary.withOpacity(0.05),
-      splashColor: AppColors.primary.withOpacity(0.1),
+      highlightColor: AppColors.primary.withValues(alpha: 0.05),
+      splashColor: AppColors.primary.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.5.h),
@@ -45,7 +45,9 @@ class DrawerMenuItem extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(2.w),
               decoration: BoxDecoration(
-                color: itemIconColor.withOpacity(MyApp.isDark ? 0.12 : 0.08),
+                color: itemIconColor.withValues(
+                  alpha: MyApp.isDark ? 0.12 : 0.08,
+                ),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, color: itemIconColor, size: 5.5.w),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:hr_manegement/core/app_assets.dart';
@@ -87,7 +89,7 @@ class ImagePickerWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => cubit.removeImage(),
                 child: CircleAvatar(
-                  backgroundColor: Colors.red.withOpacity(0.8),
+                  backgroundColor: Colors.red.withValues(alpha: 0.8),
                   radius: 12,
                   child: const Icon(Icons.close, size: 16, color: Colors.white),
                 ),

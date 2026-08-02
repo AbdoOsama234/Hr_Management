@@ -43,7 +43,7 @@ class _WebPageScreenState extends State<WebPageScreen> {
       body: Stack(
         children: [
           WebViewWidget(controller: _controller),
-          if (_isLoading) Center(child: LogoLoaderWidget()),
+          if (_isLoading) const Center(child: LogoLoaderWidget()),
         ],
       ),
     );

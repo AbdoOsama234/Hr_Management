@@ -5,11 +5,18 @@ class PulsingWidget extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  const PulsingWidget({required this.child, required this.duration, required this.tween});
-  _PulsingWidget createState() => _PulsingWidget();
+  const PulsingWidget({
+    super.key,
+    required this.child,
+    required this.duration,
+    required this.tween,
+  });
+  @override
+  PulsingWidgetState createState() => PulsingWidgetState();
 }
 
-class _PulsingWidget extends State<PulsingWidget> with SingleTickerProviderStateMixin {
+class PulsingWidgetState extends State<PulsingWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Duration _duration;
   late Tween<double> _tween;
@@ -42,10 +49,7 @@ class _PulsingWidget extends State<PulsingWidget> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _animation,
-      child: widget.child,
-    );
+    return ScaleTransition(scale: _animation, child: widget.child);
   }
 
   @override

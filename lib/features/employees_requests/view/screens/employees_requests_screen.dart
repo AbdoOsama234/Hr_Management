@@ -23,7 +23,8 @@ class EmployeesRequestsScreen extends StatefulWidget {
   const EmployeesRequestsScreen({super.key});
 
   @override
-  State<EmployeesRequestsScreen> createState() => _EmployeesRequestsScreenState();
+  State<EmployeesRequestsScreen> createState() =>
+      _EmployeesRequestsScreenState();
 }
 
 class _EmployeesRequestsScreenState extends State<EmployeesRequestsScreen> {
@@ -82,7 +83,7 @@ class _EmployeesRequestsScreenState extends State<EmployeesRequestsScreen> {
                   return ChoiceChip(
                     label: Text(_getStatusLabel(status)),
                     selected: isSelected,
-                    selectedColor: AppColors.primary.withOpacity(0.2),
+                    selectedColor: AppColors.primary.withValues(alpha: 0.2),
                     onSelected: (selected) {
                       setBottomSheetState(() {
                         _selectedStatusFilter = selected ? status : null;
@@ -106,7 +107,7 @@ class _EmployeesRequestsScreenState extends State<EmployeesRequestsScreen> {
                   return ChoiceChip(
                     label: Text(_getTypeLabel(type)),
                     selected: isSelected,
-                    selectedColor: AppColors.primary.withOpacity(0.2),
+                    selectedColor: AppColors.primary.withValues(alpha: 0.2),
                     onSelected: (selected) {
                       setBottomSheetState(() {
                         _selectedTypeFilter = selected ? type : null;
@@ -148,76 +149,79 @@ class _EmployeesRequestsScreenState extends State<EmployeesRequestsScreen> {
               ),
               AppSizedBox.h2,
               Expanded(
-                child: BlocBuilder<EmployeesRequestsCubit, EmployeesRequestsState>(
-                  builder: (context, state) {
-                    if (state is EmployeesRequestsLoading) {
-                      return const Center(child: LoaderWidget());
-                    }
+                child:
+                    BlocBuilder<EmployeesRequestsCubit, EmployeesRequestsState>(
+                      builder: (context, state) {
+                        if (state is EmployeesRequestsLoading) {
+                          return const Center(child: LoaderWidget());
+                        }
 
-                    if (state is EmployeesRequestsEmpty) {
-                      return EmptyScreen(
-                        title: 'no_requests'.tr(),
-                        description: 'no_requests_subtitle'.tr(),
-                        image: AppAssets.appLogo,
-                      );
-                    }
+                        if (state is EmployeesRequestsEmpty) {
+                          return EmptyScreen(
+                            title: 'no_requests'.tr(),
+                            description: 'no_requests_subtitle'.tr(),
+                            image: AppAssets.appLogo,
+                          );
+                        }
 
-                    if (state is EmployeesRequestsLoaded) {
-                      List<EmployeesRequestsModel> filteredRequests = state.requests;
+                        if (state is EmployeesRequestsLoaded) {
+                          List<EmployeesRequestsModel> filteredRequests =
+                              state.requests;
 
-                      if (_selectedStatusFilter != null) {
-                        filteredRequests = filteredRequests
-                            .where((r) => r.status == _selectedStatusFilter)
-                            .toList();
-                      }
+                          if (_selectedStatusFilter != null) {
+                            filteredRequests = filteredRequests
+                                .where((r) => r.status == _selectedStatusFilter)
+                                .toList();
+                          }
 
-                      if (_selectedTypeFilter != null) {
-                        filteredRequests = filteredRequests
-                            .where((r) => r.type == _selectedTypeFilter)
-                            .toList();
-                      }
+                          if (_selectedTypeFilter != null) {
+                            filteredRequests = filteredRequests
+                                .where((r) => r.type == _selectedTypeFilter)
+                                .toList();
+                          }
 
-                      if (filteredRequests.isEmpty) {
-                        return EmptyScreen(
-                          title: 'no_requests'.tr(),
-                          description: 'no_requests_subtitle'.tr(),
-                          image: AppAssets.appLogo,
-                        );
-                      }
+                          if (filteredRequests.isEmpty) {
+                            return EmptyScreen(
+                              title: 'no_requests'.tr(),
+                              description: 'no_requests_subtitle'.tr(),
+                              image: AppAssets.appLogo,
+                            );
+                          }
 
-                      return RefreshIndicator(
-                        onRefresh: () =>
-                            context.read<EmployeesRequestsCubit>().loadRequests(),
-                        child: ListView.builder(
-                          itemCount: filteredRequests.length,
-                          itemBuilder: (context, index) {
-                            return TweenAnimationBuilder<double>(
-                              duration: Duration(
-                                milliseconds: 300 + (index * 100),
-                              ),
-                              tween: Tween(begin: 0.0, end: 1.0),
-                              curve: Curves.easeIn,
-                              builder: (context, value, child) {
-                                return Opacity(
-                                  opacity: value,
-                                  child: Transform.translate(
-                                    offset: Offset(0, 20 * (1 - value)),
-                                    child: child,
+                          return RefreshIndicator(
+                            onRefresh: () => context
+                                .read<EmployeesRequestsCubit>()
+                                .loadRequests(),
+                            child: ListView.builder(
+                              itemCount: filteredRequests.length,
+                              itemBuilder: (context, index) {
+                                return TweenAnimationBuilder<double>(
+                                  duration: Duration(
+                                    milliseconds: 300 + (index * 100),
+                                  ),
+                                  tween: Tween(begin: 0.0, end: 1.0),
+                                  curve: Curves.easeIn,
+                                  builder: (context, value, child) {
+                                    return Opacity(
+                                      opacity: value,
+                                      child: Transform.translate(
+                                        offset: Offset(0, 20 * (1 - value)),
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                  child: EmployeesRequestsItemCard(
+                                    request: filteredRequests[index],
                                   ),
                                 );
                               },
-                              child: EmployeesRequestsItemCard(
-                                request: filteredRequests[index],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    }
+                            ),
+                          );
+                        }
 
-                    return const SizedBox();
-                  },
-                ),
+                        return const SizedBox();
+                      },
+                    ),
               ),
             ],
           ),

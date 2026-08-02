@@ -51,7 +51,7 @@ class _ErrandViewState extends State<_ErrandView> {
   final scrollController = ScrollController();
 
   Timer? _debounce;
-
+  @override
   void initState() {
     super.initState();
     scrollController.addListener(() {
@@ -160,7 +160,7 @@ class _ErrandViewState extends State<_ErrandView> {
                     final cubit = ErrandCubit.get(context);
 
                     return RefreshIndicator(
-                      onRefresh: () => cubit.getAllErrands(),
+                      onRefresh: cubit.getAllErrands,
 
                       child: CustomApiBuilderView(
                         isLoading: state is GetAllErrandsLoading,
@@ -193,7 +193,7 @@ class _ErrandViewState extends State<_ErrandView> {
 
                         loadingWidget: AppShimmer.verticalList(),
 
-                        onRetry: () => cubit.getAllErrands(),
+                        onRetry: cubit.getAllErrands,
 
                         errorMessage: state is GetAllErrandsError
                             ? state.error
