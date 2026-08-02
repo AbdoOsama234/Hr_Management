@@ -120,25 +120,9 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i104.AuthServiceClient>(
     () => dIModule.getAuthService(gh<_i361.Dio>()),
   );
-  gh.factory<_i611.EmployeeRepository>(
-    () => _i611.EmployeeRepository(
-      gh<_i611.EmployeeServiceClient>(),
-      gh<_i871.SafeApi>(),
-    ),
-  );
-  gh.factory<_i902.HolidayRepository>(
-    () => _i902.HolidayRepository(
-      gh<_i902.HolidayServiceClient>(),
-      gh<_i871.SafeApi>(),
-    ),
-  );
-  gh.factory<_i63.LoanRepository>(
-    () =>
-        _i63.LoanRepository(gh<_i63.LoanServiceClient>(), gh<_i871.SafeApi>()),
-  );
-  gh.factory<_i104.AuthRepository>(
-    () => _i104.AuthRepository(
-      gh<_i104.AuthServiceClient>(),
+  gh.factory<_i806.PermissionRepository>(
+    () => _i806.PermissionRepository(
+      gh<_i654.PermissionServiceClient>(),
       gh<_i871.SafeApi>(),
     ),
   );
@@ -149,12 +133,25 @@ Future<_i174.GetIt> $initGetIt(
       gh<_i832.DioHelper>(),
     ),
   );
-  gh.factory<_i97.MainCubit>(
-    () => _i97.MainCubit(gh<_i984.MainScreenRepository>()),
+  gh.factory<_i63.LoanRepository>(
+    () =>
+        _i63.LoanRepository(gh<_i63.LoanServiceClient>(), gh<_i871.SafeApi>()),
   );
-  gh.factory<_i806.PermissionRepository>(
-    () => _i806.PermissionRepository(
-      gh<_i654.PermissionServiceClient>(),
+  gh.factory<_i508.BusinessTripRepository>(
+    () => _i508.BusinessTripRepository(
+      gh<_i508.BusinessTripServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i1072.MyMissionRepository>(
+    () => _i1072.MyMissionRepository(
+      gh<_i447.MyMissionServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i902.HolidayRepository>(
+    () => _i902.HolidayRepository(
+      gh<_i902.HolidayServiceClient>(),
       gh<_i871.SafeApi>(),
     ),
   );
@@ -164,20 +161,32 @@ Future<_i174.GetIt> $initGetIt(
       gh<_i871.SafeApi>(),
     ),
   );
+  gh.factory<_i765.BusinessTripCubit>(
+    () => _i765.BusinessTripCubit(gh<_i508.BusinessTripRepository>()),
+  );
+  gh.factory<_i611.EmployeeRepository>(
+    () => _i611.EmployeeRepository(
+      gh<_i611.EmployeeServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i104.AuthRepository>(
+    () => _i104.AuthRepository(
+      gh<_i104.AuthServiceClient>(),
+      gh<_i871.SafeApi>(),
+    ),
+  );
+  gh.factory<_i448.PermissionCubit>(
+    () => _i448.PermissionCubit(gh<_i806.PermissionRepository>()),
+  );
+  gh.factory<_i454.MyMissionCubit>(
+    () => _i454.MyMissionCubit(gh<_i1072.MyMissionRepository>()),
+  );
+  gh.factory<_i97.MainCubit>(
+    () => _i97.MainCubit(gh<_i984.MainScreenRepository>()),
+  );
   gh.factory<_i222.EmployeeCubit>(
     () => _i222.EmployeeCubit(gh<_i611.EmployeeRepository>()),
-  );
-  gh.factory<_i1072.MyMissionRepository>(
-    () => _i1072.MyMissionRepository(
-      gh<_i447.MyMissionServiceClient>(),
-      gh<_i871.SafeApi>(),
-    ),
-  );
-  gh.factory<_i508.BusinessTripRepository>(
-    () => _i508.BusinessTripRepository(
-      gh<_i508.BusinessTripServiceClient>(),
-      gh<_i871.SafeApi>(),
-    ),
   );
   gh.factory<_i505.LoanCubit>(() => _i505.LoanCubit(gh<_i63.LoanRepository>()));
   gh.factory<_i679.HolidayCubit>(
@@ -185,15 +194,6 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i487.ErrandCubit>(
     () => _i487.ErrandCubit(gh<_i1005.ErrandRepository>()),
-  );
-  gh.factory<_i454.MyMissionCubit>(
-    () => _i454.MyMissionCubit(gh<_i1072.MyMissionRepository>()),
-  );
-  gh.factory<_i765.BusinessTripCubit>(
-    () => _i765.BusinessTripCubit(gh<_i508.BusinessTripRepository>()),
-  );
-  gh.factory<_i448.PermissionCubit>(
-    () => _i448.PermissionCubit(gh<_i806.PermissionRepository>()),
   );
   gh.factory<_i925.LoginCubit>(
     () => _i925.LoginCubit(gh<_i104.AuthRepository>()),
