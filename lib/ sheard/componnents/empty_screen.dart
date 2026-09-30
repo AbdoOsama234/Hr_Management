@@ -46,7 +46,7 @@ class _EmptyScreenState extends State<EmptyScreen> {
           AppAssetImage(
             uri: widget.image ?? AppAssets.appLogo,
             width: 50.w,
-            color: widget.imageColor,
+           // color: widget.imageColor,
             fit: BoxFit.contain,
           ),
           AppSizedBox.h2,

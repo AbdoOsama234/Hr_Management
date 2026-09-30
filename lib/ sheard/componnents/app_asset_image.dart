@@ -29,7 +29,7 @@ class AppAssetImage extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) {
         return Image(
           fit: fit ?? BoxFit.cover,
-          image: const AssetImage(AppAssets.appLogo),
+          image:  AssetImage(AppAssets.appLogo),
           height: height ?? 15.w,
           width: width ?? 15.w,
         );

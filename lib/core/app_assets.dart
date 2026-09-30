@@ -91,7 +91,7 @@ class AppAssets {
   static const error = '${imagesPath}erorr.png';
 
   // /// new App Images
-  static const String appLogo = '${imagesPath}logo.png';
+  // static const String appLogo = '${imagesPath}logo.png';
   static const String appLogoAr = '${imagesPath}logo.png';
   static const String camera1 = '${iconsPath}camera1.png';
   static const String camera2 = '${iconsPath}camera2.png';
@@ -130,8 +130,8 @@ class AppAssets {
   static String get mapStyle => MyApp.isDark ? darkMap : lightMap;
 
   /// example to how make assets aware of app brightness
-  // static const String get homeHeaderBg =>
-  //     MyApp.isDark ? '${imagesPath}updateprofile.png' : '${imagesPath}background2.png';
+  static   String get appLogo =>
+      MyApp.isDark ? '${imagesPath}logo_white.png' : '${imagesPath}logo_black.png';
 }
 
 class JsonAssets {

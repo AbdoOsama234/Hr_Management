@@ -44,7 +44,7 @@ class AppNetworkImage extends StatelessWidget {
       errorWidget: (context, url, error) => ClipOval(
         child: Image(
           fit: BoxFit.scaleDown,
-          image: const AssetImage(AppAssets.appLogo),
+          image:  AssetImage(AppAssets.appLogo),
           width: width ?? 15.w,
           height: height ?? 15.w,
         ),
