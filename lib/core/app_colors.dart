@@ -57,7 +57,7 @@ class AppColors {
       MyApp.isDark ? const Color(0xFF1C1C1E) : const Color(0xFFF0F0F5);
 
   // 💜 Primary Colors (UPDATED)
-  static const Color primary = Color(0xFFce6fd4);
+  static const Color primary = Color(0xFF2563EB);
   static const Color primaryDark = Color(0xFFA24FC0);
   static const Color primaryLight = Color(0xFFD8A4E8);
 
@@ -69,9 +69,9 @@ class AppColors {
   ];
 
   static const List<Color> headerGradientLight = [
-    Color(0xFFF3E8FF),
-    Color(0xFFE9D5FF),
-    Color(0xFFF5F0FF),
+    Color(0xFFFFFFFF),
+    Color(0xFFDFECFF),
+    Color(0xFFB8D2FF),
   ];
 
   static LinearGradient get primaryGradient => MyApp.isDark

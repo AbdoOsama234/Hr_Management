@@ -118,19 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       isLoading: state is LoginLoading,
                       text: 'Login'.tr(),
                       onTap: () {
-                        // if (_formKey.currentState!.validate()) {
-                        //   cubit.login(
-                        //     _emailController.text,
-                        //     _passwordController.text,
-                        //   );
-                        // }
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainScreen(),
-                          ),
-                              (route) => false,
-                        );
+                        if (_formKey.currentState!.validate()) {
+                          cubit.login(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                        }
+
                       },
                     );
                   },

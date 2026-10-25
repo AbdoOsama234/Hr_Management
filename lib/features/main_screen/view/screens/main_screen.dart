@@ -142,7 +142,7 @@ class _MainScreenBodyState extends State<_MainScreenBody> {
                               AppSizedBox.h3,
 
                               /// Admin Instructions
-                              const AdminInstructionsWidget(),
+                               AdminInstructionsWidget(),
                               AppSizedBox.h3,
 
                               /// Last Mission
