@@ -10,6 +10,7 @@ class EmployeeCard extends StatelessWidget {
   final BrancheModel branche;
   final VoidCallback? onTrack;
   final VoidCallback? onAttendance;
+  final VoidCallback? onCheckOut;
   final UsersModel user;
 
   const EmployeeCard({
@@ -17,6 +18,7 @@ class EmployeeCard extends StatelessWidget {
     required this.branche,
     this.onTrack,
     this.onAttendance,
+    this.onCheckOut,
     required this.user,
   });
 
@@ -142,6 +144,33 @@ class EmployeeCard extends StatelessWidget {
                   ),
                 ),
               ),
+
+              if (onCheckOut != null) ...[
+                SizedBox(width: 2.5.w),
+
+                /// انصراف
+                Expanded(
+                  child: GestureDetector(
+                    onTap: onCheckOut,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 1.2.h),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "انصراف",
+                          style: AppTextStyle.body.copyWith(
+                            color: Colors.orange,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ],

@@ -22,8 +22,9 @@ class ApiUrls {
   static const String employeeAttendance = '${baseApiUrl}employee-attendance';
   static const String instructions = '${baseApiUrl}instructions/';
 
-
-
   //AUTH APIS
   static const String login = 'login';
+
+  //ATTENDANCE
+  static const String attendance = '${baseUrl}/api/v1/hr/attendance';
 }

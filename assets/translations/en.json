@@ -274,6 +274,10 @@
   "absent": "Absent",
   "incomplete": "Incomplete",
   "late": "Late",
-  "leave": "Leave"
-
+  "leave": "Leave",
+  "working_days_only": "Working Days Only",
+  "overwrite_existing": "Overwrite Existing Records",
+  "attendance_time": "Attendance Time",
+  "select_employee_warning": "Please select an employee",
+  "checkout_submitted": "Check out submitted successfully"
 }

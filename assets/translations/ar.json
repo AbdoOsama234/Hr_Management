@@ -269,5 +269,10 @@
   "absent": "غائب",
   "incomplete": "حاضر",
   "late": "متأخر",
-  "leave": "إجازة"
+  "leave": "إجازة",
+  "working_days_only": "أيام العمل فقط",
+  "overwrite_existing": "استبدال السجلات السابقة",
+  "attendance_time": "وقت التحضير",
+  "select_employee_warning": "يرجى تحديد موظف",
+  "checkout_submitted": "تم تسجيل الانصراف"
 }

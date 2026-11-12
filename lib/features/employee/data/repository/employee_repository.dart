@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:hr_manegement/features/employee/data/models/attendance_request_model.dart';
 import 'package:hr_manegement/features/employee/data/models/branches_model.dart';
 import 'package:hr_manegement/features/employee/data/models/employees_model.dart';
 import 'package:injectable/injectable.dart';
@@ -26,6 +27,11 @@ abstract class EmployeeServiceClient {
     @Query('page') int page,
     @Path("id") String id,
   );
+
+  @POST(ApiUrls.attendance)
+  Future<BaseResponse<void>> createAttendance(
+    @Body() AttendanceRequest attendanceRequest,
+  );
 }
 
 @injectable
@@ -34,6 +40,14 @@ class EmployeeRepository {
   final SafeApi _safeApi;
 
   EmployeeRepository(this._employeeServiceClient, this._safeApi);
+
+  Future<Either<Failure, BaseResponse<void>>> createAttendance(
+    AttendanceRequest body,
+  ) async {
+    return await _safeApi.call(
+      apiCall: _employeeServiceClient.createAttendance(body),
+    );
+  }
 
   Future<Either<Failure, BaseResponse<AllBranches>>> getAllBranches(
     int page,

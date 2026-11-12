@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_manegement/%20sheard/componnents/app_shimmers.dart';
 import 'package:hr_manegement/%20sheard/componnents/screen_builder/screen_builder.dart';
+import 'package:hr_manegement/%20sheard/componnents/show_bottom_sheet.dart';
 import 'package:hr_manegement/core/app_colors.dart';
 import 'package:hr_manegement/core/di/di.dart';
 import 'package:hr_manegement/core/extensions.dart';
@@ -14,6 +16,7 @@ import '../../../../core/app_router.dart';
 import '../../../../core/app_sized_box.dart';
 import '../../controller/employee_cubit.dart';
 import '../../controller/employee_state.dart';
+import '../widgets/attendance_bottom_sheet.dart';
 import '../widgets/employee_card.dart';
 
 class EmployeesScreen extends StatelessWidget {
@@ -131,52 +134,56 @@ class _EmployeesScreenState extends State<_EmployeesScreen> {
                 );
               },
 
-              /// ✅ FIXED Attendance
-              // onAttendance: () {
-              //   final cubit = context.read<EmployeeCubit>();
-              //
-              //   cubit.initAttendanceForm();
-              //
-              //   final notesController = TextEditingController();
-              //
-              //   showAppBottomSheet(
-              //     context: context,
-              //     title: "attendance".tr(),
-              //     body: Builder(
-              //       builder: (sheetContext) {
-              //         return BlocProvider.value(
-              //           value: cubit,
-              //           child: BlocListener<EmployeeCubit, EmployeeState>(
-              //             listener: (context, state) {
-              //               /// ✅ Success باستخدام flag
-              //               if (state is GetAllUsersLoaded ) {
-              //                 Navigator.pop(sheetContext);
-              //
-              //                 showFlutterSnackBar(
-              //                   message: "attendance_submitted".tr(),
-              //                 );
-              //               }
-              //             },
-              //             child: BlocBuilder<EmployeeCubit, EmployeeState>(
-              //               builder: (context, state) {
-              //                 if (state is! GetAllUsersLoaded) {
-              //                   return const SizedBox();
-              //                 }
-              //
-              //                 final current = state;
-              //
-              //                 return const SizedBox();                          },
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //   );
-              // },
+              /// ✅ Attendance (Check In)
+              onAttendance: () {
+                _openAttendanceSheet(
+                  user: user,
+                  mode: 'check_in',
+                  defaultTime: '09:00',
+                );
+              },
+
+              /// 🚪 Check Out
+              onCheckOut: () {
+                _openAttendanceSheet(
+                  user: user,
+                  mode: 'check_out',
+                  defaultTime: '17:00',
+                );
+              },
             ),
           );
         },
       ),
     );
+  }
+
+  void _openAttendanceSheet({
+    required UsersModel user,
+    required String mode,
+    required String defaultTime,
+  }) {
+    final cubit = context.read<EmployeeCubit>();
+    final employeeId = (user.employeesId ?? user.id)?.toString();
+
+    cubit.initAttendanceForm(
+      employeeId: employeeId,
+      mode: mode,
+      time: defaultTime,
+    );
+
+    showAppBottomSheet(
+      context: context,
+      title: mode == 'check_out' ? 'check_out'.tr() : 'attendance'.tr(),
+      body: BlocProvider.value(
+        value: cubit,
+        child: AttendanceBottomSheet(
+          user: user,
+          branche: widget.brancheModel,
+        ),
+      ),
+    ).whenComplete(() {
+      cubit.resetAttendanceForm();
+    });
   }
 }
