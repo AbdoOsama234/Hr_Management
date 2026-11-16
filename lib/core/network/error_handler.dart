@@ -58,8 +58,10 @@ Failure _handleError(DioException error) {
       return DataSource.CANCEL.getFailure();
     case DioExceptionType.unknown:
     case DioExceptionType.badCertificate:
-    case DioExceptionType.connectionError:
       return DataSource.DEFAULT.getFailure();
+
+    case DioExceptionType.connectionError:
+      return DataSource.NO_INTERNET_CONNECTION.getFailure();
   }
 }
 

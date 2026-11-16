@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _emailController.text ;
+    _emailController.text;
     _passwordController.text;
   }
 
@@ -44,110 +44,116 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (context) => getIt<LoginCubit>(),
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppSizedBox.h4,
-                AuthHeader(
-                  title: 'Login'.tr(),
-                  subtitle: 'Welcome To Halacar Employee Management'.tr(),
-                ),
-                TitleRow(title: 'Email'.tr(), icon: Icons.email),
-                AppSizedBox.h1,
-                // CodePickerTextFieldTwo(
-                //   controller: _emailController,
-                //   labelText: 'Phone...'.tr(),
-                // ),
-                CustomTextField(
-                  controller: _emailController,
-                  hint: 'Email...'.tr(),
-                  type: TextInputType.emailAddress,
-                  validator: Validations.emailValidation,
-                ),
-                AppSizedBox.h3,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AppSizedBox.h4,
+                    AuthHeader(
+                      title: 'Login'.tr(),
+                      subtitle: 'Welcome To Halacar Employee Management'.tr(),
+                    ),
+                    TitleRow(title: 'Email'.tr(), icon: Icons.email),
+                    AppSizedBox.h1,
+                    // CodePickerTextFieldTwo(
+                    //   controller: _emailController,
+                    //   labelText: 'Phone...'.tr(),
+                    // ),
+                    CustomTextField(
+                      controller: _emailController,
+                      hint: 'Email...'.tr(),
+                      type: TextInputType.emailAddress,
+                      validator: Validations.emailValidation,
+                    ),
+                    AppSizedBox.h3,
 
-                TitleRow(title: 'Password'.tr(), icon: Icons.lock),
-                AppSizedBox.h1,
-                CustomTextField(
-                  controller: _passwordController,
-                  hint: 'password...'.tr(),
-                  type: TextInputType.visiblePassword,
-                  validator: Validations.passwordValidation,
-                ),
+                    TitleRow(title: 'Password'.tr(), icon: Icons.lock),
+                    AppSizedBox.h1,
+                    CustomTextField(
+                      controller: _passwordController,
+                      hint: 'password...'.tr(),
+                      type: TextInputType.visiblePassword,
+                      validator: Validations.passwordValidation,
+                    ),
 
-                AppSizedBox.h2,
+                    AppSizedBox.h2,
 
-                // Align(
-                //   alignment: AlignmentDirectional.centerEnd,
-                //   child: TextButton(
-                //     style: TextButton.styleFrom(
-                //       padding: EdgeInsets.zero,
-                //       minimumSize: Size.zero,
-                //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                //     ),
-                //     onPressed: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => const ForgetPasswordScreen(),
-                //         ),
-                //       );
-                //     },
-                //     child: Text(
-                //       'Forget Password?'.tr(),
-                //       style: AppTextStyle.subTitle.copyWith(
-                //         color: AppColors.primary,
-                //         fontWeight: FontWeight.w600,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                AppSizedBox.h3,
-                BlocConsumer<LoginCubit, LoginState>(
-                  buildWhen: (previous, current) =>
-                      current is LoginLoading ||
-                      current is LoginSuccess ||
-                      current is LoginError,
-                  builder: (context, state) {
-                    var cubit = LoginCubit.get(context);
-                    return CustomButton(
-                      isLoading: state is LoginLoading,
-                      text: 'Login'.tr(),
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          cubit.login(
-                            _emailController.text,
-                            _passwordController.text,
+                    // Align(
+                    //   alignment: AlignmentDirectional.centerEnd,
+                    //   child: TextButton(
+                    //     style: TextButton.styleFrom(
+                    //       padding: EdgeInsets.zero,
+                    //       minimumSize: Size.zero,
+                    //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     ),
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //           builder: (context) => const ForgetPasswordScreen(),
+                    //         ),
+                    //       );
+                    //     },
+                    //     child: Text(
+                    //       'Forget Password?'.tr(),
+                    //       style: AppTextStyle.subTitle.copyWith(
+                    //         color: AppColors.primary,
+                    //         fontWeight: FontWeight.w600,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    AppSizedBox.h3,
+                    BlocConsumer<LoginCubit, LoginState>(
+                      buildWhen: (previous, current) =>
+                          current is LoginLoading ||
+                          current is LoginSuccess ||
+                          current is LoginError,
+                      builder: (context, state) {
+                        var cubit = LoginCubit.get(context);
+                        return CustomButton(
+                          isLoading: state is LoginLoading,
+                          text: 'Login'.tr(),
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              cubit.login(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                            }
+                          },
+                        );
+                      },
+                      listener: (BuildContext context, LoginState state) {
+                        if (state is LoginSuccess) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        } else if (state is LoginError) {
+                          CustomToast.show(
+                            message: state.error,
+                            type: ToastType.error,
                           );
                         }
-
                       },
-                    );
-                  },
-                  listener: (BuildContext context, LoginState state) {
-                    if (state is LoginSuccess) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
-                        ),
-                        (route) => false,
-                      );
-                    } else if (state is LoginError) {
-                      CustomToast.show(
-                        message: state.error,
-                        type: ToastType.error,
-                      );
-                    }
-                  },
-                ),
+                    ),
 
-                AppSizedBox.h3,
-              ],
+                    AppSizedBox.h3,
+                  ],
+                ),
+              ),
             ),
           ),
         ),

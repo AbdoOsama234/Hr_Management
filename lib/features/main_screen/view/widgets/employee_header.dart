@@ -79,37 +79,36 @@ class EmployeeHeader extends StatelessWidget {
 
               SizedBox(width: 2.w),
 
-              /// Notification
-              AppIcon(
-                icon: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Icon(
-                      Icons.notifications_outlined,
-                      color: AppColors.textMain,
-                      size: 6.w,
-                    ),
-                    Positioned(
-                      top: -3,
-                      right: -2,
-                      child: Container(
-                        width: 2.5.w,
-                        height: 2.5.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.badgeBorderColor,
-                            width: 1.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                onTap: onNotificationTap ?? () {},
-              ),
-
+              // /// Notification
+              // AppIcon(
+              //   icon: Stack(
+              //     clipBehavior: Clip.none,
+              //     children: [
+              //       Icon(
+              //         Icons.notifications_outlined,
+              //         color: AppColors.textMain,
+              //         size: 6.w,
+              //       ),
+              //       Positioned(
+              //         top: -3,
+              //         right: -2,
+              //         child: Container(
+              //           width: 2.5.w,
+              //           height: 2.5.w,
+              //           decoration: BoxDecoration(
+              //             color: AppColors.primary,
+              //             shape: BoxShape.circle,
+              //             border: Border.all(
+              //               color: AppColors.badgeBorderColor,
+              //               width: 1.5,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              //   onTap: onNotificationTap ?? () {},
+              // ),
               const Spacer(),
 
               /// Name & Job

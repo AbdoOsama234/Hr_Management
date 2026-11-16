@@ -85,6 +85,8 @@ class _DatesRowState extends State<DatesRow> {
                   hint: 'Enter Date'.tr(),
                   prefix: const AppAssetImage(
                     uri: AppAssets.calendar2,
+                    width: 24,
+                    height: 24,
                     color: AppColors.primary,
                   ),
                   validator: Validations.normalValidation,
@@ -119,6 +121,8 @@ class _DatesRowState extends State<DatesRow> {
                   hint: 'Enter Date'.tr(),
                   prefix: const AppAssetImage(
                     uri: AppAssets.calendar2,
+                    width: 24,
+                    height: 24,
                     color: AppColors.primary,
                   ),
 
